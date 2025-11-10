@@ -11,9 +11,9 @@ function Navbar(){
             
             {/* Desktop menu */}
             <div className="hidden sm:flex items-center gap-8">
-                <NavLink>Home</NavLink>
-                <NavLink>Write-Ups</NavLink>
-                <NavLink>Contact</NavLink>
+                <NavLink to={'/'}>Home</NavLink>
+                <NavLink to={'/write-ups'}>Write-Ups</NavLink>
+                <NavLink to={'/contact'}>Contact</NavLink>
             </div>
 
             {/* Menu Button */}
@@ -25,9 +25,9 @@ function Navbar(){
 
             {/* Mobile menu */}
             <div className={`${open ? 'flex': 'hidden'} absolute top-[60px] left-0 w-full bg-white shadow-md py-4 flex-col items-start gap-2 px-5 text-sm md:hidden`}>
-                <NavLink className="block py-2 w-full">Home</NavLink>
-                <NavLink className="block py-2 w-full">Write-Ups</NavLink>
-                <NavLink className="block py-2 w-full">Contact</NavLink>
+                <NavLink to={'/'} className="block py-2 w-full">Home</NavLink>
+                <NavLink to={'/write-ups'} className="block py-2 w-full">Write-Ups</NavLink>
+                <NavLink to={'/contact'} className="block py-2 w-full">Contact</NavLink>
             </div>
         </nav>
     )
