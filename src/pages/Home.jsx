@@ -1,3 +1,5 @@
+import Background from "../components/Background"
+
 function Home(){
 
 }
