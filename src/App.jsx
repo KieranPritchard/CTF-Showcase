@@ -3,6 +3,7 @@ import { Routes, Route, NavLink } from 'react-router-dom'
 import Home from './pages/home'
 import WriteUps from './pages/WriteUps'
 import Contact from './pages/Contact'
+import WriteUpPage from './pages/WriteUpPage'
 import Navbar from './components/Navbar'
 
 function App() {
