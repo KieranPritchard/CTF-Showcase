@@ -6,7 +6,6 @@ import Contact from './pages/Contact'
 import Navbar from './components/Navbar'
 
 function App() {
-
   return (
     <div>
       <Navbar />
