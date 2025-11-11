@@ -13,15 +13,62 @@ function WriteUpPage() {
     const [header, setHeader] = useState("")
 
     useEffect(() => {
-        const url = `https://raw.githubusercontent.com/KieranPritchard/CTF-Write-Ups/main/writeups/${slug}.md`
+        // Get filePath from sessionStorage (stored by WriteUps page)
+        // If not found, try to reconstruct from slug (convert dashes to slashes)
+        let filePath = null
+        
+        try {
+            const filePathMap = sessionStorage.getItem('writeupFilePaths')
+            if (filePathMap) {
+                const map = JSON.parse(filePathMap)
+                filePath = map[slug]
+            }
+        } catch (e) {
+            console.warn('Could not read file paths from sessionStorage:', e)
+        }
+        
+        // If filePath not found, try to construct it from slug
+        // Slug format: "Agent_Sudo-writeup" -> "Agent_Sudo/writeup.md"
+        if (!filePath) {
+            // Try converting last dash to slash (most common case: folder-name)
+            const lastDashIndex = slug.lastIndexOf('-')
+            if (lastDashIndex > 0) {
+                filePath = `${slug.substring(0, lastDashIndex)}/${slug.substring(lastDashIndex + 1)}.md`
+            } else {
+                // No dashes, assume it's a flat file
+                filePath = `${slug}.md`
+            }
+        }
+        
+        // Construct URL with full path
+        const url = `https://raw.githubusercontent.com/KieranPritchard/CTF-Write-Ups/main/Contents/${filePath}`
+        
         fetch(url)
-            .then((res) => res.text())
+            .then((res) => {
+                if (!res.ok) {
+                    // If first attempt fails, try as flat file (fallback)
+                    if (filePath.includes('/')) {
+                        const fallbackUrl = `https://raw.githubusercontent.com/KieranPritchard/CTF-Write-Ups/main/Contents/${slug}.md`
+                        return fetch(fallbackUrl).then(fallbackRes => {
+                            if (!fallbackRes.ok) throw new Error(`Failed to fetch write-up: ${res.status}`)
+                            return fallbackRes.text()
+                        })
+                    }
+                    throw new Error(`Failed to fetch write-up: ${res.status}`)
+                }
+                return res.text()
+            })
             .then((text) => {
                 const { data, content } = matter(text)
                 setMeta(data)
                 const titleLine = content.match(/^# (.+)/)
                 setHeader(titleLine ? titleLine[1] : data.title)
                 setContent(content)
+            })
+            .catch((error) => {
+                console.error("Error fetching write-up:", error)
+                setContent("## Error\n\nFailed to load write-up. Please try again later.")
+                setHeader("Error")
             })
     }, [slug])
 
