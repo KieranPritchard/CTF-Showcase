@@ -1,55 +1,62 @@
-import { useState, useEffect } from "react"
-import { Link } from "react-router-dom"
-import Background from "../components/Background"
-import Dropdown from "../components/write_ups/Dropdown"
-import Search from "../components/write_ups/Search"
-import Toolbar from "../components/write_ups/Toolbar"
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import Background from "../components/Background";
+import Dropdown from "../components/write_ups/Dropdown";
+import Search from "../components/write_ups/Search";
+import Toolbar from "../components/write_ups/Toolbar";
 
-const PAGE_SIZE = 10
+const PAGE_SIZE = 10;
 
 function WriteUps() {
-    const [posts, setPosts] = useState([])
-    const [filtered, setFiltered] = useState([])
-    const [categories, setCategories] = useState([])
-    const [platforms, setPlatforms] = useState([])
-    const [category, setCategory] = useState("")
-    const [platform, setPlatform] = useState("")
-    const [search, setSearch] = useState("")
-    const [page, setPage] = useState(1)
+    const [posts, setPosts] = useState([]);
+    const [filtered, setFiltered] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [platforms, setPlatforms] = useState([]);
+    const [category, setCategory] = useState("");
+    const [platform, setPlatform] = useState("");
+    const [search, setSearch] = useState("");
+    const [page, setPage] = useState(1);
 
-  // ✅ Fetch from local JSON file (no CORS issues)
+    // ✅ Fetch from local JSON file
     useEffect(() => {
         fetch("/writeups.json")
-            .then((res) => res.json())
-            .then((data) => {
-                setPosts(data)
-                setFiltered(data)
+        .then((res) => res.json())
+        .then((data) => {
+            setPosts(data);
+            setFiltered(data);
 
-            // Extract unique categories and platforms for dropdowns
-            setCategories([...new Set(data.map((p) => p.category).filter(Boolean))])
-            setPlatforms([...new Set(data.map((p) => p.platform).filter(Boolean))])
+        // Extract unique categories and platforms for dropdowns
+        setCategories([...new Set(data.map((p) => p.category).filter(Boolean))]);
+        setPlatforms([...new Set(data.map((p) => p.platform).filter(Boolean))]);
         })
-        .catch((err) => console.error("Failed to load writeups.json:", err))
-    }, [])
+        .catch((err) => console.error("Failed to load writeups.json:", err));
+    }, []);
 
-    // ✅ Handle filtering and searching
+        // ✅ Handle filtering and searching
     useEffect(() => {
-        let results = posts
-        if (category) results = results.filter((p) => p.category === category)
-        if (platform) results = results.filter((p) => p.platform === platform)
+        let results = posts;
+        if (category) results = results.filter((p) => p.category === category);
+        if (platform) results = results.filter((p) => p.platform === platform);
         if (search)
             results = results.filter((p) =>
-            (p.title || p.slug).toLowerCase().includes(search.toLowerCase())
-        )
+                (p.title || p.slug).toLowerCase().includes(search.toLowerCase())
+            );
 
-        setFiltered(results)
-        setPage(1)
-    }, [category, platform, search, posts])
+            setFiltered(results);
+            setPage(1);
+        }, [category, platform, search, posts]);
 
-    // ✅ Pagination
-    const totalPages = Math.ceil(filtered.length / PAGE_SIZE)
-    const startIndex = (page - 1) * PAGE_SIZE
-    const currentPosts = filtered.slice(startIndex, startIndex + PAGE_SIZE)
+        // ✅ Pagination
+        const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+        const startIndex = (page - 1) * PAGE_SIZE;
+        const currentPosts = filtered.slice(startIndex, startIndex + PAGE_SIZE);
+
+        // ✅ Helper to get first paragraph block as description
+        const getDescription = (content) => {
+        if (!content || !Array.isArray(content)) return "";
+        const paraBlock = content.find((b) => b.type === "paragraph");
+        return paraBlock ? paraBlock.text : "";
+    };
 
     return (
         <Background>
@@ -59,26 +66,26 @@ function WriteUps() {
                 <Dropdown options={platforms} handleSelect={setPlatform} message="Platform" />
             </Toolbar>
 
-        <div className="grid gap-4 p-6">
-            {currentPosts.map((post) => (
-            <Link
-                key={post.slug}
-                to={`/writeups/${post.slug}`}
-                className="block p-4 bg-white rounded-xl shadow hover:shadow-lg transition"
-            >
-                <h2 className="text-xl font-bold">{post.title}</h2>
-                {post.points && (
+            <div className="grid gap-4 p-6">
+                {currentPosts.map((post) => (
+                <Link
+                    key={post.slug}
+                    to={`/writeups/${post.slug}`}
+                    className="block p-4 bg-white rounded-xl shadow hover:shadow-lg transition"
+                >
+                    <h2 className="text-xl mt-2 font-bold">{post.title}</h2>
+                    {post.points && (
                     <p className="text-sm text-gray-500">
                         {post.category} · {post.platform} · {post.difficulty} ({post.points} pts)
                     </p>
-                )}
-                <p className="text-gray-700 mt-2 line-clamp-2">{post.description}</p>
-            </Link>
-            ))}
-        </div>
+                    )}
+                    <p className="text-gray-700 mt-2 line-clamp-2">{getDescription(post.content)}</p>
+                </Link>
+                ))}
+            </div>
 
-        {totalPages > 1 && (
-            <div className="flex justify-center items-center gap-4 py-6">
+            {totalPages > 1 && (
+                <div className="flex justify-center items-center gap-4 py-6">
                 <button
                     onClick={() => setPage(page - 1)}
                     disabled={page === 1}
@@ -96,10 +103,10 @@ function WriteUps() {
                 >
                     Next
                 </button>
-            </div>
-        )}
+                </div>
+            )}
         </Background>
-    )
+    );
 }
 
-export default WriteUps
+export default WriteUps;
