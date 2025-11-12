@@ -65,7 +65,7 @@ function WriteUpPage() {
 
     return (
             <Background>
-                <header className="bg-gray-100 py-10 text-center shadow">
+                <header className="max-w-6xl">
                     <h1 className="text-4xl font-bold">{post.title}</h1>
                     <p className="text-gray-600 mt-2">
                     {post.ctf_name} · {post.category} · {post.difficulty} ({post.points} pts)
