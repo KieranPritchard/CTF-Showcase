@@ -73,7 +73,7 @@ function WriteUpPage() {
                     {post.flag && <p className="mt-4 text-green-600 font-mono">{post.flag}</p>}
                 </header>
 
-                <article className="prose lg:prose-xl max-w-6xl mx-auto p-8 bg-white rounded-2xl shadow mt-6">
+                <article className="mx-auto p-8 bg-white">
                     {post.content.map((block, idx) => renderBlock(block, idx))}
                 </article>
             </Background>
