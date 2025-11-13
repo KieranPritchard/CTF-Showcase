@@ -15,7 +15,7 @@ function Dropdown({ options = [], handleSelect, message}) {
             <button
                 type="button"
                 onClick={() => setIsOpen(!isOpen)}
-                className="w-full text-left px-4 pr-2 py-2 border rounded-xl shadow-sm focus:outline-none"
+                className="w-full text-left px-4 pr-2 py-2 border-4 border-[#00FF88] text-[#00FF88] rounded-xl shadow-sm focus:outline-none"
             >
                 <span>{selected}</span>
                 <svg
@@ -23,18 +23,18 @@ function Dropdown({ options = [], handleSelect, message}) {
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
-                    stroke="#6B7280"
+                    stroke="#00FF88"
                 >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
             </button>
 
             {isOpen && (
-                <ul className="w-full bg-white border border-gray-300 rounded shadow-md mt-1 py-2 absolute z-10">
+                <ul className="w-full bg-[#0A0F14] border border-[#00FF88] text-[#00FF88] rounded shadow-md mt-1 py-2 absolute z-10">
                 {options.map((option) => (
                     <li
                         key={option}
-                        className="px-4 py-2 hover:bg-indigo-500 hover:text-white cursor-pointer"
+                        className="px-4 py-2 hover:bg-[#00FF88] hover:text-[#0A0F14] cursor-pointer"
                         onClick={() => onSelectOption(option)}
                     >
                         {option}
