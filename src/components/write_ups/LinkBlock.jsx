@@ -12,7 +12,7 @@ function LinkBlock({ post, getDescription }) {
                 <h2 className="text-xl mt-2 font-bold text-[#00FF88] hover:text-white neon-hover">{post.title}</h2>
                 {post.points && (
                     <p className="flex flex-row gap-2 mt-2 text-sm text-[#00FF88]">
-                        <span className="border-2 border-[#00FF88] p-1 px-2 rounded-4xl">{post.category}</span> <span className="border-2 border-[#00FF88] p-1 px-2 rounded-4xl">{post.platform}</span> <span className="border-2 border-[#00FF88] p-1 px-2 rounded-4xl">{post.difficulty}</span> <span className="border-2 border-[#00FF88] p-1 px-2 rounded-4xl">{post.points} pts</span>
+                        <span className="border-2 border-[#00FF88] p-1 px-2 rounded-4xl">{post.category}</span> <span className="border-2 border-[#00FF88] p-1 px-2 rounded-4xl">{post.ctf_name}</span> <span className="border-2 border-[#00FF88] p-1 px-2 rounded-4xl">{post.difficulty}</span> <span className="border-2 border-[#00FF88] p-1 px-2 rounded-4xl">{post.points} pts</span>
                     </p>
                 )}
                 <p className="text-[#C7FCEC] mt-2 line-clamp-2">
