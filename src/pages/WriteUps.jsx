@@ -25,7 +25,7 @@ function WriteUps() {
             setPosts(data);
             setFiltered(data);
             setCategories([...new Set(data.map((p) => p.category).filter(Boolean))]);
-            setPlatforms([...new Set(data.map((p) => p.platform).filter(Boolean))]);
+            setPlatforms([...new Set(data.map((p) => p.ctf_name).filter(Boolean))]);
         })
         .catch((err) => console.error("Failed to load writeups.json:", err));
     }, []);
@@ -33,7 +33,7 @@ function WriteUps() {
     useEffect(() => {
         let results = posts;
         if (category) results = results.filter((p) => p.category === category);
-        if (platform) results = results.filter((p) => p.platform === platform);
+        if (platform) results = results.filter((p) => p.ctf_name === platform);
         if (search)
         results = results.filter((p) =>
             (p.title || p.slug).toLowerCase().includes(search.toLowerCase())

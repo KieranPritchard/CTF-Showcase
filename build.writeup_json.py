@@ -67,13 +67,47 @@ def request_with_retry(url, max_retries=3, delay=5):
 
 
 def clean_md_inline(s: str) -> str:
-    """Strip inline markdown and HTML from a string."""
+    """Strip inline markdown, HTML, and emojis from a string."""
     if not s:
         return ""
+
+    # Remove markdown links
     s = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", s)
+
+    # Remove markdown formatting
     s = s.replace("`", "").replace("**", "").replace("__", "").replace("*", "").replace("_", "")
+
+    # Remove HTML tags
     s = re.sub(r"<[^>]+>", "", s)
+
+    # Remove emojis (Unicode ranges)
+    emoji_pattern = re.compile(
+        "["
+        "\U0001F600-\U0001F64F"  # Emoticons
+        "\U0001F300-\U0001F5FF"  # Symbols & pictographs
+        "\U0001F680-\U0001F6FF"  # Transport & map symbols
+        "\U0001F1E0-\U0001F1FF"  # Flags
+        "\U00002500-\U00002BEF"  # Chinese characters & misc
+        "\U00002702-\U000027B0"
+        "\U000024C2-\U0001F251"
+        "\U0001f926-\U0001f937"
+        "\U00010000-\U0010ffff"
+        "\u200d"                 # Zero-width joiner
+        "\u2640-\u2642"
+        "\u2600-\u2B55"
+        "\u23cf"
+        "\u23e9"
+        "\u231a"
+        "\ufe0f"                 # Variation selector
+        "\u3030"
+        "]+",
+        flags=re.UNICODE,
+    )
+    s = emoji_pattern.sub("", s)
+
+    # Normalize whitespace
     s = re.sub(r"\s+", " ", s).strip()
+
     return s
 
 
@@ -91,7 +125,7 @@ def list_md_files_recursive() -> List[Dict]:
         and item["path"].lower().endswith(".md")
         and item["path"].startswith(prefix)
         and not any(excl in item["path"].lower() for excl in excluded_dirs)
-        # ✅ Ignore README.md in root of Contents
+        # Ignore root README.md inside Contents
         and os.path.normpath(item["path"]).lower() != os.path.normpath(f"{ROOT_PATH}/readme.md").lower()
     ]
 
@@ -134,25 +168,37 @@ def extract_flag(md: str) -> str:
 
 
 def parse_markdown_to_blocks(md: str) -> List[Dict]:
-    """Basic Markdown → blocks parser."""
+    """Markdown → structured blocks."""
     blocks = []
     lines = md.splitlines()
     i = 0
+
     while i < len(lines):
         line = lines[i].rstrip()
+
         if not line:
             i += 1
             continue
 
-        # Heading
-        if line.startswith("#"):
-            level = len(line) - len(line.lstrip("#"))
-            text = line.lstrip("#").strip()
-            blocks.append({"type": "heading", "level": level, "text": clean_md_inline(text)})
+        # -------------------------
+        # HEADINGS (FIXED VERSION)
+        # -------------------------
+        stripped = line.lstrip()
+        if stripped.startswith("#"):
+            level = len(stripped) - len(stripped.lstrip("#"))
+            text = clean_md_inline(stripped.lstrip("#").strip())
+
+            if level >= 3:
+                blocks.append({"type": "subheading", "text": text})
+            else:
+                blocks.append({"type": "heading", "level": level, "text": text})
+
             i += 1
             continue
 
-        # Code block
+        # -------------------------
+        # CODE BLOCKS
+        # -------------------------
         if line.startswith("```"):
             lang = line[3:].strip() or ""
             code_lines = []
@@ -160,11 +206,13 @@ def parse_markdown_to_blocks(md: str) -> List[Dict]:
             while i < len(lines) and not lines[i].startswith("```"):
                 code_lines.append(lines[i])
                 i += 1
-            i += 1  # Skip closing ```
+            i += 1
             blocks.append({"type": "code", "language": lang, "code": "\n".join(code_lines)})
             continue
 
-        # List
+        # -------------------------
+        # LISTS
+        # -------------------------
         if line.startswith(("-", "*")):
             items = []
             while i < len(lines) and lines[i].strip().startswith(("-", "*")):
@@ -173,7 +221,9 @@ def parse_markdown_to_blocks(md: str) -> List[Dict]:
             blocks.append({"type": "list", "ordered": False, "items": items})
             continue
 
-        # Image
+        # -------------------------
+        # IMAGES
+        # -------------------------
         img_match = re.match(r"!\[([^\]]*)\]\(([^)]+)\)", line)
         if img_match:
             alt, src = img_match.groups()
@@ -181,10 +231,12 @@ def parse_markdown_to_blocks(md: str) -> List[Dict]:
             i += 1
             continue
 
-        # Paragraph
+        # -------------------------
+        # PARAGRAPHS
+        # -------------------------
         para_lines = [line]
         i += 1
-        while i < len(lines) and lines[i].strip() and not lines[i].startswith(("#", "-", "*", "```", "![", ">")):
+        while i < len(lines) and lines[i].strip() and not lines[i].lstrip().startswith(("#", "-", "*", "```", "![", ">")):
             para_lines.append(lines[i].strip())
             i += 1
         blocks.append({"type": "paragraph", "text": clean_md_inline(" ".join(para_lines))})
@@ -215,7 +267,7 @@ def build_json():
             "difficulty": clean_md_inline(info.get("difficulty")),
             "points": clean_md_inline(info.get("points")),
             "flag": extract_flag(md),
-            "tools": [],  # optional: parse separately
+            "tools": [],
             "content": parse_markdown_to_blocks(md),
             "_source": {"path": path, "sha": item.get("sha")},
         }
