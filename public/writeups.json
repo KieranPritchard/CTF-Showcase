@@ -1817,32 +1817,6 @@
   },
   {
     "slug": "README",
-    "title": "README",
-    "ctf_name": "",
-    "platform": "",
-    "category": "",
-    "difficulty": "",
-    "points": "",
-    "flag": "",
-    "tools": [],
-    "content": [
-      {
-        "type": "heading",
-        "level": 1,
-        "text": "📂 Index of Rooms"
-      },
-      {
-        "type": "paragraph",
-        "text": "| Room Name | Category | Date | Difficulty | Write-Up | |-----------|----------|------------|----------|----------| |Light|Database Exploit| 16/04/2025 |Easy|Click Here| |Basic Pentesting|Web App| 18/04/2025 |Easy|Click Here| |Crack The Hash|Password Cracking|18/04/2025|Easy|Click Here| |OhSINT|OSINT|19/04/2025|Easy|Click Here| |c4ptur3-th3-fl4g|Cryptography,Stegnography|21/04/2025|Easy|Click Here| |RootMe|Privalage Escalation|10/05/2025|Easy|Click Here| |Simple CTF|Web App|11/05/2025|Easy|Click Here| |Bounty Hunter|Web App|30/05/2025|Easy|Click Here| |Agent Sudo| Web App & Privalage Escalation| 26/7/2025|Easy|Click Here| |Anthem|Web App, Privalage Escalation and Windows| 04/08/2025/|Easy|Click Here | More coming soon... | – | – | – | 🚧 |"
-      }
-    ],
-    "_source": {
-      "path": "Contents/README.md",
-      "sha": "fe8eb7407759e48ffd8e47655f4e3f48f49ecba1"
-    }
-  },
-  {
-    "slug": "README",
     "title": "Root Me",
     "ctf_name": "Try Hack ME",
     "platform": "",

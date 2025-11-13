@@ -91,8 +91,11 @@ def list_md_files_recursive() -> List[Dict]:
         and item["path"].lower().endswith(".md")
         and item["path"].startswith(prefix)
         and not any(excl in item["path"].lower() for excl in excluded_dirs)
+        # ✅ Ignore README.md in root of Contents
+        and os.path.normpath(item["path"]).lower() != os.path.normpath(f"{ROOT_PATH}/readme.md").lower()
     ]
-    print(f"📄 Found {len(md_items)} markdown write-up files under {ROOT_PATH}/")
+
+    print(f"📄 Found {len(md_items)} markdown write-up files under {ROOT_PATH}/ (excluding root readme)")
     return md_items
 
 
