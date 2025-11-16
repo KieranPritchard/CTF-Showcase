@@ -15,7 +15,7 @@ function Dropdown({ options = [], handleSelect, message}) {
             <button
                 type="button"
                 onClick={() => setIsOpen(!isOpen)}
-                className="w-full text-left px-4 pr-2 py-2 border-4 border-[#00FF88] text-[#00FF88] rounded-xl shadow-sm focus:outline-none"
+                className="w-full text-left px-4 py-2 h-12 pr-2 border-4 border-[#00FF88] text-[#00FF88] rounded-xl shadow-sm focus:outline-none"
             >
                 <span>{selected}</span>
                 <svg
