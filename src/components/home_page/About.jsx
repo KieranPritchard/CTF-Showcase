@@ -17,10 +17,9 @@ function About() {
                 <div className="w-full md:w-auto text-center">
                     <h2 className="headings flicker text-white text-3xl sm:text-4xl font-bold mb-4">About</h2>
                     <p className="text-body text-lg sm:text-xl text-[#C7FCEC] leading-relaxed">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates,
-                        nemo, ex ullam similique minima, illo perferendis vel voluptatum et
-                        assumenda dicta! Aperiam, alias quaerat? Sint itaque alias esse sed
-                        rerum?
+                        I'm currently a T-Level student at Bournemouth and Poole College studying software development; however, despite focusing on that, I also love all things hacking and cyber security which honestly just shows how much of a geek I am.
+                        You might be wondering why I'm studying software development in the first place. Well, it complements what I do really well by building up my coding knowledge, so I can not only build programs but also break them apart.
+                        Also, If you are a hacker or have a knack for this sort of thing I would love to hear about any vulnerablilities you can find and also any secrets I've hidden.
                     </p>
                 </div>
             </div>

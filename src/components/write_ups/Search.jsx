@@ -1,24 +1,15 @@
-import { useState } from "react"
-
-function Search(){
-    const [item, setItem] = useState("")
-
-    const handleChange = (e) => {
-        setItem(e.target.value)
-    }
-
-    return(
+function Search({ value, handleChange }) {
+    return (
         <form>
             <input
-                className="text-body border-4 h-12 border-[#00FF88] text-[#00FF88] rounded-xl p-2 w-75"
+                className="text-body border-4 h-12 border-[#00FF88] text-[#00FF88] rounded-xl p-2 w-72"
                 type="text"
-                value={item}
-                onChange={handleChange}
+                value={value}               // controlled by parent
+                onChange={(e) => handleChange(e.target.value)}
                 placeholder="Search"
-            >
-            </input>
+            />
         </form>
-    )
+    );
 }
 
-export default Search
+export default Search;

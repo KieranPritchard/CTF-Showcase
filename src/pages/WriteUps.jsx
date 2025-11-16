@@ -66,7 +66,7 @@ function WriteUps() {
     <Wrapper>
         <div className="px-[5%] pt-5">
             <Toolbar>
-            <Search handleChange={setSearch} />
+            <Search value={search} handleChange={setSearch} />
             <Dropdown options={categories} handleSelect={setCategory} message="Category" />
             <Dropdown options={platforms} handleSelect={setPlatform} message="Platform" />
             </Toolbar>
