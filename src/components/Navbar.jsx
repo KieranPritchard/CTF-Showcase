@@ -6,7 +6,7 @@ function Navbar() {
 
     return (
         <nav className="flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 border-b bg-[#121a22] relative transition-all">
-            <NavLink className="text-[#00FF88] font-bold text-xl neon-hover">
+            <NavLink className="headings text-[#00FF88] font-bold text-xl neon-hover">
                 Kieran Pritchard
             </NavLink>
 
@@ -15,7 +15,7 @@ function Navbar() {
                 <NavLink
                 to="/"
                 className={({ isActive }) =>
-                    `neon-hover transition-all ${
+                    `text-body neon-hover transition-all ${
                     isActive ? "text-[#C7FCEC]" : "text-[#C7FCEC]"
                     }`
                 }
@@ -25,7 +25,7 @@ function Navbar() {
                 <NavLink
                 to="/write-ups"
                 className={({ isActive }) =>
-                    `neon-hover transition-all ${
+                    `text-body neon-hover transition-all ${
                     isActive ? "text-[#C7FCEC]" : "text-[#C7FCEC]"
                     }`
                 }
@@ -35,7 +35,7 @@ function Navbar() {
                 <NavLink
                 to="/contact"
                 className={({ isActive }) =>
-                    `neon-hover transition-all ${
+                    `text-body neon-hover transition-all ${
                     isActive ? "text-[#C7FCEC]" : "text-[#C7FCEC]"
                     }`
                 }
@@ -67,20 +67,23 @@ function Navbar() {
                 open ? "flex" : "hidden"
                 } absolute top-[60px] left-0 w-full bg-[#121a22] shadow-lg py-4 flex-col items-start gap-2 px-5 text-sm md:hidden`}
             >
-                <NavLink to="/" className="block py-2 w-full neon-hover text-[#C7FCEC]">
-                Home
+                <NavLink 
+                    to="/" 
+                    className="text-body block py-2 w-full neon-hover text-[#C7FCEC]"
+                >
+                    Home
                 </NavLink>
                 <NavLink
-                to="/write-ups"
-                className="block py-2 w-full neon-hover text-[#C7FCEC]"
+                    to="/write-ups"
+                    className="text-body block py-2 w-full neon-hover text-[#C7FCEC]"
                 >
-                Write-Ups
+                    Write-Ups
                 </NavLink>
                 <NavLink
-                to="/contact"
-                className="block py-2 w-full neon-hover text-[#C7FCEC]"
+                    to="/contact"
+                    className="text-body block py-2 w-full neon-hover text-[#C7FCEC]"
                 >
-                Contact
+                    Contact
                 </NavLink>
             </div>
         </nav>

@@ -32,7 +32,7 @@ function WriteUpPage() {
                 return (
                     <h1
                         key={index}
-                        className={`text-[#00FF88] font-bold mt-6 mb-3 ${
+                        className={`text-[#00FF88] headings font-bold mt-6 mb-3 ${
                             block.level === 1 ? "text-3xl" :
                             block.level === 2 ? "text-xl" :
                             "text-xl"
@@ -46,7 +46,7 @@ function WriteUpPage() {
                 return (
                     <h3
                         key={index}
-                        className="text-lg mt-5 mb-2 text-[#00FF88] font-semibold"
+                        className="headings text-lg mt-5 mb-2 text-[#00FF88] font-semibold"
                     >
                         {block.text}
                     </h3>
@@ -72,7 +72,7 @@ function WriteUpPage() {
                 return (
                     <pre
                         key={index}
-                        className="bg-black/40 text-[#00FF88] p-4 mx-5 rounded-lg overflow-x-auto my-4 border border-[#00FF88]"
+                        className="code-text bg-black/40 text-[#00FF88] p-4 mx-5 rounded-lg overflow-x-auto my-4 border border-[#00FF88]"
                     >
                         <code>{block.code}</code>
                     </pre>
@@ -104,7 +104,7 @@ function WriteUpPage() {
 
                     </div>
 
-                    <h1 className="text-4xl mb-5 font-bold text-[#00FF88]">
+                    <h1 className="headings text-4xl mb-5 font-bold text-[#00FF88]">
                         {post.title}
                     </h1>
 

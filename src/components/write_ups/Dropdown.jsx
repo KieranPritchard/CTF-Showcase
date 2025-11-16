@@ -11,7 +11,7 @@ function Dropdown({ options = [], handleSelect, message}) {
     }
 
     return (
-        <div className="flex flex-col w-44 text-sm relative">
+        <div className="flex flex-col w-44 text-sm relative text-body">
             <button
                 type="button"
                 onClick={() => setIsOpen(!isOpen)}

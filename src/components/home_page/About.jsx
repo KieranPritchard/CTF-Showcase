@@ -13,8 +13,8 @@ function About() {
 
                 {/* Text Section */}
                 <div className="w-full md:w-auto text-center">
-                    <h2 className="flicker text-white text-3xl sm:text-4xl font-bold mb-4">About</h2>
-                    <p className="text-lg sm:text-xl text-[#C7FCEC] leading-relaxed">
+                    <h2 className="headings flicker text-white text-3xl sm:text-4xl font-bold mb-4">About</h2>
+                    <p className="text-body text-lg sm:text-xl text-[#C7FCEC] leading-relaxed">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates,
                         nemo, ex ullam similique minima, illo perferendis vel voluptatum et
                         assumenda dicta! Aperiam, alias quaerat? Sint itaque alias esse sed

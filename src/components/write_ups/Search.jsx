@@ -10,7 +10,7 @@ function Search(){
     return(
         <form>
             <input
-                className="border-4 border-[#00FF88] text-[#00FF88] rounded-xl p-2 w-75"
+                className="text-body border-4 border-[#00FF88] text-[#00FF88] rounded-xl p-2 w-75"
                 type="text"
                 value={item}
                 onChange={handleChange}

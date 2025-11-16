@@ -18,7 +18,7 @@ function Recents() {
     return (
         <div className="min-h-screen w-full flex flex-col px-4 sm:px-8 py-10">
             {/* Header pinned at the top */}
-            <h2 className="flicker text-4xl text-center font-bold mb-10 text-white">
+            <h2 className="headings flicker text-4xl text-center font-bold mb-10 text-white">
                 Recent Projects
             </h2>
 
