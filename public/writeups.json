@@ -1,6 +1,6 @@
 [
   {
-    "slug": "README",
+    "slug": "agent-sudo",
     "title": "Agent Sudo",
     "ctf_name": "Try Hack Me",
     "platform": "",
@@ -193,7 +193,7 @@
     }
   },
   {
-    "slug": "README",
+    "slug": "anonymous",
     "title": "Anonymous",
     "ctf_name": "Try Hack Me",
     "platform": "",
@@ -403,7 +403,7 @@
     }
   },
   {
-    "slug": "README",
+    "slug": "anthem",
     "title": "Anthem",
     "ctf_name": "Try Hack Me",
     "platform": "",
@@ -618,7 +618,7 @@
     }
   },
   {
-    "slug": "README",
+    "slug": "basic-pentesting",
     "title": "Basic Pentesting",
     "ctf_name": "Try Hack Me",
     "platform": "",
@@ -903,7 +903,7 @@
     }
   },
   {
-    "slug": "README",
+    "slug": "crack-the-hash",
     "title": "Crack The Hash",
     "ctf_name": "TryHackMe",
     "platform": "",
@@ -1120,7 +1120,7 @@
     }
   },
   {
-    "slug": "README",
+    "slug": "lazyadmin",
     "title": "LazyAdmin",
     "ctf_name": "Try Hack Me",
     "platform": "",
@@ -1315,7 +1315,7 @@
     }
   },
   {
-    "slug": "README",
+    "slug": "light",
     "title": "Light",
     "ctf_name": "TryHackMe",
     "platform": "",
@@ -1581,7 +1581,7 @@
     }
   },
   {
-    "slug": "README",
+    "slug": "ohsint",
     "title": "OhSINT",
     "ctf_name": "Try Hack Me",
     "platform": "",
@@ -1813,7 +1813,7 @@
     }
   },
   {
-    "slug": "README",
+    "slug": "root-me",
     "title": "Root Me",
     "ctf_name": "Try Hack ME",
     "platform": "",
@@ -2061,7 +2061,7 @@
     }
   },
   {
-    "slug": "README",
+    "slug": "simple-ctf",
     "title": "Simple CTF",
     "ctf_name": "Try Hack Me",
     "platform": "",
@@ -2298,7 +2298,7 @@
     }
   },
   {
-    "slug": "README",
+    "slug": "bounty-hunter",
     "title": "Bounty Hunter",
     "ctf_name": "Try Hack Me",
     "platform": "",
@@ -2531,7 +2531,7 @@
     }
   },
   {
-    "slug": "README",
+    "slug": "c4ptur3-th3-fl4g",
     "title": "c4ptur3-th3-fl4g",
     "ctf_name": "Try Hack Me: c4ptur3-th3-fl4g",
     "platform": "",

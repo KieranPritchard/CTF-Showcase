@@ -83,22 +83,22 @@ def clean_md_inline(s: str) -> str:
     # Remove emojis (Unicode ranges)
     emoji_pattern = re.compile(
         "["
-        "\U0001F600-\U0001F64F"  # Emoticons
-        "\U0001F300-\U0001F5FF"  # Symbols & pictographs
-        "\U0001F680-\U0001F6FF"  # Transport & map symbols
-        "\U0001F1E0-\U0001F1FF"  # Flags
-        "\U00002500-\U00002BEF"  # Chinese characters & misc
+        "\U0001F600-\U0001F64F"
+        "\U0001F300-\U0001F5FF"
+        "\U0001F680-\U0001F6FF"
+        "\U0001F1E0-\U0001F1FF"
+        "\U00002500-\U00002BEF"
         "\U00002702-\U000027B0"
         "\U000024C2-\U0001F251"
         "\U0001f926-\U0001f937"
         "\U00010000-\U0010ffff"
-        "\u200d"                 # Zero-width joiner
+        "\u200d"
         "\u2640-\u2642"
         "\u2600-\u2B55"
         "\u23cf"
         "\u23e9"
         "\u231a"
-        "\ufe0f"                 # Variation selector
+        "\ufe0f"
         "\u3030"
         "]+",
         flags=re.UNICODE,
@@ -125,7 +125,6 @@ def list_md_files_recursive() -> List[Dict]:
         and item["path"].lower().endswith(".md")
         and item["path"].startswith(prefix)
         and not any(excl in item["path"].lower() for excl in excluded_dirs)
-        # Ignore root README.md inside Contents
         and os.path.normpath(item["path"]).lower() != os.path.normpath(f"{ROOT_PATH}/readme.md").lower()
     ]
 
@@ -180,9 +179,6 @@ def parse_markdown_to_blocks(md: str) -> List[Dict]:
             i += 1
             continue
 
-        # -------------------------
-        # HEADINGS (FIXED VERSION)
-        # -------------------------
         stripped = line.lstrip()
         if stripped.startswith("#"):
             level = len(stripped) - len(stripped.lstrip("#"))
@@ -196,9 +192,6 @@ def parse_markdown_to_blocks(md: str) -> List[Dict]:
             i += 1
             continue
 
-        # -------------------------
-        # CODE BLOCKS
-        # -------------------------
         if line.startswith("```"):
             lang = line[3:].strip() or ""
             code_lines = []
@@ -210,9 +203,6 @@ def parse_markdown_to_blocks(md: str) -> List[Dict]:
             blocks.append({"type": "code", "language": lang, "code": "\n".join(code_lines)})
             continue
 
-        # -------------------------
-        # LISTS
-        # -------------------------
         if line.startswith(("-", "*")):
             items = []
             while i < len(lines) and lines[i].strip().startswith(("-", "*")):
@@ -221,9 +211,6 @@ def parse_markdown_to_blocks(md: str) -> List[Dict]:
             blocks.append({"type": "list", "ordered": False, "items": items})
             continue
 
-        # -------------------------
-        # IMAGES
-        # -------------------------
         img_match = re.match(r"!\[([^\]]*)\]\(([^)]+)\)", line)
         if img_match:
             alt, src = img_match.groups()
@@ -231,9 +218,6 @@ def parse_markdown_to_blocks(md: str) -> List[Dict]:
             i += 1
             continue
 
-        # -------------------------
-        # PARAGRAPHS
-        # -------------------------
         para_lines = [line]
         i += 1
         while i < len(lines) and lines[i].strip() and not lines[i].lstrip().startswith(("#", "-", "*", "```", "![", ">")):
@@ -258,9 +242,14 @@ def build_json():
             continue
 
         info = parse_challenge_info(md)
+
+        # ----- TITLE & SLUG -----
+        raw_title = clean_md_inline(info.get("challenge name") or os.path.splitext(os.path.basename(path))[0])
+        slug = re.sub(r"[^a-z0-9]+", "-", raw_title.lower()).strip("-")
+
         entry = {
-            "slug": os.path.splitext(os.path.basename(path))[0],
-            "title": clean_md_inline(info.get("challenge name") or os.path.splitext(os.path.basename(path))[0]),
+            "slug": slug,
+            "title": raw_title,
             "ctf_name": clean_md_inline(info.get("ctf name")),
             "platform": clean_md_inline(info.get("platform")),
             "category": clean_md_inline(info.get("category")),

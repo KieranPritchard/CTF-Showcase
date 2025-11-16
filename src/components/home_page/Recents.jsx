@@ -40,6 +40,7 @@ function Recents() {
                                 <RecentWriteUp
                                     title={w.title}
                                     description={description}
+                                    category={w.category}
                                 />
                             </Link>
                         );

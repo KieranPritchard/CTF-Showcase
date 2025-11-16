@@ -2,6 +2,13 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import AutoBackground from "../components/AutoBackground";
 import Background from "../components/Background";
+import WebAppImage from "../assets/web-app.webp"
+import PrivEscImage from "../assets/priv-esc.webp"
+import WindowsImage from "../assets/windows.webp"
+import OsintImage from "../assets/osint.webp"
+import CryptographyImage from "../assets/cryptography.webp"
+import DatabaseImage from "../assets/database.webp"
+import LinuxImage from "../assets/linux.webp"
 
 function WriteUpPage() {
     const { slug } = useParams();
@@ -22,6 +29,38 @@ function WriteUpPage() {
     if (loading) return <p className="text-center mt-8">Loading...</p>;
     if (!post) return <p className="text-center mt-8">Write-up not found.</p>;
 
+    // -----------------------------
+    // Image
+    // -----------------------------
+    const renderImage = (category) => {
+        const cat = category.toLowerCase();
+
+        if (cat.includes("web")) {
+            return <img className="h-4/5 w-auto" src={WebAppImage} alt="Globe" />;
+        }
+        if (cat.includes("priv") || cat.includes("escalation")) {
+            return <img className="h-4/5 w-auto" src={PrivEscImage} alt="ID card" />;
+        }
+        if (cat.includes("windows")) {
+            return <img className="h-4/5 w-auto" src={WindowsImage} alt="Windows logo" />;
+        }
+        if (cat.includes("osint")) {
+            return <img className="h-4/5 w-auto" src={OsintImage} alt="Magnifying glass" />;
+        }
+        if (cat.includes("password") || cat.includes("crypto")) {
+            return <img className="h-4/5 w-auto" src={CryptographyImage} alt="Lock" />;
+        }
+        if (cat.includes("database") || cat.includes("sql")) {
+            return <img className="h-4/5 w-auto" src={DatabaseImage} alt="Database" />;
+        }
+        if (cat.includes("linux")) {
+            return <img className="h-4/5 w-auto" src={LinuxImage} alt="Penguin" />;
+        }
+
+        return null; // fallback
+    };
+
+    
     // -----------------------------
     // Block renderer
     // -----------------------------
@@ -100,8 +139,8 @@ function WriteUpPage() {
         <div>
             <Background >
                 <header className="flex flex-col justify-center px-[5%] h-full">
-                    <div className="border h-2/5 mb-5 rounded-xl text-[#00FF88]">
-
+                    <div className="flex justify-center items-center border h-2/5 mb-5 rounded-xl text-[#00FF88]">
+                        {renderImage(post.category)}
                     </div>
 
                     <h1 className="headings text-4xl mb-5 font-bold text-[#00FF88]">

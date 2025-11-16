@@ -1,3 +1,5 @@
+import ImageOfMe from "../../assets/kieran-pritchard-profile-photo.webp"
+
 function About() {
     return (
         <div className="min-h-screen flex items-center justify-center px-4 sm:px-8 py-10 w-full">
@@ -5,8 +7,8 @@ function About() {
                 {/* Optional Image Section */}
                 <div className="flex justify-center md:justify-start">
                     <img 
-                        src="/path-to-image.jpg" 
-                        alt="About image" 
+                        src={ImageOfMe}
+                        alt="Image of me" 
                         className="w-full max-w-sm rounded-lg shadow-lg"
                     />
                 </div>
