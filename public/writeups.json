@@ -2,9 +2,9 @@
   {
     "slug": "agent-sudo",
     "title": "Agent Sudo",
-    "ctf_name": "Try Hack Me",
+    "ctf_name": "TryHackMe",
     "platform": "",
-    "category": "Web Application and Privalge Escalation",
+    "category": "Web Application",
     "difficulty": "Easy",
     "points": "150",
     "flag": "",
@@ -19,9 +19,9 @@
         "type": "list",
         "ordered": false,
         "items": [
-          "CTF Name: Try Hack Me",
+          "CTF Name: TryHackMe",
           "Challenge Name: Agent Sudo",
-          "Category: Web Application and Privalge Escalation",
+          "Category: Web Application",
           "Points: 150",
           "Difficulty: Easy"
         ]
@@ -189,13 +189,13 @@
     ],
     "_source": {
       "path": "Contents/Agent_Sudo/README.md",
-      "sha": "770843e7a85123a069c8b9c55e0ea44558686159"
+      "sha": "5c4856b173629938374951ee76f8a9e9eec12ad0"
     }
   },
   {
     "slug": "anonymous",
     "title": "Anonymous",
-    "ctf_name": "Try Hack Me",
+    "ctf_name": "TryHackMe",
     "platform": "",
     "category": "Linux",
     "difficulty": "Medium",
@@ -212,7 +212,7 @@
         "type": "list",
         "ordered": false,
         "items": [
-          "CTF Name: Try Hack Me",
+          "CTF Name: TryHackMe",
           "Challenge Name: Anonymous",
           "Category: Linux",
           "Points: 210",
@@ -399,15 +399,15 @@
     ],
     "_source": {
       "path": "Contents/Anonymous/README.md",
-      "sha": "d78f84376e10089121d0baac343cb2bce211573e"
+      "sha": "5444c859d15586f29c5640d1fdf8716115690a4c"
     }
   },
   {
     "slug": "anthem",
     "title": "Anthem",
-    "ctf_name": "Try Hack Me",
+    "ctf_name": "TryHackMe",
     "platform": "",
-    "category": "Web Application, Windows, Privilege Escalation",
+    "category": "Windows",
     "difficulty": "Easy",
     "points": "150",
     "flag": "THM{L0L_WH0_US3S_M3T4}",
@@ -422,9 +422,9 @@
         "type": "list",
         "ordered": false,
         "items": [
-          "CTF Name: Try Hack Me",
+          "CTF Name: TryHackMe",
           "Challenge Name: Anthem",
-          "Category: Web Application, Windows, Privilege Escalation",
+          "Category: Windows",
           "Points: 150",
           "Difficulty: Easy"
         ]
@@ -614,15 +614,15 @@
     ],
     "_source": {
       "path": "Contents/Anthem/README.md",
-      "sha": "03fa8f968b6592fa7970be3facc81b499226529f"
+      "sha": "8d5c48dfbf51c575197e8800e4b79eb4472a0597"
     }
   },
   {
     "slug": "basic-pentesting",
     "title": "Basic Pentesting",
-    "ctf_name": "Try Hack Me",
+    "ctf_name": "TryHackMe",
     "platform": "",
-    "category": "Web App",
+    "category": "Web Application",
     "difficulty": "Easy",
     "points": "Not Listed",
     "flag": "",
@@ -637,9 +637,9 @@
         "type": "list",
         "ordered": false,
         "items": [
-          "CTF Name: Try Hack Me",
+          "CTF Name: TryHackMe",
           "Challenge Name: Basic Pentesting",
-          "Category: Web App",
+          "Category: Web Application",
           "Points: Not Listed",
           "Difficulty: Easy"
         ]
@@ -899,7 +899,7 @@
     ],
     "_source": {
       "path": "Contents/Basic-Pentesting/README.md",
-      "sha": "9f8d16e2e6ab7e7ed0971a15c74e7fff7a81827f"
+      "sha": "5b4e224a9e7aa336a1c7ae99c3f722aa7559b245"
     }
   },
   {
@@ -1122,9 +1122,9 @@
   {
     "slug": "lazyadmin",
     "title": "LazyAdmin",
-    "ctf_name": "Try Hack Me",
+    "ctf_name": "TryHackMe",
     "platform": "",
-    "category": "Web Application, Linux, Privilege Escalation",
+    "category": "Web Application",
     "difficulty": "Easy",
     "points": "150",
     "flag": "THM{63e5bce9271952aad1113b6f1ac28a07}",
@@ -1139,9 +1139,9 @@
         "type": "list",
         "ordered": false,
         "items": [
-          "CTF Name: Try Hack Me",
+          "CTF Name: TryHackMe",
           "Challenge Name: LazyAdmin",
-          "Category: Web Application, Linux, Privilege Escalation",
+          "Category: Web Application",
           "Points: 150",
           "Difficulty: Easy"
         ]
@@ -1311,7 +1311,7 @@
     ],
     "_source": {
       "path": "Contents/Lazy_Admin/README.md",
-      "sha": "7a461b57b0e790223fd55231241fea29c995acd7"
+      "sha": "efae5d66690e083791cb24570306fca39ebceab5"
     }
   },
   {
@@ -1583,7 +1583,7 @@
   {
     "slug": "ohsint",
     "title": "OhSINT",
-    "ctf_name": "Try Hack Me",
+    "ctf_name": "TryHackMe",
     "platform": "",
     "category": "OSINT",
     "difficulty": "Easy",
@@ -1600,7 +1600,7 @@
         "type": "list",
         "ordered": false,
         "items": [
-          "CTF Name: Try Hack Me",
+          "CTF Name: TryHackMe",
           "Challenge Name: OhSINT",
           "Category: OSINT",
           "Points: 0",
@@ -1809,15 +1809,15 @@
     ],
     "_source": {
       "path": "Contents/OhSINT/README.md",
-      "sha": "a128a0af267ace18faedbba3a17aba3f4e606791"
+      "sha": "c118ebf144b3f4b7a0ec01e411d8cce8da17e965"
     }
   },
   {
     "slug": "root-me",
     "title": "Root Me",
-    "ctf_name": "Try Hack ME",
+    "ctf_name": "TryHackMe",
     "platform": "",
-    "category": "Privilege Escalation / Web Exploitation",
+    "category": "Privilege Escalatio",
     "difficulty": "Easy",
     "points": "210",
     "flag": "THM{y0u_g0t_a_sh3ll}",
@@ -1832,9 +1832,9 @@
         "type": "list",
         "ordered": false,
         "items": [
-          "CTF Name: Try Hack ME",
+          "CTF Name: TryHackMe",
           "Challenge Name: Root Me",
-          "Category: Privilege Escalation / Web Exploitation",
+          "Category: Privilege Escalatio",
           "Points: 210",
           "Difficulty: Easy"
         ]
@@ -2057,15 +2057,15 @@
     ],
     "_source": {
       "path": "Contents/RootMe/README.md",
-      "sha": "6f04cbf1830fa5f17b22a3085c5c4a0cc6d87b0d"
+      "sha": "d31cb76db18a6ec6f2702f6a4bd966b0ad88772a"
     }
   },
   {
     "slug": "simple-ctf",
     "title": "Simple CTF",
-    "ctf_name": "Try Hack Me",
+    "ctf_name": "TryHackMe",
     "platform": "",
-    "category": "Web App",
+    "category": "Web Application",
     "difficulty": "Easy",
     "points": "300",
     "flag": "",
@@ -2080,9 +2080,9 @@
         "type": "list",
         "ordered": false,
         "items": [
-          "CTF Name: Try Hack Me",
+          "CTF Name: TryHackMe",
           "Challenge Name: Simple CTF",
-          "Category: Web App",
+          "Category: Web Application",
           "Points: 300",
           "Difficulty: Easy"
         ]
@@ -2294,15 +2294,15 @@
     ],
     "_source": {
       "path": "Contents/Simple-CTF/README.md",
-      "sha": "e6225aed2c16a89a8ba5a0385613d60bb302e60b"
+      "sha": "ff61d91bd84d214563f1176a69cb4b10b14696df"
     }
   },
   {
     "slug": "bounty-hunter",
     "title": "Bounty Hunter",
-    "ctf_name": "Try Hack Me",
+    "ctf_name": "TryHackMe",
     "platform": "",
-    "category": "Web App",
+    "category": "Web Application",
     "difficulty": "Easy",
     "points": "150",
     "flag": "THM{CR1M3_SyNd1C4T3}",
@@ -2317,9 +2317,9 @@
         "type": "list",
         "ordered": false,
         "items": [
-          "CTF Name: Try Hack Me",
+          "CTF Name: TryHackMe",
           "Challenge Name: Bounty Hunter",
-          "Category: Web App",
+          "Category: Web Application",
           "Points: 150",
           "Difficulty: Easy"
         ]
@@ -2527,13 +2527,13 @@
     ],
     "_source": {
       "path": "Contents/bounty-hunter/README.md",
-      "sha": "76ebf498045871c8f9cada5cde154b9488bd12cd"
+      "sha": "30f3f5cee9b725aa1823a6c2138320e57aeabce5"
     }
   },
   {
     "slug": "c4ptur3-th3-fl4g",
     "title": "c4ptur3-th3-fl4g",
-    "ctf_name": "Try Hack Me: c4ptur3-th3-fl4g",
+    "ctf_name": "TryHackMe",
     "platform": "",
     "category": "Cryptography/Steganography",
     "difficulty": "Easy",
@@ -2550,7 +2550,7 @@
         "type": "list",
         "ordered": false,
         "items": [
-          "CTF Name: Try Hack Me: c4ptur3-th3-fl4g",
+          "CTF Name: TryHackMe",
           "Challenge Name: c4ptur3-th3-fl4g",
           "Category: Cryptography/Steganography",
           "Points: 150",
@@ -2927,7 +2927,7 @@
     ],
     "_source": {
       "path": "Contents/c4ptur3-th3-fl4g/README.md",
-      "sha": "a5c08b22c73c659b2da14f380f42790bb8bc4755"
+      "sha": "02969a247f20d5cf293fbc2898a6881c4d23cbb8"
     }
   }
 ]
