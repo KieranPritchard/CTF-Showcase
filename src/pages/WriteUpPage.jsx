@@ -19,6 +19,7 @@ function WriteUpPage() {
 
     // Carousel state
     const [currentImage, setCurrentImage] = useState(0);
+    const [validImages, setValidImages] = useState([]);
 
     // Swipe detection
     const startX = useRef(null);
@@ -39,17 +40,33 @@ function WriteUpPage() {
         const threshold = 50;
 
         if (diff > threshold) {
-            setCurrentImage((prev) =>
-                prev === post.images.length - 1 ? 0 : prev + 1
-            );
+            setCurrentImage((prev) => getNextIndex(prev, validImages.length, "next"));
         } else if (diff < -threshold) {
-            setCurrentImage((prev) =>
-                prev === 0 ? post.images.length - 1 : prev - 1
-            );
+            setCurrentImage((prev) => getNextIndex(prev, validImages.length, "prev"));
         }
 
         startX.current = null;
         endX.current = null;
+    };
+
+    // Utility: get next/prev index without repeating
+    const getNextIndex = (current, length, direction = "next") => {
+        if (length <= 1) return 0;
+        let next;
+        do {
+            if (direction === "next") {
+                next = (current + 1) % length;
+            } else {
+                next = (current - 1 + length) % length;
+            }
+        } while (next === current);
+        return next;
+    };
+
+    // Remove broken images
+    const handleImageError = (index) => {
+        setValidImages((prev) => prev.filter((_, i) => i !== index));
+        if (index === currentImage) setCurrentImage(0);
     };
 
     useEffect(() => {
@@ -58,6 +75,7 @@ function WriteUpPage() {
             .then((data) => {
                 const found = data.find((item) => item.slug === slug);
                 setPost(found);
+                setValidImages(found?.images || []);
                 setLoading(false);
             })
             .catch((err) => console.error("Failed to load writeup:", err));
@@ -93,11 +111,7 @@ function WriteUpPage() {
                     <h1
                         key={index}
                         className={`text-[#00FF88] headings font-bold mt-6 mb-3 ${
-                            block.level === 1
-                                ? "text-3xl"
-                                : block.level === 2
-                                ? "text-xl"
-                                : "text-xl"
+                            block.level === 1 ? "text-3xl" : "text-xl"
                         }`}
                     >
                         {block.text}
@@ -138,6 +152,17 @@ function WriteUpPage() {
                     >
                         <code>{block.code}</code>
                     </pre>
+                );
+
+            case "image":
+                return (
+                    <img
+                        key={index}
+                        src={block.src}
+                        alt={block.alt}
+                        className="rounded-xl shadow my-4 border border-[#00FF88]"
+                        onError={(e) => (e.currentTarget.style.display = "none")}
+                    />
                 );
 
             default:
@@ -191,18 +216,14 @@ function WriteUpPage() {
                 </header>
             </Background>
 
-            {/* -----------------------------
-                ARTICLE FIRST
-            ----------------------------- */}
+            {/* ARTICLE CONTENT */}
             <AutoBackground isEven={true}>
                 <article className="pt-4 px-[5%]">
                     {post.content.map((block, idx) => renderBlock(block, idx))}
                 </article>
 
-                {/* -----------------------------
-                    CAROUSEL UNDER ARTICLE
-                ----------------------------- */}
-                {post.images && post.images.length > 0 && (
+                {/* CAROUSEL */}
+                {validImages && validImages.length > 0 && (
                     <div className="w-full flex flex-col items-center my-10 px-[5%]">
                         <div
                             className="relative w-full max-w-3xl select-none"
@@ -210,47 +231,34 @@ function WriteUpPage() {
                             onTouchMove={handleTouchMove}
                             onTouchEnd={handleTouchEnd}
                         >
-                            {/* Image */}
                             <img
-                                src={post.images[currentImage].download_url}
+                                src={validImages[currentImage].download_url}
                                 alt={`Image ${currentImage + 1}`}
+                                onError={() => handleImageError(currentImage)}
                                 className="rounded-xl border border-[#00FF88] shadow-lg max-h-[500px] mx-auto object-contain bg-black/40"
                             />
 
-                            {/* Left Button */}
                             <button
-                                onClick={() =>
-                                    setCurrentImage((prev) =>
-                                        prev === 0 ? post.images.length - 1 : prev - 1
-                                    )
-                                }
+                                onClick={() => setCurrentImage((prev) => getNextIndex(prev, validImages.length, "prev"))}
                                 className="absolute top-1/2 left-0 -translate-y-1/2 bg-black/60 text-[#00FF88] px-4 py-2 rounded-r-lg hover:bg-black/80"
                             >
                                 ‹
                             </button>
 
-                            {/* Right Button */}
                             <button
-                                onClick={() =>
-                                    setCurrentImage((prev) =>
-                                        prev === post.images.length - 1 ? 0 : prev + 1
-                                    )
-                                }
+                                onClick={() => setCurrentImage((prev) => getNextIndex(prev, validImages.length, "next"))}
                                 className="absolute top-1/2 right-0 -translate-y-1/2 bg-black/60 text-[#00FF88] px-4 py-2 rounded-l-lg hover:bg-black/80"
                             >
                                 ›
                             </button>
                         </div>
 
-                        {/* Indicators */}
                         <div className="flex gap-2 mt-4">
-                            {post.images.map((img, i) => (
+                            {validImages.map((_, i) => (
                                 <button
                                     key={i}
                                     onClick={() => setCurrentImage(i)}
-                                    className={`h-3 w-3 rounded-full ${
-                                        currentImage === i ? "bg-[#00FF88]" : "bg-gray-500"
-                                    }`}
+                                    className={`h-3 w-3 rounded-full ${currentImage === i ? "bg-[#00FF88]" : "bg-gray-500"}`}
                                 ></button>
                             ))}
                         </div>
