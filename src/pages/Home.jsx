@@ -1,26 +1,46 @@
-import Background from "../components/Background"
-import About from "../components/home_page/About"
-import Recents from "../components/home_page/Recents"
-import Welcome from "../components/home_page/Welcome"
-import ImageBackground from "../components/ImageBackground"
-import Banner from "../assets/banner.png"
+import { useState, useEffect } from "react";
+import Background from "../components/Background";
+import AutoBackground from "../components/AutoBackground";
+import About from "../components/home_page/About";
+import Recents from "../components/home_page/Recents";
+import Welcome from "../components/home_page/Welcome";
+import ImageBackground from "../components/ImageBackground";
+import Banner from "../assets/banner.png";
 
-function Home(){
-    return(
+function Home() {
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768); // mobile breakpoint
+        };
+
+        handleResize(); // initial check
+        window.addEventListener("resize", handleResize);
+
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+    const AboutWrapper = isMobile ? AutoBackground : Background;
+    const RecentsWrapper = isMobile ? AutoBackground : Background;
+
+    return (
         <>
             <ImageBackground isEven={false} image={Banner}>
                 <div className="flex justify-center items-end h-screen">
                     <Welcome />
                 </div>
             </ImageBackground>
-            <Background isEven={true}>
+
+            <AboutWrapper isEven={true}>
                 <About />
-            </Background>
-            <Background isEven={false}>
+            </AboutWrapper>
+
+            <RecentsWrapper isEven={false}>
                 <Recents />
-            </Background>
+            </RecentsWrapper>
         </>
-    )
+    );
 }
 
-export default Home
+export default Home;
