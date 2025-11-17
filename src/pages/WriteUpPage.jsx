@@ -1,19 +1,56 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import AutoBackground from "../components/AutoBackground";
 import Background from "../components/Background";
-import WebAppImage from "../assets/web-app.webp"
-import PrivEscImage from "../assets/priv-esc.webp"
-import WindowsImage from "../assets/windows.webp"
-import OsintImage from "../assets/osint.webp"
-import CryptographyImage from "../assets/cryptography.webp"
-import DatabaseImage from "../assets/database.webp"
-import LinuxImage from "../assets/linux.webp"
+
+// Category Images
+import WebAppImage from "../assets/web-app.webp";
+import PrivEscImage from "../assets/priv-esc.webp";
+import WindowsImage from "../assets/windows.webp";
+import OsintImage from "../assets/osint.webp";
+import CryptographyImage from "../assets/cryptography.webp";
+import DatabaseImage from "../assets/database.webp";
+import LinuxImage from "../assets/linux.webp";
 
 function WriteUpPage() {
     const { slug } = useParams();
     const [post, setPost] = useState(null);
     const [loading, setLoading] = useState(true);
+
+    // Carousel state
+    const [currentImage, setCurrentImage] = useState(0);
+
+    // Swipe detection
+    const startX = useRef(null);
+    const endX = useRef(null);
+
+    const handleTouchStart = (e) => {
+        startX.current = e.touches[0].clientX;
+    };
+
+    const handleTouchMove = (e) => {
+        endX.current = e.touches[0].clientX;
+    };
+
+    const handleTouchEnd = () => {
+        if (startX.current === null || endX.current === null) return;
+
+        const diff = startX.current - endX.current;
+        const threshold = 50;
+
+        if (diff > threshold) {
+            setCurrentImage((prev) =>
+                prev === post.images.length - 1 ? 0 : prev + 1
+            );
+        } else if (diff < -threshold) {
+            setCurrentImage((prev) =>
+                prev === 0 ? post.images.length - 1 : prev - 1
+            );
+        }
+
+        startX.current = null;
+        endX.current = null;
+    };
 
     useEffect(() => {
         fetch("https://kieranpritchard.github.io/CTF-Showcase/writeups.json")
@@ -30,51 +67,37 @@ function WriteUpPage() {
     if (!post) return <p className="text-center mt-8">Write-up not found.</p>;
 
     // -----------------------------
-    // Image
+    // CATEGORY IMAGE LOGIC
     // -----------------------------
     const renderImage = (category) => {
         const cat = category.toLowerCase();
 
-        if (cat.includes("web")) {
-            return <img className="h-4/5 w-auto" src={WebAppImage} alt="Globe" />;
-        }
-        if (cat.includes("priv") || cat.includes("escalation")) {
-            return <img className="h-4/5 w-auto" src={PrivEscImage} alt="ID card" />;
-        }
-        if (cat.includes("windows")) {
-            return <img className="h-4/5 w-auto" src={WindowsImage} alt="Windows logo" />;
-        }
-        if (cat.includes("osint")) {
-            return <img className="h-4/5 w-auto" src={OsintImage} alt="Magnifying glass" />;
-        }
-        if (cat.includes("password") || cat.includes("crypto")) {
-            return <img className="h-4/5 w-auto" src={CryptographyImage} alt="Lock" />;
-        }
-        if (cat.includes("database") || cat.includes("sql")) {
-            return <img className="h-4/5 w-auto" src={DatabaseImage} alt="Database" />;
-        }
-        if (cat.includes("linux")) {
-            return <img className="h-4/5 w-auto" src={LinuxImage} alt="Penguin" />;
-        }
+        if (cat.includes("web")) return <img className="h-4/5 w-auto" src={WebAppImage} />;
+        if (cat.includes("priv") || cat.includes("escalation")) return <img className="h-4/5 w-auto" src={PrivEscImage} />;
+        if (cat.includes("windows")) return <img className="h-4/5 w-auto" src={WindowsImage} />;
+        if (cat.includes("osint")) return <img className="h-4/5 w-auto" src={OsintImage} />;
+        if (cat.includes("password") || cat.includes("crypto")) return <img className="h-4/5 w-auto" src={CryptographyImage} />;
+        if (cat.includes("database") || cat.includes("sql")) return <img className="h-4/5 w-auto" src={DatabaseImage} />;
+        if (cat.includes("linux")) return <img className="h-4/5 w-auto" src={LinuxImage} />;
 
-        return null; // fallback
+        return null;
     };
 
-    
     // -----------------------------
-    // Block renderer
+    // CONTENT BLOCK RENDERER
     // -----------------------------
     const renderBlock = (block, index) => {
         switch (block.type) {
-
             case "heading":
                 return (
                     <h1
                         key={index}
                         className={`text-[#00FF88] headings font-bold mt-6 mb-3 ${
-                            block.level === 1 ? "text-3xl" :
-                            block.level === 2 ? "text-xl" :
-                            "text-xl"
+                            block.level === 1
+                                ? "text-3xl"
+                                : block.level === 2
+                                ? "text-xl"
+                                : "text-xl"
                         }`}
                     >
                         {block.text}
@@ -133,11 +156,11 @@ function WriteUpPage() {
     };
 
     // -----------------------------
-    // Page layout
+    // PAGE OUTPUT
     // -----------------------------
     return (
         <div>
-            <Background >
+            <Background>
                 <header className="flex flex-col justify-center px-[5%] h-full">
                     <div className="flex justify-center items-center border h-2/5 mb-5 rounded-xl text-[#00FF88]">
                         {renderImage(post.category)}
@@ -177,10 +200,74 @@ function WriteUpPage() {
                     )}
                 </header>
             </Background>
+
+            {/* -----------------------------
+                ARTICLE FIRST
+            ----------------------------- */}
             <AutoBackground isEven={true}>
                 <article className="pt-4 px-[5%]">
                     {post.content.map((block, idx) => renderBlock(block, idx))}
                 </article>
+
+                {/* -----------------------------
+                    CAROUSEL UNDER ARTICLE
+                ----------------------------- */}
+                {post.images && post.images.length > 0 && (
+                    <div className="w-full flex flex-col items-center my-10 px-[5%]">
+                        <h2 className="text-[#00FF88] text-2xl font-bold mb-4">Images</h2>
+
+                        <div
+                            className="relative w-full max-w-3xl select-none"
+                            onTouchStart={handleTouchStart}
+                            onTouchMove={handleTouchMove}
+                            onTouchEnd={handleTouchEnd}
+                        >
+                            {/* Image */}
+                            <img
+                                src={post.images[currentImage].download_url}
+                                alt={`Image ${currentImage + 1}`}
+                                className="rounded-xl border border-[#00FF88] shadow-lg max-h-[500px] mx-auto object-contain bg-black/40"
+                            />
+
+                            {/* Left Button */}
+                            <button
+                                onClick={() =>
+                                    setCurrentImage((prev) =>
+                                        prev === 0 ? post.images.length - 1 : prev - 1
+                                    )
+                                }
+                                className="absolute top-1/2 left-0 -translate-y-1/2 bg-black/60 text-[#00FF88] px-4 py-2 rounded-r-lg hover:bg-black/80"
+                            >
+                                ‹
+                            </button>
+
+                            {/* Right Button */}
+                            <button
+                                onClick={() =>
+                                    setCurrentImage((prev) =>
+                                        prev === post.images.length - 1 ? 0 : prev + 1
+                                    )
+                                }
+                                className="absolute top-1/2 right-0 -translate-y-1/2 bg-black/60 text-[#00FF88] px-4 py-2 rounded-l-lg hover:bg-black/80"
+                            >
+                                ›
+                            </button>
+                        </div>
+
+                        {/* Indicators */}
+                        <div className="flex gap-2 mt-4">
+                            {post.images.map((img, i) => (
+                                <button
+                                    key={i}
+                                    onClick={() => setCurrentImage(i)}
+                                    className={`h-3 w-3 rounded-full ${
+                                        currentImage === i ? "bg-[#00FF88]" : "bg-gray-500"
+                                    }`}
+                                ></button>
+                            ))}
+                        </div>
+                    </div>
+                )}
             </AutoBackground>
         </div>
     );

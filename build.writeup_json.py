@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-build_writeups_json.py (Structured Blocks Version + Rate Limit Handling)
+build_writeups_json.py (Structured Blocks Version + Rate Limit Handling + Image Discovery)
 
 Fetch markdown write-ups from GitHub, parse fields, convert markdown
-to structured blocks, and write to public/writeups.json. Handles
-GitHub API rate limits gracefully.
+to structured blocks, extract images inside directories, and write to
+public/writeups.json. Handles GitHub API rate limits gracefully.
 """
 
 import os
@@ -27,7 +27,6 @@ PUBLIC_DIR = os.path.join(SCRIPT_DIR, "public")
 os.makedirs(PUBLIC_DIR, exist_ok=True)
 OUTPUT_FILE = os.path.join(PUBLIC_DIR, "writeups.json")
 
-# Explicitly load .env from script directory
 dotenv_path = os.path.join(SCRIPT_DIR, ".env")
 if os.path.exists(dotenv_path):
     load_dotenv(dotenv_path)
@@ -80,7 +79,7 @@ def clean_md_inline(s: str) -> str:
     # Remove HTML tags
     s = re.sub(r"<[^>]+>", "", s)
 
-    # Remove emojis (Unicode ranges)
+    # Remove emojis
     emoji_pattern = re.compile(
         "["
         "\U0001F600-\U0001F64F"
@@ -105,16 +104,17 @@ def clean_md_inline(s: str) -> str:
     )
     s = emoji_pattern.sub("", s)
 
-    # Normalize whitespace
-    s = re.sub(r"\s+", " ", s).strip()
-
-    return s
+    return re.sub(r"\s+", " ", s).strip()
 
 
-def list_md_files_recursive() -> List[Dict]:
+def list_md_files_recursive():
+    """
+    Returns (markdown_files, full_tree) so we can fetch images later.
+    """
     url = f"https://api.github.com/repos/{REPO_OWNER}/{REPO_NAME}/git/trees/{BRANCH}?recursive=1"
     r = request_with_retry(url)
     tree = r.json().get("tree", [])
+
     prefix = ROOT_PATH.rstrip("/") + "/"
     excluded_dirs = ("screenshots", "images", "imgs", "assets")
 
@@ -125,22 +125,48 @@ def list_md_files_recursive() -> List[Dict]:
         and item["path"].lower().endswith(".md")
         and item["path"].startswith(prefix)
         and not any(excl in item["path"].lower() for excl in excluded_dirs)
-        and os.path.normpath(item["path"]).lower() != os.path.normpath(f"{ROOT_PATH}/readme.md").lower()
+        and os.path.normpath(item["path"]).lower()
+        != os.path.normpath(f"{ROOT_PATH}/readme.md").lower()
     ]
 
-    print(f"📄 Found {len(md_items)} markdown write-up files under {ROOT_PATH}/ (excluding root readme)")
-    return md_items
+    print(f"📄 Found {len(md_items)} markdown write-up files under {ROOT_PATH}/")
+    return md_items, tree
+
+
+def list_images_for_writeup(md_path: str, tree: List[Dict]) -> List[Dict]:
+    """
+    Given a markdown file path, return all image paths within the same
+    directory or subdirectories.
+    """
+    base_dir = os.path.dirname(md_path).rstrip("/") + "/"
+    image_exts = (".png", ".jpg", ".jpeg", ".gif", ".bmp", ".webp", ".svg")
+
+    images = []
+    for item in tree:
+        if item.get("type") == "blob":
+            p = item["path"]
+            if p.startswith(base_dir) and p.lower().endswith(image_exts):
+                images.append({
+                    "path": p,
+                    "sha": item.get("sha"),
+                    "download_url": f"https://raw.githubusercontent.com/{REPO_OWNER}/{REPO_NAME}/{BRANCH}/{p}"
+                })
+
+    return images
 
 
 def fetch_markdown(file_path: str) -> str:
     url = f"https://api.github.com/repos/{REPO_OWNER}/{REPO_NAME}/contents/{file_path}?ref={BRANCH}"
     r = request_with_retry(url)
     payload = r.json()
+
     if payload.get("encoding") == "base64":
         return base64.b64decode(payload["content"]).decode("utf-8", errors="replace")
+
     if payload.get("download_url"):
         rr = request_with_retry(payload["download_url"])
         return rr.text
+
     raise RuntimeError(f"Unable to fetch content for {file_path}")
 
 
@@ -174,7 +200,6 @@ def parse_markdown_to_blocks(md: str) -> List[Dict]:
 
     while i < len(lines):
         line = lines[i].rstrip()
-
         if not line:
             i += 1
             continue
@@ -183,12 +208,10 @@ def parse_markdown_to_blocks(md: str) -> List[Dict]:
         if stripped.startswith("#"):
             level = len(stripped) - len(stripped.lstrip("#"))
             text = clean_md_inline(stripped.lstrip("#").strip())
-
             if level >= 3:
                 blocks.append({"type": "subheading", "text": text})
             else:
                 blocks.append({"type": "heading", "level": level, "text": text})
-
             i += 1
             continue
 
@@ -220,16 +243,21 @@ def parse_markdown_to_blocks(md: str) -> List[Dict]:
 
         para_lines = [line]
         i += 1
-        while i < len(lines) and lines[i].strip() and not lines[i].lstrip().startswith(("#", "-", "*", "```", "![", ">")):
+        while (
+            i < len(lines)
+            and lines[i].strip()
+            and not lines[i].lstrip().startswith(("#", "-", "*", "```", "![", ">"))
+        ):
             para_lines.append(lines[i].strip())
             i += 1
+
         blocks.append({"type": "paragraph", "text": clean_md_inline(" ".join(para_lines))})
 
     return blocks
 
 
 def build_json():
-    md_files = list_md_files_recursive()
+    md_files, full_tree = list_md_files_recursive()
     results = []
 
     for idx, item in enumerate(md_files, 1):
@@ -243,9 +271,10 @@ def build_json():
 
         info = parse_challenge_info(md)
 
-        # ----- TITLE & SLUG -----
         raw_title = clean_md_inline(info.get("challenge name") or os.path.splitext(os.path.basename(path))[0])
         slug = re.sub(r"[^a-z0-9]+", "-", raw_title.lower()).strip("-")
+
+        images = list_images_for_writeup(path, full_tree)
 
         entry = {
             "slug": slug,
@@ -258,8 +287,10 @@ def build_json():
             "flag": extract_flag(md),
             "tools": [],
             "content": parse_markdown_to_blocks(md),
+            "images": images,
             "_source": {"path": path, "sha": item.get("sha")},
         }
+
         results.append(entry)
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as fh:
