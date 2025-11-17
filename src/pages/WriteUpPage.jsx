@@ -16,7 +16,7 @@ function WriteUpPage() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch("/writeups.json")
+        fetch(process.env.PUBLIC_URL + "/writeups.json")
             .then((res) => res.json())
             .then((data) => {
                 const found = data.find((item) => item.slug === slug);

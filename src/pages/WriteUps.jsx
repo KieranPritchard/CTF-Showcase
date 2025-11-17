@@ -19,7 +19,7 @@ function WriteUps() {
     const [page, setPage] = useState(1);
 
     useEffect(() => {
-        fetch("/writeups.json")
+        fetch(process.env.PUBLIC_URL + "/writeups.json")
         .then((res) => res.json())
         .then((data) => {
             setPosts(data);

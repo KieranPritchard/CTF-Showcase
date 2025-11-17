@@ -6,7 +6,7 @@ function Recents() {
     const [writeups, setWriteups] = useState([]);
 
     useEffect(() => {
-        fetch("/writeups.json")
+        fetch(process.env.PUBLIC_URL + "/writeups.json")
             .then((res) => res.json())
             .then((data) => {
                 const latest = data.slice(-3).reverse();
