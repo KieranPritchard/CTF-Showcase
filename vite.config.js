@@ -8,6 +8,7 @@ export default defineConfig({
     react(),
     tailwindcss()
   ],
+  base: '/CTF-Showcase/',
   define: {
     global: 'globalThis',
   },
