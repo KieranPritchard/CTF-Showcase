@@ -214,8 +214,6 @@ function WriteUpPage() {
                 ----------------------------- */}
                 {post.images && post.images.length > 0 && (
                     <div className="w-full flex flex-col items-center my-10 px-[5%]">
-                        <h2 className="text-[#00FF88] text-2xl font-bold mb-4">Images</h2>
-
                         <div
                             className="relative w-full max-w-3xl select-none"
                             onTouchStart={handleTouchStart}
