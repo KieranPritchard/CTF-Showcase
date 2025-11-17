@@ -135,8 +135,8 @@ def list_md_files_recursive():
 
 def list_images_for_writeup(md_path: str, tree: List[Dict]) -> List[Dict]:
     """
-    Given a markdown file path, return all image paths within the same
-    directory or subdirectories.
+    Return all images in the same directory or subdirectories of the markdown file.
+    Groups all images in the folder with the write-up.
     """
     base_dir = os.path.dirname(md_path).rstrip("/") + "/"
     image_exts = (".png", ".jpg", ".jpeg", ".gif", ".bmp", ".webp", ".svg")
@@ -145,13 +145,13 @@ def list_images_for_writeup(md_path: str, tree: List[Dict]) -> List[Dict]:
     for item in tree:
         if item.get("type") == "blob":
             p = item["path"]
+            # Include images in base_dir and any subdirectory
             if p.startswith(base_dir) and p.lower().endswith(image_exts):
                 images.append({
                     "path": p,
                     "sha": item.get("sha"),
                     "download_url": f"https://raw.githubusercontent.com/{REPO_OWNER}/{REPO_NAME}/{BRANCH}/{p}"
                 })
-
     return images
 
 
@@ -274,6 +274,7 @@ def build_json():
         raw_title = clean_md_inline(info.get("challenge name") or os.path.splitext(os.path.basename(path))[0])
         slug = re.sub(r"[^a-z0-9]+", "-", raw_title.lower()).strip("-")
 
+        # ✅ Get all images in the same folder or subfolders
         images = list_images_for_writeup(path, full_tree)
 
         entry = {
