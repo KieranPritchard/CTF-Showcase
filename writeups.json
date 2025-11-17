@@ -1,0 +1,2933 @@
+[
+  {
+    "slug": "agent-sudo",
+    "title": "Agent Sudo",
+    "ctf_name": "TryHackMe",
+    "platform": "",
+    "category": "Web Application",
+    "difficulty": "Easy",
+    "points": "150",
+    "flag": "",
+    "tools": [],
+    "content": [
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Info"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "CTF Name: TryHackMe",
+          "Challenge Name: Agent Sudo",
+          "Category: Web Application",
+          "Points: 150",
+          "Difficulty: Easy"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Description"
+      },
+      {
+        "type": "paragraph",
+        "text": "Exploit a Windows machine in this beginner level challenge."
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Files Provided"
+      },
+      {
+        "type": "paragraph",
+        "text": "None"
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Setup"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Tools Used:"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Nmap — Port scanning & service enumeration",
+          "Gobuster — Directory enumeration",
+          "Burp Suite — Intercepting and modifying HTTP requests",
+          "Hydra — Brute forcing login credentials",
+          "Steghide — Extracting hidden data from images",
+          "John the Ripper — Cracking password-protected archives",
+          "scp — Securely copying files from remote host to local machine"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Environment:"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "TryHackMe hosted target machine",
+          "Kali Linux (attacker machine)"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Initial Recon"
+      },
+      {
+        "type": "paragraph",
+        "text": "I first deployed the machine to get the IP address that i then scanned and found three services running on them. I found on the IP address: FTP on port 21; SSH on port 22; and apache on port 80."
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Exploitation / Solution"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "1. First Look Through The Website"
+      },
+      {
+        "type": "paragraph",
+        "text": "I opened the webpage on the provided IP address and was greeted with a message from a person called “Agent R”. In response, I fired up Gobuster on the webpage, as there was nothing else I could use."
+      },
+      {
+        "type": "paragraph",
+        "text": "I then searched Google for information on changing user agents, as the question mentions redirecting. I used Burp Suite to catch a request from the website and rename the user agent header to another agent’s message. I deduced that “Agent R” was called because the agents were all letters of the alphabet, limiting me to at least 25 tries before I should try something else."
+      },
+      {
+        "type": "paragraph",
+        "text": "I tried it a couple of times before coming across an interesting header in the HTTP response pointing to a PHP page with a possible message. I went to the page and found out that the real name of Agent C is Chris. It also mentions that he needs to change his password."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "2. Finding Credentials:"
+      },
+      {
+        "type": "paragraph",
+        "text": "I used Hydra with the username chris and the rockyou.txt wordlist to crack the password. After cracking, it revealed the password was crystal. I logged in and downloaded three files from the FTP server."
+      },
+      {
+        "type": "paragraph",
+        "text": "The text file I downloaded referenced steganography being used to hide something in another file. This led me to a hidden zip file in one of the photos. I converted the password-locked zip file to a format John the Ripper could crack. I cracked the password and got the word alien. I obtained the steganography password from the file and converted it from base 64, giving me arena51. I used it to extract J’s name and password from Steghide Agent."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "3. Accessing the remote computer"
+      },
+      {
+        "type": "paragraph",
+        "text": "I used the credentials to sign into SSH and easily found the user flag. I noticed a photo file. I used secure copy to transfer the photo to my Kali Linux virtual machine. I opened it and found it was a photo of the Roswell alien autospy. I listed the sudo privileges and first checked gtfoblins, but they didn’t have anything I could use. I then found an exploit on exploit-db that I could use under CVE-2019-14287. I used the exploit to get root privileges and then found the root flag."
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Flag"
+      },
+      {
+        "type": "code",
+        "language": "",
+        "code": "User Flag: b03d975e8c92a7c04146cfa7a5a313c7\nRoot Flag: b53a02f55b57d4439e3341834d70c062"
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Tools Used"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Nmap — Network scanning and service enumeration",
+          "Gobuster — Directory brute forcing",
+          "Burp Suite — Intercepting/modifying HTTP requests",
+          "Hydra — Brute-forcing login credentials",
+          "Steghide — Extracting hidden data from images",
+          "John the Ripper — Cracking password-protected archives",
+          "scp — Transferring files securely",
+          "Exploit-DB — Finding privilege escalation exploits"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Notes / Lessons Learned"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Always check HTTP headers — sometimes the key is hidden in plain sight.",
+          "Steganography is a common technique in CTFs; always inspect images for hidden files.",
+          "Brute force attacks can be efficient if the username is known and password lists are small.",
+          "Privilege escalation often comes down to misconfigurations, not just kernel exploits."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Screenshots (Optional)"
+      },
+      {
+        "type": "paragraph",
+        "text": ""
+      }
+    ],
+    "_source": {
+      "path": "Contents/Agent_Sudo/README.md",
+      "sha": "5c4856b173629938374951ee76f8a9e9eec12ad0"
+    }
+  },
+  {
+    "slug": "anonymous",
+    "title": "Anonymous",
+    "ctf_name": "TryHackMe",
+    "platform": "",
+    "category": "Linux",
+    "difficulty": "Medium",
+    "points": "210",
+    "flag": "",
+    "tools": [],
+    "content": [
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Info"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "CTF Name: TryHackMe",
+          "Challenge Name: Anonymous",
+          "Category: Linux",
+          "Points: 210",
+          "Difficulty: Medium"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Description"
+      },
+      {
+        "type": "paragraph",
+        "text": "Not the hacking group"
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Files Provided"
+      },
+      {
+        "type": "paragraph",
+        "text": "None"
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Setup"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Tools Used:"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "nmap — port scanning & service/version enumeration",
+          "ftp — interact with the FTP server",
+          "nc (netcat) — listener / networking",
+          "find — search filesystem for SUID binaries",
+          "GTFOBins — SUID exploitation reference",
+          "PentestMonkey reverse-shell cheat sheet"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Environment:"
+      },
+      {
+        "type": "paragraph",
+        "text": "TryHackMe virtual machine (via VPN connection)"
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Initial Recon"
+      },
+      {
+        "type": "paragraph",
+        "text": "I deployed the machine to obtain the target IP, then ran nmap to identify open services. The scan showed:"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "FTP on port 21",
+          "SSH on port 22",
+          "NetBIOS-SSN on port 139",
+          "Microsoft-DS on port 445"
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "A version scan confirmed SMB-related services on 139/445."
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Exploitation / Solution"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Step One — FTP Enumeration"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Connected to FTP and tried the common anonymous login: username: anonymous, password: password. The login succeeded.",
+          "In the FTP root there was a folder “scripts” containing:",
+          "clean.sh — cleanup script",
+          "removedfiles.log — empty log file but timestamp updated",
+          "to-do.txt — hinting SSH credentials are not safe",
+          "Tried the FTP credentials on SSH. unfortunately they did not work."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Step Two — Abusing a Cron Job"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Noticed removedfiles.log timestamp changed often → suspected a cron job executes clean.sh.",
+          "At this point I was stuck because i knew there must of been a way to spawn a shell here, so I checked a write-up which introduced me to PentestMonkey’s reverse shell one-liners.",
+          "I edited clean.sh locally to include a reverse-shell payload, uploaded it back to FTP (so the cron job would run it).",
+          "Started a netcat listener on my attacking machine and waited. When the cron job executed the modified clean.sh, I received a reverse shell as the target user which i intercepted with nmap."
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "Step Three — Privilege Escalation"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Found the user flag in the user home directory.",
+          "Enumerated for SUID binaries using this script: find / -type f -perm -04000 -ls 2>/dev/null",
+          "Identified env as SUID and checked GTFOBins for exploitation methods.",
+          "Used the GTFOBins technique to spawn a root shell: ./env /bin/sh -p",
+          "With the root shell, read the root flag in /root."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Flag"
+      },
+      {
+        "type": "paragraph",
+        "text": "> User Flag: 90d6f992585815ff991e68748c414740"
+      },
+      {
+        "type": "paragraph",
+        "text": "> Root Flag: 4d930091c31a622a7ed10f27999af363"
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Tools Used"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "nmap",
+          "ftp / lftp (optional)",
+          "nc (netcat)",
+          "find",
+          "GTFOBins (https://gtfobins.github.io)",
+          "PentestMonkey reverse shell cheat sheet (http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet)"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Notes / Lessons Learned"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "File timestamps and logs often reveal scheduled tasks (cron jobs).",
+          "When a script is run by a scheduled task, modifying that script can allow command execution (if you have write access).",
+          "I got stuck initially but referencing a write-up pointed me towards PentestMonkey reverse shells, which are now a go-to resource."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Screenshots"
+      },
+      {
+        "type": "paragraph",
+        "text": ""
+      }
+    ],
+    "_source": {
+      "path": "Contents/Anonymous/README.md",
+      "sha": "5444c859d15586f29c5640d1fdf8716115690a4c"
+    }
+  },
+  {
+    "slug": "anthem",
+    "title": "Anthem",
+    "ctf_name": "TryHackMe",
+    "platform": "",
+    "category": "Windows",
+    "difficulty": "Easy",
+    "points": "150",
+    "flag": "THM{L0L_WH0_US3S_M3T4}",
+    "tools": [],
+    "content": [
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Info"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "CTF Name: TryHackMe",
+          "Challenge Name: Anthem",
+          "Category: Windows",
+          "Points: 150",
+          "Difficulty: Easy"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Description"
+      },
+      {
+        "type": "paragraph",
+        "text": "Exploit a Windows machine in this beginner-level challenge."
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Files Provided"
+      },
+      {
+        "type": "paragraph",
+        "text": "None"
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Setup"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Tools Used:"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Nmap — Network scanning to find open ports and services.",
+          "Gobuster — Directory brute-forcing to find hidden paths.",
+          "Remmina — RDP client to connect to the target’s desktop."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Environment:"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "TryHackMe hosted VM — Accessed through the provided IP address."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Initial Recon"
+      },
+      {
+        "type": "paragraph",
+        "text": "I started the TryHackMe machine and performed an nmap scan:"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Port 80/tcp — HTTP (Website)",
+          "Port 3389/tcp — RDP"
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "Using gobuster, I discovered several interesting directories:"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "/sitemap",
+          "/install (potential CMS setup)"
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "These immediately hinted at potential information disclosure and CMS exploitation opportunities."
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Exploitation / Solution"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "1. First Set of Tasks"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Checked /robots.txt and found a suspicious entry containing a password: UmbracoIsTheBest!",
+          "The /install page revealed the CMS in use: Umbraco.",
+          "The site’s main page showed the domain: anthem.com.",
+          "On another page, I found a poem dedicated to the admin. Searching it on Google revealed it was “The Poem of Solomon Grundy,” giving me the probable admin username: solomon."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "2. Searching for Flags"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Found the first flag on Jane Doe’s profile page.",
+          "Discovered more flags in HTML source comments and tags.",
+          "Attempted login to the Umbraco admin panel with solomon:UmbracoIsTheBest!, but no direct success on the CMS.",
+          "Decided to attempt RDP login using the same credentials."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "3. Remoting into the Desktop"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Used Remmina to RDP into the target as solomon.",
+          "Found a text file on the desktop containing the user flag.",
+          "Discovered an Administrator folder but could not access it with Solomon’s credentials.",
+          "Located a hidden file named backup. Modified file permissions to grant myself read access.",
+          "Inside was the Administrator password.",
+          "Logged in via RDP as Administrator, navigated to the desktop, and retrieved the root flag."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Flags"
+      },
+      {
+        "type": "code",
+        "language": "",
+        "code": "THM{L0L_WH0_US3S_M3T4}\nTHM{G!T_G00D}\nTHM{L0L_WH0_D15}\nTHM{AN0TH3R_M3TA}\nTHM{N00T_NO0T}\nTHM{Y0U_4R3_1337}"
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Tools Used"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Nmap — Port scanning and service enumeration.",
+          "Gobuster — Directory brute-forcing for hidden pages.",
+          "Remmina — RDP access to the Windows desktop."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Notes / Lessons Learned"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Always check /robots.txt — it can leak sensitive information like passwords.",
+          "Poems, text, and other “fluff” content may be clues for usernames.",
+          "Adjusting file permissions can be a quick privilege escalation method in misconfigured Windows systems.",
+          "Even if a CMS login fails, credentials may still be valid for other services."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Screenshots"
+      },
+      {
+        "type": "paragraph",
+        "text": ""
+      }
+    ],
+    "_source": {
+      "path": "Contents/Anthem/README.md",
+      "sha": "8d5c48dfbf51c575197e8800e4b79eb4472a0597"
+    }
+  },
+  {
+    "slug": "basic-pentesting",
+    "title": "Basic Pentesting",
+    "ctf_name": "TryHackMe",
+    "platform": "",
+    "category": "Web Application",
+    "difficulty": "Easy",
+    "points": "Not Listed",
+    "flag": "",
+    "tools": [],
+    "content": [
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Info"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "CTF Name: TryHackMe",
+          "Challenge Name: Basic Pentesting",
+          "Category: Web Application",
+          "Points: Not Listed",
+          "Difficulty: Easy"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Description"
+      },
+      {
+        "type": "paragraph",
+        "text": "In this challenge, we are tasked with gaining unauthorized access to a machine by exploiting weak service configurations, brute-forcing credentials, and escalating privileges to retrieve the final flag. The box simulates a real-world environment where enumeration and proper tool usage are key to success."
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Files Provided"
+      },
+      {
+        "type": "paragraph",
+        "text": "None"
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Setup"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Tools Used:"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Nmap — (for scanning open ports and services)",
+          "Gobuster — (for discovering hidden directories on the webserver)",
+          "Hydra — (for brute-forcing passwords)",
+          "Enum4linux — (for SMB enumeration)",
+          "John the Ripper — (for cracking password-protected SSH keys)"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Environment:"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "TryHackMe virtual machine (VPN connection)"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Initial Recon"
+      },
+      {
+        "type": "paragraph",
+        "text": "I first deployed the machine and waited for it to load. I then used the ip address it had given me for this session to scan the machine to find any services running on it and what ports are open. I found there was these services SSH, HTTP apache server, netbios, and other apache related services."
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Exploitation / Solution"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "1. Looking at the webpage on the machine"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "I put the ip address into a new firefox tab to see what was on the website.",
+          "I was greeted with a webpage with a “undergoing maintence” message.",
+          "I then decided to use gobuster to look for any new directorys on the webserver.",
+          "It then came back straight away with a path to a page called devlopement",
+          "I then found an index page.",
+          "I then opened up dev.txt to find some logs, i screenshot these for later.",
+          "After looking in j.txt i found a message, it was hinting at credentials being in another path called: “/etc/shadow”",
+          "I then researched what smb is to figure out what it does. I then found out how to use smb map after asking questions about it on chatgpt.",
+          "It gave me a command: “enum4linux -a ” this then gave me the two users names."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "2. Brute Forcing the passwords"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "I quickly went through my notes to find some brute force app",
+          "I then used hydra on Jan’s user to get the password to it for logging in",
+          "I then logged into jans user.",
+          "It would only go into one folder so, i decided to research how to privilage checklists for escalation.",
+          "I found out about LinEnum from a hint.",
+          "I then cloned the repository and tryed to use ftp to transfer with no luck",
+          "Run after transfer with scp after research into file transfering linenum and found kay run sudo privages. attempting to crack her password.",
+          "I didnt find anthing with the script"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "3. Gaining sudo"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "I watched john hammonds walkthrough to where i was on how to get past this point. it turns out kay has a ssh key in her folder.",
+          "I extracted the private key and saved it on my machine to sign into ssh as kay-private-key.",
+          "I then decided to use john the ripper to crack it using john2key to turn it into a hash",
+          "I then cracked the hash to find “beeswax” so i then signed into ssh with that."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "4. Signing on as kay"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "I signed on using the private key and password i found.",
+          "I listed sources including sources and found pass.bak",
+          "I opened it and got the final flag"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Flag"
+      },
+      {
+        "type": "paragraph",
+        "text": "> heresareallystrongpasswordthatfollowsthepasswordpolicy$$"
+      },
+      {
+        "type": "paragraph",
+        "text": ">"
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Tools Used"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Nmap — Port and service scanning",
+          "Gobuster — Directory brute-forcing",
+          "Hydra — Brute-forcing SMB credentials",
+          "Enum4linux — SMB enumeration",
+          "LinEnum — Local privilege enumeration",
+          "John the Ripper — Cracking password-protected SSH key",
+          "scp — Secure file transfer"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Notes / Lessons Learned"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Always perform thorough enumeration on all available services.",
+          "Directory brute-forcing can reveal hidden, critical files.",
+          "SMB enumeration can provide valuable user information for further exploitation.",
+          "Password-protected SSH keys can be cracked if weak passwords are used.",
+          "Privilege escalation often involves exploiting misconfigured files, sudo privileges, or credential leaks.",
+          "Having a strong workflow with tools like LinEnum saves a lot of manual checking time.",
+          "Find a alternative to LinEnum"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Screenshots (Optional)"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/Basic-Pentesting/Basic_Pentesting_Screenshot_1.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/Basic-Pentesting/Basic_Pentesting_Screenshot_2.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/Basic-Pentesting/Basic_Pentesting_Screenshot_3.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/Basic-Pentesting/Basic_Pentesting_Screenshot_4.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/Basic-Pentesting/Basic_Pentesting_Screenshot_5.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/Basic-Pentesting/Basic_Pentesting_Screenshot_6.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/Basic-Pentesting/Basic_Pentesting_Screenshot_7.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/Basic-Pentesting/Basic_Pentesting_Screenshot_8.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/Basic-Pentesting/Basic_Pentesting_Screenshot_9.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/Basic-Pentesting/Basic_Pentesting_Screenshot_10.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/Basic-Pentesting/Basic_Pentesting_Screenshot_11.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/Basic-Pentesting/Basic_Pentesting_Screenshot_12.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/Basic-Pentesting/Basic_Pentesting_Screenshot_13.png",
+        "alt": "Screenshot of the challenge soloution"
+      }
+    ],
+    "_source": {
+      "path": "Contents/Basic-Pentesting/README.md",
+      "sha": "5b4e224a9e7aa336a1c7ae99c3f722aa7559b245"
+    }
+  },
+  {
+    "slug": "crack-the-hash",
+    "title": "Crack The Hash",
+    "ctf_name": "TryHackMe",
+    "platform": "",
+    "category": "Password Cracking",
+    "difficulty": "Easy",
+    "points": "270",
+    "flag": "",
+    "tools": [],
+    "content": [
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Info"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "CTF Name: TryHackMe",
+          "Challenge Name: Crack The Hash",
+          "Category: Password Cracking",
+          "Points: 270",
+          "Difficulty: Easy"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Description"
+      },
+      {
+        "type": "paragraph",
+        "text": "This challenge focused on cracking different types of password hashes, using a variety of techniques and tools."
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Files Provided"
+      },
+      {
+        "type": "paragraph",
+        "text": "No additional files provided, only the hashes were given within the questions."
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Setup"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Tools Used:"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "hashid — Used for identifying hash types",
+          "Hashcat — Used for cracking hashes",
+          "John the Ripper — Used for cracking hashes",
+          "CrackStation — Online tool for cracking simple hashes"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Environment:"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Local Kali Linux Virtual Machine",
+          "TryHackMe Platform"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Initial Recon"
+      },
+      {
+        "type": "paragraph",
+        "text": "There wasn't any machines to scan over or enumerate but there was alot of questions with the hashes needed to complete the challenge. there are two sections one with nothing but questions and one that mentions about the hashes being in the rock you wordlist. I then went straight into it."
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Exploitation / Solution"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "1. Section 1 Of Challenge"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Saved each hash into individual text files to streamline the cracking process with John or Hashcat.",
+          "Used hashid to identify each hash type:",
+          "Hash 1: Identified as MD5. Cracked using Hashcat, password was easy.",
+          "Hash 2: Identified as SHA-1. Cracked using CrackStation, password was password123.",
+          "Hash 3: Also cracked using CrackStation, password was letmein.",
+          "Hash 4: Despite hints suggesting a 4-letter lowercase word from rockyou.txt, I referred to a write-up and found the password was bleh.",
+          "Hash 5: Identified as MD4. Cracked using CrackStation, password was Eternity22."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "2. Section 2 Of Challenge"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Used John the Ripper for initial hash cracking, with —wordlist=/usr/share/wordlists/rockyou.txt:",
+          "Hash 1: Identified and cracked directly using John the Ripper.",
+          "Hash 2: Recognized as LM hash. Cracked it with John.",
+          "Hash 3: Found to be SHA-512 Crypt (with salt). Cracked with John.",
+          "Hash 4: Identified as SHA-1 with salt. Attempted cracking with John; switched to Hashcat for more flexible SHA-1 + salt options."
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "For salted hashes, additional research into specific cracking modes and salt usage was necessary."
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Flag"
+      },
+      {
+        "type": "code",
+        "language": "",
+        "code": "No flags were provided in this challenge."
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Tools Used"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "hashid — Hash type identification",
+          "Hashcat — Brute force and dictionary attacks",
+          "John the Ripper — Wordlist attacks (rockyou.txt)",
+          "CrackStation — Online hash cracking for simple hashes"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Notes / Lessons Learned"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Gained practical experience with hash identification and different hash types.",
+          "Learned the basic usage and syntax of Hashcat and John the Ripper.",
+          "Practiced using rockyou.txt and understanding salted vs unsalted hashes.",
+          "Understood the limitations of online tools like CrackStation compared to offline cracking tools.",
+          "Importance of knowing hash modes in Hashcat (especially for salted hashes)."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Screenshots (Optional)"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/Crack-The-Hash/Crack_The_Hash_1.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/Crack-The-Hash/Crack_The_Hash_2.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/Crack-The-Hash/Crack_The_Hash_3.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/Crack-The-Hash/Crack_The_Hash_4.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/Crack-The-Hash/Crack_The_Hash_5.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/Crack-The-Hash/Crack_The_Hash_6.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/Crack-The-Hash/Crack_The_Hash_7.png",
+        "alt": "Screenshot of the challenge soloution"
+      }
+    ],
+    "_source": {
+      "path": "Contents/Crack-The-Hash/README.md",
+      "sha": "af3651aeb59a9bb2bc0317ec250b2173f818a2c9"
+    }
+  },
+  {
+    "slug": "lazyadmin",
+    "title": "LazyAdmin",
+    "ctf_name": "TryHackMe",
+    "platform": "",
+    "category": "Web Application",
+    "difficulty": "Easy",
+    "points": "150",
+    "flag": "THM{63e5bce9271952aad1113b6f1ac28a07}",
+    "tools": [],
+    "content": [
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Info"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "CTF Name: TryHackMe",
+          "Challenge Name: LazyAdmin",
+          "Category: Web Application",
+          "Points: 150",
+          "Difficulty: Easy"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Description"
+      },
+      {
+        "type": "paragraph",
+        "text": "Exploit a misconfigured web application to gain access to the target, escalate privileges, and capture the flags."
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Files Provided"
+      },
+      {
+        "type": "paragraph",
+        "text": "None"
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Setup"
+      },
+      {
+        "type": "subheading",
+        "text": "Tools Used:"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Nmap — Port scanning and service enumeration.",
+          "Gobuster — Directory brute-forcing to discover hidden files/folders.",
+          "CrackStation — Online hash cracking to recover plaintext passwords."
+        ]
+      },
+      {
+        "type": "subheading",
+        "text": "Environment:"
+      },
+      {
+        "type": "paragraph",
+        "text": "TryHackMe hosted VM — Accessed via the provided IP address."
+      },
+      {
+        "type": "subheading",
+        "text": "Initial Recon"
+      },
+      {
+        "type": "paragraph",
+        "text": "Started the target machine on TryHackMe. Ran an nmap service scan and found:"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Port 22/tcp — OpenSSH",
+          "Port 80/tcp — HTTP web service"
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "Visited the site in a browser — a simple default Apache welcome page was displayed. Ran gobuster against the IP and found a directory named /content. Navigated to /content and discovered a page for a CMS called SweetRice."
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Exploitation / Solution"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "1. Enumerating SweetRice"
+      },
+      {
+        "type": "paragraph",
+        "text": "Ran gobuster again on /content and discovered 6 different subpaths. In /content/images, found a sitemap file — saved for later. In /content/as, found files with varying version numbers. The latest file contained a version number 1.5.1. Searched online for “SweetRice 1.5.1 exploit” and found several potential vulnerabilities. One exploit mentioned backup file disclosure, which could leak credentials."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "2. Finding Credentials"
+      },
+      {
+        "type": "paragraph",
+        "text": "The exploit pointed to a backup database file. Downloaded it and opened it — found entries for username admin and a hashed password. Sent the hash to CrackStation and recovered the password: Password123."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "3. Admin Dashboard Access"
+      },
+      {
+        "type": "paragraph",
+        "text": "Logged into the SweetRice admin dashboard with admin:Password123. Explored the dashboard and found a Media Center upload function."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "4. Gaining a Shell"
+      },
+      {
+        "type": "paragraph",
+        "text": "Crafted a PHP reverse shell and uploaded it via the Media Center. Discovered that the CMS allowed multiple file extensions for uploads. Triggered the reverse shell by visiting the uploaded file’s URL. Connected back to my listener — initial shell obtained."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "5. Post-Exploitation & Privilege Escalation"
+      },
+      {
+        "type": "paragraph",
+        "text": "Enumerated the file system and found a script that referenced another file containing a command to run with elevated privileges. Edited the script to execute my own command, saved it, and triggered it. This granted me root-level access."
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Flags"
+      },
+      {
+        "type": "code",
+        "language": "",
+        "code": "User Flag: THM{63e5bce9271952aad1113b6f1ac28a07}\nRoot Flag: THM{6637f41d0177b6f37cb20d775124699f}"
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Tools Used"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Nmap — Port scanning and service detection.",
+          "Gobuster — Directory brute-forcing.",
+          "CrackStation — Hash cracking."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Notes / Lessons Learned"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Always check for CMS version leaks — they often lead to known exploits.",
+          "Backup files are a goldmine for credentials.",
+          "Even “basic” upload functions can allow arbitrary code execution if file type checks are weak.",
+          "Editing scripts that run with elevated privileges is a simple but powerful privilege escalation method."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Images"
+      },
+      {
+        "type": "paragraph",
+        "text": ""
+      }
+    ],
+    "_source": {
+      "path": "Contents/Lazy_Admin/README.md",
+      "sha": "efae5d66690e083791cb24570306fca39ebceab5"
+    }
+  },
+  {
+    "slug": "light",
+    "title": "Light",
+    "ctf_name": "TryHackMe",
+    "platform": "",
+    "category": "Database Exploit",
+    "difficulty": "Beginner",
+    "points": "90",
+    "flag": "THM{SQLit3_InJ3cTion_is_SimplE_nO?}",
+    "tools": [],
+    "content": [
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Info"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "CTF Name: TryHackMe",
+          "Challenge Name: Light",
+          "Category: Database Exploit",
+          "Points: 90",
+          "Difficulty: Beginner"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Description"
+      },
+      {
+        "type": "paragraph",
+        "text": "Light is a beginner-friendly room on TryHackMe that introduces users to basic SQL injection techniques. Through a simple login challenge, you'll explore how improper input handling can expose vulnerabilities in web applications. Great for those starting out in web exploitation!"
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Files Provided"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Port: 1337",
+          "Username: smokey"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Setup"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Tools Used:"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "nmap (port scanning)",
+          "netcat (connecting to service)",
+          "john the ripper (password cracking)",
+          "CyberChef (decoding attempts)"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Environment:"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Local Kali Linux VM and THM target machine."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Initial Recon"
+      },
+      {
+        "type": "paragraph",
+        "text": "Before starting the challenge, I was given the machine's IP address, the service port (1337), and a username (smokey). I scanned the IP address with nmap to check for any other services — only SSH was found, which wasn’t needed for this challenge. After that, I connected directly to the service using netcat, and found a login prompt."
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Exploitation / Solution"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "1. First Login"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "I connected to the machine on try hack me via netcat.",
+          "I was presented with a login portal on my command line to the database.",
+          "I then entered the given username smokey, which produced a value on the screen.",
+          "At first I suspected some sort of encoding, so I tried decoding it with CyberChef but no luck."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "2. Finding out the Encoded Value"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "I saved the given \"password\" into a text file named password.txt to come back to if i had any light bulbs go off.",
+          "Decided to use John the Ripper on the file but, it hinted that the content could be UTF-8 encoding.",
+          "I then attempted further decoding with CyberChef, but still didn't retrieve anything useful so, i stopped that there."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "3. Trying SQL Injection"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Attempted SQL queries manually through netcat:",
+          "Basic inputs like select from caused errors (bad syntax).",
+          "Tried using ' OR 1=1 and variations, leading to different errors.",
+          "Experimented with ' OR 1=1 -- which gave new error messages.",
+          "After researching SQL payloads, I found a working query:"
+        ]
+      },
+      {
+        "type": "code",
+        "language": "sql",
+        "code": "' UNION SELECT null, table_name FROM information_schema.tables --"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Initially struggled because the server restricted certain characters, but after testing different versions, I retrieved the admin's username and part of the flag."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "4. Finding the Username's Password"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "I explored the database schema further and its columns to see if there was any other data.",
+          "I found an id column and retrieved its data.",
+          "I made a query to filter the password table based on the id, which finally revealed the complete password for smokey and allowed me to get the final flag."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Flag"
+      },
+      {
+        "type": "paragraph",
+        "text": "> THM{SQLit3InJ3cTionisSimplEnO?}"
+      },
+      {
+        "type": "paragraph",
+        "text": ">"
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Tools Used"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "nmap — Scanned IP address to discover open ports/services.",
+          "netcat — Connected to the service manually.",
+          "john the ripper — Analyzed the provided encoded password.",
+          "CyberChef — Attempted various decoding methods.",
+          "SQL Injection payload lists — Helped craft injections."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Notes / Lessons Learned"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "SQL Injection requires creativity, especially when the environment restricts certain characters.",
+          "It's good practice to save any outputs like hashes or encoded data immediately into a file.",
+          "Testing payloads manually teaches a lot more than just copy-pasting.",
+          "Always explore the database structure (information schema) carefully if you have injection access."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Screenshots (Optional)"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/Light/Light_Screenshot_1.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/Light/Light_Screenshot_2.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/Light/Light_Screenshot_3.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/Light/Light_Screenshot_4.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/Light/Light_Screenshot_5.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/Light/Light_Screenshot_6.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/Light/Light_Screenshot_7.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/Light/Light_Screenshot_8.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/Light/Light_Screenshot_9.png",
+        "alt": "Screenshot of the challenge soloution"
+      }
+    ],
+    "_source": {
+      "path": "Contents/Light/README.md",
+      "sha": "686cf9f24287f562b0a4515b29916eaf6c129e4b"
+    }
+  },
+  {
+    "slug": "ohsint",
+    "title": "OhSINT",
+    "ctf_name": "TryHackMe",
+    "platform": "",
+    "category": "OSINT",
+    "difficulty": "Easy",
+    "points": "0",
+    "flag": "",
+    "tools": [],
+    "content": [
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Info"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "CTF Name: TryHackMe",
+          "Challenge Name: OhSINT",
+          "Category: OSINT",
+          "Points: 0",
+          "Difficulty: Easy"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Description"
+      },
+      {
+        "type": "paragraph",
+        "text": "What information can you possible get with just one image file?"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Note: This challenge was updated on 2024-02-01. If you are following any older walkthroughs, expect a small change. Additionally, the file is also available on the AttackBox, under the /Rooms/OhSINT directory."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Files Provided"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "An image of the Windows XP wallpaper"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Setup"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Tools Used:"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "ExifTool — for extracting metadata from images",
+          "Google — for OSINT investigations and lookups",
+          "Wigle.net — for BSSID/SSID lookup and geolocation"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Environment:"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "TryHackMe AttackBox"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Initial Recon"
+      },
+      {
+        "type": "paragraph",
+        "text": "I first downloaded the image to take a closer look at it. on its own it looks like a random image of the windows wallpaper for windows XP. although as i have learned from watching films and stuff theres probably something more to it so thats what i did."
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Exploitation / Solution"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "1. Looking At the photo"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "I used ExifTool to extract metadata from the image. This revealed useful information such as GPS data and copyright information.",
+          "A key piece of data found was a copyright tag: \"OWoodflint\".",
+          "I Googled this name, which led me to a GitHub repository containing a project called People Finder. The repository also contained a WordPress website link and an email address, answering two questions in the TryHackMe challenge."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "2. Exploring Further"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Visiting the WordPress site revealed that the individual was located in New York, which answered another question on TryHackMe.",
+          "While browsing the site, I also noted a few potential clues hidden in the HTML source code (more on that later)."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "3. Looking on x"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "A Google search for \"OWoodflint\" revealed an X (Twitter) account.",
+          "The profile image (avatar) was a cat, which answered the corresponding challenge question.",
+          "One of the tweets from the account mentioned a BSSID.",
+          "I used wigle.net to search for the BSSID and successfully obtained the corresponding SSID and location name."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "4. Finding the password"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "I returned to the WordPress site and viewed the page source.",
+          "Hidden in the HTML was a paragraph element that didn’t appear in the rendered page.",
+          "Copying and pasting that hidden text into TryHackMe revealed it to be the final flag, successfully completing the challenge."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Flag"
+      },
+      {
+        "type": "code",
+        "language": "",
+        "code": "None"
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Tools Used"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "ExifTool — For extracting metadata from the image",
+          "CyberChef — (if used for decoding any hidden strings)",
+          "Wigle.net — To identify SSID/location from BSSID",
+          "Google/X — For OSINT sleuthing and locating online accounts"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Notes / Lessons Learned"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Always check image metadata — you never know what's hidden in plain sight.",
+          "GitHub and social media can leak a lot more personal info than you'd expect.",
+          "Even seemingly harmless sites can contain hidden content in the source code.",
+          "OSINT is powerful — and sometimes terrifying."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Screenshots (Optional)"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/OhSINT/OhSINT_1.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/OhSINT/OhSINT_2.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/OhSINT/OhSINT_3.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/OhSINT/OhSINT_4.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/OhSINT/OhSINT_5.png",
+        "alt": "Screenshot of the challenge soloution"
+      }
+    ],
+    "_source": {
+      "path": "Contents/OhSINT/README.md",
+      "sha": "c118ebf144b3f4b7a0ec01e411d8cce8da17e965"
+    }
+  },
+  {
+    "slug": "root-me",
+    "title": "Root Me",
+    "ctf_name": "TryHackMe",
+    "platform": "",
+    "category": "Privilege Escalatio",
+    "difficulty": "Easy",
+    "points": "210",
+    "flag": "THM{y0u_g0t_a_sh3ll}",
+    "tools": [],
+    "content": [
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Info"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "CTF Name: TryHackMe",
+          "Challenge Name: Root Me",
+          "Category: Privilege Escalatio",
+          "Points: 210",
+          "Difficulty: Easy"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Description"
+      },
+      {
+        "type": "paragraph",
+        "text": "The goal of this challenge is to exploit a vulnerable web application to gain an initial foothold and escalate privileges to obtain user and root flags. The machine tests your understanding of file upload vulnerabilities, reverse shells, and Linux privilege escalation techniques."
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Files Provided"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "No downloadable files were provided. The challenge was conducted entirely on a deployed TryHackMe machine."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Setup"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Tools Used:"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Nmap — for port scanning and service detection",
+          "Gobuster — for directory brute-forcing",
+          "Netcat — for catching the reverse shell",
+          "Searchsploit / GTFObins — for privilege escalation research"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Environment:"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Kali Linux (VM)",
+          "Deployed machine IP"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Initial Recon"
+      },
+      {
+        "type": "paragraph",
+        "text": "I first loaded my kali linux vm and found the room on try hack me, I deployed the machine on try hack me to get ip address. I then used the ip address with nmap to scan for services. I found three things from this scan. firstly, i found that there was ssh on port 22; secondly, i found http on port 80 (signalling a web page is accessible); finally, I found the machine uses apache 2.4.29. These allowed me to start answering the questions on the challenge. Moving on, I used gobuster to search for any webpages to access. I then found a page called “panel” and “uploads”"
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Exploitation / Solution"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Step 1:"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "The page called panel features a file upload function on it.",
+          "The question says to upload a file to get a reverse shell, the hint gave me more information mentioning about file upload bypasses and php reverse shells.",
+          "I then looked in kali linux for a default php reverse shell and found one.",
+          "I copied this to my documents and then uploaded it to the page.",
+          "I then go an error for the .php file, I then researched about other php file types.",
+          "Using a list i found i kept trying different php file types and checking the uploads page to see if i got one file type that works alongside netcat.",
+          "I found one and got access to the system."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Step 2:"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "After i had got the shell i then gathered basic info like “whoami”, which returned “www-data”.",
+          "The next question i had me go after a file called user.txt, i used the find command to look for it and found it at “/var/www/user.txt”",
+          "I then used the cat command on it and got a flag."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Step 3:"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Based on the question for privailage escalation i went and used the search command to find SUID files that can be exploited for this to happen.",
+          "To do this i used my notes on linux privailge escalation to assist with this to help me do this.",
+          "I found there was a python file to use. so, using gtfoblins i inputed a python command to allow me to escalate to root user.",
+          "I used whoami to check if i did become a root user and i did. Following on, I then accessed the root folder and got the final flag."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Flag"
+      },
+      {
+        "type": "code",
+        "language": "",
+        "code": "Flag 1: THM{y0u_g0t_a_sh3ll}\nFlag 2: THM{pr1v1l3g3_3sc4l4t10n}"
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Tools Used"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Nmap — Port/service discovery",
+          "Gobuster — Directory enumeration",
+          "Netcat — Listener for reverse shell",
+          "GTFObins — Privilege escalation via known binary exploits"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Notes / Lessons Learned"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "How to bypass file upload restrictions using alternate PHP extensions.",
+          "Practical use of reverse shells and basic post-exploitation.",
+          "SUID-based privilege escalation using Python and GTFOBins.",
+          "Importance of recon and methodical enumeration."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Screenshots (Optional)"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/RootMe/RootMe_Screenshot_1.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/RootMe/RootMe_Screenshot_2.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/RootMe/RootMe_Screenshot_3.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/RootMe/RootMe_Screenshot_4.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/RootMe/RootMe_Screenshot_5.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/RootMe/RootMe_Screenshot_6.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/RootMe/RootMe_Screenshot_7.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/RootMe/RootMe_Screenshot_8.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/RootMe/RootMe_Screenshot_9.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/RootMe/RootMe_Screenshot_10.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/RootMe/RootMe_Screenshot_11.png",
+        "alt": "Screenshot of the challenge soloution"
+      }
+    ],
+    "_source": {
+      "path": "Contents/RootMe/README.md",
+      "sha": "d31cb76db18a6ec6f2702f6a4bd966b0ad88772a"
+    }
+  },
+  {
+    "slug": "simple-ctf",
+    "title": "Simple CTF",
+    "ctf_name": "TryHackMe",
+    "platform": "",
+    "category": "Web Application",
+    "difficulty": "Easy",
+    "points": "300",
+    "flag": "",
+    "tools": [],
+    "content": [
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Info"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "CTF Name: TryHackMe",
+          "Challenge Name: Simple CTF",
+          "Category: Web Application",
+          "Points: 300",
+          "Difficulty: Easy"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Description"
+      },
+      {
+        "type": "paragraph",
+        "text": "Beginner level ctf"
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Files Provided"
+      },
+      {
+        "type": "paragraph",
+        "text": "None other then the machine"
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Setup"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Tools Used:"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "nmap — For network reconnaissance and port scanning",
+          "gobuster — To brute-force web directories",
+          "exploit-db — To search for known vulnerabilities",
+          "Python 3 — For running the modified exploit",
+          "SSH — To remotely access the target machine",
+          "gtfobins — To find privilege escalation techniques"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Environment:"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Kali linux virtual machine"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Initial Recon"
+      },
+      {
+        "type": "paragraph",
+        "text": "I first scanned for services and open ports on the IP address with nmap. i then found three services on the network: port 21 uses FTP; port 80 uses HTTP (meaning there is a website); and port 2222 uses SSH to allow for remote sign on. I followed this up with gobuster to see what web pages I can access. I found a page called simple, I found this using a wordlist called: “directory-list-2-3-medium-txt”."
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Exploitation / Solution"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "1. Exploitation"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "the path lead me to a page called “cms made simple”.",
+          "i investigated the site for any noticeable things i could search for in exploit database. Then i found a version number in the footer.",
+          "I then searched for it in exploit database and found an sql injection exploitation.",
+          "I downloaded it and found it was written in python 2, so to save time i had google gemini convert it to the current python version python 3.",
+          "I used the exploit and gained the users details being the username: “mitch” and the password: secret"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "2. Post exploitation"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "I used the found credentials to log onto the machine using ssh.",
+          "I used the whoami command to identify my user, i then used the find command to locate the user flag.",
+          "i then found and submitted the flag",
+          "used ls to see the users in the home directory and found a user called sunbath."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "3. Privilege Escalation"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Used the find command to search for files i could use to escalate to admin.",
+          "listed sudo apps and found vim required the admin user.",
+          "I then went on gtfoblins and found a vim payload.",
+          "gained sudo privileges and found root file flag and completed challenge"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Flag"
+      },
+      {
+        "type": "code",
+        "language": "",
+        "code": "W3ll d0n3. You made it!"
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Tools Used"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "nmap — Port scanning and service enumeration",
+          "gobuster — Directory brute-forcing",
+          "Exploit-DB — Finding public exploits",
+          "Python 3 — Running the exploit",
+          "SSH — Remote shell access",
+          "gtfobins — Privilege escalation techniques"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Notes / Lessons Learned"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Always check for version info in footers — it’s often an easy path to exploitation.",
+          "Don’t ignore non-standard SSH ports (e.g., 2222).",
+          "Converting old Python exploits is a useful skill — Python 2 is increasingly outdated.",
+          "GTFOBins is invaluable for privilege escalation — bookmark it!"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Screenshots"
+      },
+      {
+        "type": "image",
+        "src": "Simple_CTF_Screenshot_1.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "Simple_CTF_Screenshot_2.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "Simple_CTF_Screenshot_3.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "Simple_CTF_Screenshot_4.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "Simple_CTF_Screenshot_5.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "Simple_CTF_Screenshot_6.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "Simple_CTF_Screenshot_7.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "Simple_CTF_Screenshot_8.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "Simple_CTF_Screenshot_9.png",
+        "alt": "Screenshot of the challenge soloution"
+      }
+    ],
+    "_source": {
+      "path": "Contents/Simple-CTF/README.md",
+      "sha": "ff61d91bd84d214563f1176a69cb4b10b14696df"
+    }
+  },
+  {
+    "slug": "bounty-hunter",
+    "title": "Bounty Hunter",
+    "ctf_name": "TryHackMe",
+    "platform": "",
+    "category": "Web Application",
+    "difficulty": "Easy",
+    "points": "150",
+    "flag": "THM{CR1M3_SyNd1C4T3}",
+    "tools": [],
+    "content": [
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Info"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "CTF Name: TryHackMe",
+          "Challenge Name: Bounty Hunter",
+          "Category: Web Application",
+          "Points: 150",
+          "Difficulty: Easy"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Description"
+      },
+      {
+        "type": "paragraph",
+        "text": "You talked a big game about being the most elite hacker in the solar system. Prove it and claim your right to the status of Elite Bounty Hacker!"
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Files Provided"
+      },
+      {
+        "type": "paragraph",
+        "text": "No files were provided."
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Setup"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Tools Used:"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "nmap — Port scanning and service detection",
+          "gobuster — Directory brute-forcing on the web server",
+          "hydra — Brute-force login credentials",
+          "ftp / ssh — File access and remote login",
+          "GTFOBins — Privilege escalation reference"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Environment:"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Local Kali linux virtual machine."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Initial Recon"
+      },
+      {
+        "type": "paragraph",
+        "text": "Firstly, I scanned for services with nmap. doing this found three services: ftp on port 21; ssh on port 20; and http on port 80."
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Exploitation / Solution"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "1. Exploration"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "I went to the website on the network and was meet with a landing page.",
+          "There were no links to other pages so, i decided to use gobuster to find any more pages. i found a page called home and another page.",
+          "After this i thought to look at what is on the ftp server. I opened the ftp server to a login form. I tried name as the user name and a message saying “only for anonymous”.",
+          "I signed into ftp with anonymous as my user name and listed files, i found two files and downloaded them."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "2. Exploitation"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Found out one was a message written by someone called lin.",
+          "The other contained a list of passwords.",
+          "I then used hydra with the password list and “lin” as the username to find out the password to the ssh client.",
+          "the password was “RedDragonSyndicate” and i signed onto ssh using it."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "3. Privilege escalation."
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "I listed sudo privileges and then looked on gtoblins for privilege escalation commands.",
+          "Used command to escalate privalges and gain root.",
+          "found the user flag and navigated to root to find the root flag."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Flag"
+      },
+      {
+        "type": "code",
+        "language": "",
+        "code": "THM{CR1M3_SyNd1C4T3}\nTHM{80UN7Y_h4cK3r}"
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Tools Used"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "nmap — Discovered open ports and running services",
+          "gobuster — Enumerated hidden web directories",
+          "hydra — Brute-forced SSH password",
+          "ftp/ssh — Connected to services and navigated the file system",
+          "GTFOBins — Found privilege escalation vectors"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Notes / Lessons Learned"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Anonymous FTP access can expose sensitive information.",
+          "Always check for reused usernames in file contents — they often become SSH usernames.",
+          "Directory brute-forcing is essential when a website has little to no navigation.",
+          "GTFOBins is a key resource for privilege escalation when you have limited sudo rights."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Screenshots (Optional)"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/bounty-hunter/Bounty_Hunter_Screenshot_1.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/bounty-hunter/Bounty_Hunter_Screenshot_2.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/bounty-hunter/Bounty_Hunter_Screenshot_3.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/bounty-hunter/Bounty_Hunter_Screenshot_4.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/bounty-hunter/Bounty_Hunter_Screenshot_5.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/bounty-hunter/Bounty_Hunter_Screenshot_6.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/bounty-hunter/Bounty_Hunter_Screenshot_7.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/bounty-hunter/Bounty_Hunter_Screenshot_8.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/bounty-hunter/Bounty_Hunter_Screenshot_9.png",
+        "alt": "Screenshot of the challenge soloution"
+      }
+    ],
+    "_source": {
+      "path": "Contents/bounty-hunter/README.md",
+      "sha": "30f3f5cee9b725aa1823a6c2138320e57aeabce5"
+    }
+  },
+  {
+    "slug": "c4ptur3-th3-fl4g",
+    "title": "c4ptur3-th3-fl4g",
+    "ctf_name": "TryHackMe",
+    "platform": "",
+    "category": "Cryptography/Steganography",
+    "difficulty": "Easy",
+    "points": "150",
+    "flag": "",
+    "tools": [],
+    "content": [
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Info"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "CTF Name: TryHackMe",
+          "Challenge Name: c4ptur3-th3-fl4g",
+          "Category: Cryptography/Steganography",
+          "Points: 150",
+          "Difficulty: Easy"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Description"
+      },
+      {
+        "type": "paragraph",
+        "text": "A beginner level CTF challenge"
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Files Provided"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Audio files to analyse with spectrograms",
+          "Photos to analyse for stegnograph"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Setup"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Tools Used:"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "CyberChef — for decoding binary, base encodings, and ciphers",
+          "Inspectrum / Online Spectrogram Tool — for analyzing audio waveforms",
+          "StegOnline / StegSolve — for extracting hidden data from images"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Environment:"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "TryHackMe virtual room with downloadable challenge resources",
+          "Local Kali Linux VM used for file analysis"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Initial Recon"
+      },
+      {
+        "type": "paragraph",
+        "text": "I first logged into the page to find four sections: “Translation & Shifting”; “Spectrograms”; “Steganography”; and “Security through obscurity”. The later three files then have downloadable files to complete the tasks, these are specific to the section of the challenge."
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Exploitation / Solution"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "1. Section one: Translation & Shifting"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "The first task was a question: “c4n y0u c4p7u23 7h3 f149?”. I quickly recognized it as leetspeak, where numbers are used in place of similar-looking letters. Translating it gave me the flag: “can you capture the flag”.",
+          "The second task was more challenging. It gave a binary string:"
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "01101100 01100101 01110100 01110011 00100000 01110100 01110010 01111001 00100000 01110011 01101111 01101101 01100101 00100000 01100010 01101001 01101110 01100001 01110010 01111001 00100000 01101111 01110101 01110100 00100001"
+      },
+      {
+        "type": "paragraph",
+        "text": "I used CyberChef to decode it into text, revealing the message: “lets try some binary out!”"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "The third task presented this encoded value:"
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "MJQXGZJTGIQGS4ZAON2XAZLSEBRW63LNN5XCA2LOEBBVIRRHOM======"
+      },
+      {
+        "type": "paragraph",
+        "text": "Recognizing the format as Base32, I decoded it with CyberChef and got: “base32 is super common in CTF's”."
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Task four involved decoding another string that looked like Base64:"
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "RWFjaCBCYXNlNjQgZGlnaXQgcmVwcmVzZW50cyBleGFjdGx5IDYgYml0cyBvZiBkYXRhLg=="
+      },
+      {
+        "type": "paragraph",
+        "text": "After decoding it in CyberChef, the message was: “Each Base64 digit represents exactly 6 bits of data.”"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Task five provided what looked like a hexadecimal string:"
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "68 65 78 61 64 65 63 69 6d 61 6c 20 6f 72 20 62 61 73 65 31 36 3f"
+      },
+      {
+        "type": "paragraph",
+        "text": "Using CyberChef again, I decoded it to: “hexadecimal or base16?”"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Task six gave this string: “Ebgngr zr 13 cynprf!”."
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "I suspected it was a Caesar cipher, especially since \"13\" was mentioned. Using ROT13 in CyberChef, I decoded it to: “Rotate me 13 places!”"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "The seventh task presented this text:",
+          "@F DA:? >6 C:89E C@F?5 323J C:89E C@F?5 Wcf E:>6DX"
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "After trying various ciphers in CyberChef, I found it was encoded with ROT47. The decoded result:"
+      },
+      {
+        "type": "paragraph",
+        "text": "“You spin me right round baby right round (47 times)”"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Task eight involved Morse code:"
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": ".-.. . -.-. --- -- -- ..- -. .. -.-. .- - .. --- -. . -. -.-. --- -.. .. -. --."
+      },
+      {
+        "type": "paragraph",
+        "text": "Translating this gave the message: “telecommunication encoding”"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Task nine gave a series of decimal values:"
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "85 110 112 97 99 107 32 116 104 105 115 32 66 67 68"
+      },
+      {
+        "type": "paragraph",
+        "text": "Converting these to ASCII produced: “Unpack this BCD”"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "The final task gave what appeared to be a random Base64 string:"
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "LS0tLS0gLi0tLS0gLi0tLS0gLS0tLS0gLS0tLS0gLi0tLS0gLi0tLS0gLS0tLS0KLS0tLS0gLi0tLS0gLi0tLS0"
+      },
+      {
+        "type": "paragraph",
+        "text": "CyberChef revealed this as a multi-step encoding: Base64 → Morse → Binary → ROT47 → Decimal. The final decoded message was: “Let's make this a bit trickier…”"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "2. Spectrograms"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Initially had trouble with Inspectrum installation and setup.",
+          "Found an online spectrogram generator that worked — uploaded the audio file.",
+          "After visual analysis, I spotted the embedded text hidden in the waveform:"
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "Flag: Super Secret Message"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "3. Steganography"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "The image provided was a photo of a seal and spaghetti.",
+          "Using StegOnline, I decoded the image and found the message hidden in the least significant bits (LSBs):"
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "Flag: SpaghettiSteg"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "4. Security through obscurity"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Initially ran the image file through steganography tools — no output.",
+          "Remembered that sometimes data can be hidden after EOF (end of file) markers in images.",
+          "Used cat image.jpg in terminal and noticed unexpected strings appended after the file content.",
+          "Found two hidden values:",
+          "One was a filename: hackerchat.png",
+          "The other, a flag: AHHYOUFOUNDME!"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Flag"
+      },
+      {
+        "type": "code",
+        "language": "",
+        "code": "Flag 1: can you capture the flag  \nFlag 2: lets try some binary out!  \nFlag 3: base32 is super common in CTF's  \nFlag 4: Each Base64 digit represents exactly 6 bits of data.  \nFlag 5: hexadecimal or base16?  \nFlag 6: Rotate me 13 places!  \nFlag 7: You spin me right round baby right round (47 times)  \nFlag 8: telecommunication encoding  \nFlag 9: Unpack this BCD  \nFlag 10: Let's make this a bit trickier…  \nFlag 11: Super Secret Message  \nFlag 12: SpaghettiSteg  \nFlag 13: AHH_YOU_FOUND_ME!"
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Tools Used"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "CyberChef — Decoding binary, hex, base encodings, ciphers",
+          "Online Spectrogram Tool — Audio analysis for hidden messages",
+          "StegOnline / StegSolve — Image steganography tools",
+          "Linux Terminal (cat command) — Extracting hidden text after EOF in image files"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Notes / Lessons Learned"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Spectrograms are a powerful way to hide plain-text in audio — great to recognize that visual format.",
+          "Always inspect all aspects of a file — headers, metadata, and content after EOF can hide useful info.",
+          "Steganography isn’t just visual — it can be hidden in noise, pixel values, or metadata."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Screenshots (Optional)"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/c4ptur3-th3-fl4g/c4ptur3_th3_fl4g_1.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/c4ptur3-th3-fl4g/c4ptur3_th3_fl4g_2.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/c4ptur3-th3-fl4g/c4ptur3_th3_fl4g_3.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/c4ptur3-th3-fl4g/c4ptur3_th3_fl4g_4.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/c4ptur3-th3-fl4g/c4ptur3_th3_fl4g_5.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/c4ptur3-th3-fl4g/c4ptur3_th3_fl4g_6.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/c4ptur3-th3-fl4g/c4ptur3_th3_fl4g_7.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/c4ptur3-th3-fl4g/c4ptur3_th3_fl4g_8.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/c4ptur3-th3-fl4g/c4ptur3_th3_fl4g_9.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/c4ptur3-th3-fl4g/c4ptur3_th3_fl4g_10.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/c4ptur3-th3-fl4g/c4ptur3_th3_fl4g_11.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/c4ptur3-th3-fl4g/c4ptur3_th3_fl4g_12.png",
+        "alt": "Screenshot of the challenge soloution"
+      },
+      {
+        "type": "image",
+        "src": "https://github.com/KieranPritchard/CTF-Write-Ups/blob/main/TryHackMe/c4ptur3-th3-fl4g/c4ptur3_th3_fl4g_13.png",
+        "alt": "Screenshot of the challenge soloution"
+      }
+    ],
+    "_source": {
+      "path": "Contents/c4ptur3-th3-fl4g/README.md",
+      "sha": "02969a247f20d5cf293fbc2898a6881c4d23cbb8"
+    }
+  }
+]
