@@ -16,7 +16,7 @@ function WriteUpPage() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch(process.env.PUBLIC_URL + "/writeups.json")
+        fetch("https://kieranpritchard.github.io/CTF-Showcase/writeups.json")
             .then((res) => res.json())
             .then((data) => {
                 const found = data.find((item) => item.slug === slug);
