@@ -6,7 +6,10 @@ function Navbar() {
 
     return (
         <nav className="flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 border-b bg-[#121a22] relative transition-all">
-            <NavLink className="headings text-[#00FF88] font-bold text-xl neon-hover">
+            <NavLink 
+                className="headings text-[#00FF88] font-bold text-xl neon-hover"
+                to="/"
+            >
                 Kieran Pritchard
             </NavLink>
 
@@ -16,7 +19,7 @@ function Navbar() {
                 to="/"
                 className={({ isActive }) =>
                     `text-body neon-hover transition-all ${
-                    isActive ? "text-[#C7FCEC]" : "text-[#C7FCEC]"
+                    isActive ? "text-[#C7FCEC] flicker" : "text-[#C7FCEC]"
                     }`
                 }
                 >
@@ -26,7 +29,7 @@ function Navbar() {
                 to="/write-ups"
                 className={({ isActive }) =>
                     `text-body neon-hover transition-all ${
-                    isActive ? "text-[#C7FCEC]" : "text-[#C7FCEC]"
+                    isActive ? "text-[#C7FCEC] flicker" : "text-[#C7FCEC]"
                     }`
                 }
                 >
@@ -36,7 +39,7 @@ function Navbar() {
                 to="/contact"
                 className={({ isActive }) =>
                     `text-body neon-hover transition-all ${
-                    isActive ? "text-[#C7FCEC]" : "text-[#C7FCEC]"
+                    isActive ? "text-[#C7FCEC] flicker" : "text-[#C7FCEC]"
                     }`
                 }
                 >
@@ -70,18 +73,21 @@ function Navbar() {
                 <NavLink 
                     to="/" 
                     className="text-body block py-2 w-full neon-hover text-[#C7FCEC]"
+                    onClick={() => setOpen(false)}
                 >
                     Home
                 </NavLink>
                 <NavLink
                     to="/write-ups"
                     className="text-body block py-2 w-full neon-hover text-[#C7FCEC]"
+                    onClick={() => setOpen(false)}
                 >
                     Write-Ups
                 </NavLink>
                 <NavLink
                     to="/contact"
                     className="text-body block py-2 w-full neon-hover text-[#C7FCEC]"
+                    onClick={() => setOpen(false)}
                 >
                     Contact
                 </NavLink>
