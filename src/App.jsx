@@ -9,8 +9,10 @@ import Navbar from './components/Navbar'
 function App() {
   return (
     <div>
+      {/* This makes the navigation bar always render */}
       <Navbar />
       <Routes>
+        {/* This renders pages based on the current link */}
         <Route path="/" element={<Home />} />
         <Route path="/write-ups" element={<WriteUps />} />
         <Route path="/contact" element={<Contact />} />

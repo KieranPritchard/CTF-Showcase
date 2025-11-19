@@ -3,8 +3,9 @@ import ImageOfMe from "../../assets/kieran-pritchard-profile-photo.webp"
 function About() {
     return (
         <div className="min-h-screen flex items-center justify-center px-4 sm:px-8 py-10 w-full">
+            {/* Two columned page */}
             <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-8 w-full max-w-6xl">
-                {/* Optional Image Section */}
+                {/* Image Section */}
                 <div className="flex justify-center md:justify-start">
                     <img 
                         src={ImageOfMe}
