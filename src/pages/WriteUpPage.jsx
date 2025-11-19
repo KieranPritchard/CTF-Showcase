@@ -12,11 +12,16 @@ import OsintImage from "../assets/osint.webp";
 import CryptographyImage from "../assets/cryptography.webp";
 import DatabaseImage from "../assets/database.webp";
 import LinuxImage from "../assets/linux.webp";
+import HeadingBlock from "../components/write_ups/content_blocks/HeadingBlock";
+import SubheadingBlock from "../components/write_ups/content_blocks/SubheadingBlock";
+import ParagraphBlock from "../components/write_ups/content_blocks/ParagraphBlock";
+import ListItem from "../components/write_ups/content_blocks/ListBlock";
+import CodeBlock from "../components/write_ups/content_blocks/CodeBlock";
+import ImageBlock from "../components/write_ups/content_blocks/ImageBlock";
 
 function WriteUpPage() {
     const { slug } = useParams();
     const [post, setPost] = useState(null);
-    const [loading, setLoading] = useState(true);
 
     const [validImages, setValidImages] = useState([]);
 
@@ -32,7 +37,6 @@ function WriteUpPage() {
             .catch((err) => console.error("Failed to load writeup:", err));
     }, [slug]);
 
-    if (loading) return <p className="text-center mt-8">Loading...</p>;
     if (!post) return <p className="text-center mt-8">Write-up not found.</p>;
 
     // -----------------------------
@@ -58,60 +62,22 @@ function WriteUpPage() {
     const renderBlock = (block, index) => {
         switch (block.type) {
             case "heading":
-                return (
-                    <h1
-                        key={index}
-                        className={`text-[#00FF88] headings font-bold mt-6 mb-3 ${
-                            block.level === 1 ? "text-3xl" : "text-xl"
-                        }`}
-                    >
-                        {block.text}
-                    </h1>
-                );
+                return <HeadingBlock block={block} index={index} />
 
             case "subheading":
-                return (
-                    <h3 key={index} className="headings text-lg mt-5 mb-2 text-[#00FF88] font-semibold">
-                        {block.text}
-                    </h3>
-                );
+                return <SubheadingBlock block={block} index={index} />
 
             case "paragraph":
-                return (
-                    <p key={index} className="px-5 my-3 text-[#C7FCEC] leading-relaxed">
-                        {block.text}
-                    </p>
-                );
+                return <ParagraphBlock block={block} index={index} />
 
             case "list":
-                return (
-                    <ul key={index} className="px-5 ml-6 text-[#C7FCEC] list-disc my-3">
-                        {block.items.map((item, i) => (
-                            <li key={i}>{item}</li>
-                        ))}
-                    </ul>
-                );
+                return <ListItem block={block} index={index} />
 
             case "code":
-                return (
-                    <pre
-                        key={index}
-                        className="code-text bg-black/40 text-[#00FF88] p-4 mx-5 rounded-lg overflow-x-auto my-4 border border-[#00FF88]"
-                    >
-                        <code>{block.code}</code>
-                    </pre>
-                );
+                return <CodeBlock block={block} index={index} />
 
             case "image":
-                return (
-                    <img
-                        key={index}
-                        src={block.src}
-                        alt={block.alt}
-                        className="rounded-xl shadow my-4 border border-[#00FF88]"
-                        onError={(e) => (e.currentTarget.style.display = "none")}
-                    />
-                );
+                return <ImageBlock block={block} index={index} />
 
             default:
                 return null;
