@@ -249,6 +249,7 @@
         "download_url": "https://raw.githubusercontent.com/KieranPritchard/CTF-Write-Ups/main/Contents/Agent_Sudo/Agent_Sudo_Screenshot_9.png"
       }
     ],
+    "created_date": "2025-11-11T21:32:30Z",
     "_source": {
       "path": "Contents/Agent_Sudo/README.md",
       "sha": "5c4856b173629938374951ee76f8a9e9eec12ad0"
@@ -511,6 +512,7 @@
         "download_url": "https://raw.githubusercontent.com/KieranPritchard/CTF-Write-Ups/main/Contents/Anonymous/Anoymous_Screenshot_9.png"
       }
     ],
+    "created_date": "2025-11-11T21:32:30Z",
     "_source": {
       "path": "Contents/Anonymous/README.md",
       "sha": "5444c859d15586f29c5640d1fdf8716115690a4c"
@@ -818,6 +820,7 @@
         "download_url": "https://raw.githubusercontent.com/KieranPritchard/CTF-Write-Ups/main/Contents/Anthem/Anthem_Screenshot_9.png"
       }
     ],
+    "created_date": "2025-11-11T21:32:30Z",
     "_source": {
       "path": "Contents/Anthem/README.md",
       "sha": "8d5c48dfbf51c575197e8800e4b79eb4472a0597"
@@ -1170,6 +1173,7 @@
         "download_url": "https://raw.githubusercontent.com/KieranPritchard/CTF-Write-Ups/main/Contents/Basic-Pentesting/Basic_Pentesting_Screenshot_9.png"
       }
     ],
+    "created_date": "2025-11-11T21:32:30Z",
     "_source": {
       "path": "Contents/Basic-Pentesting/README.md",
       "sha": "5b4e224a9e7aa336a1c7ae99c3f722aa7559b245"
@@ -1424,6 +1428,7 @@
         "download_url": "https://raw.githubusercontent.com/KieranPritchard/CTF-Write-Ups/main/Contents/Crack-The-Hash/Crack_The_Hash_7.png"
       }
     ],
+    "created_date": "2025-11-11T21:32:30Z",
     "_source": {
       "path": "Contents/Crack-The-Hash/README.md",
       "sha": "af3651aeb59a9bb2bc0317ec250b2173f818a2c9"
@@ -1481,6 +1486,7 @@
       },
       {
         "type": "subheading",
+        "level": 3,
         "text": "Tools Used:"
       },
       {
@@ -1494,6 +1500,7 @@
       },
       {
         "type": "subheading",
+        "level": 3,
         "text": "Environment:"
       },
       {
@@ -1502,6 +1509,7 @@
       },
       {
         "type": "subheading",
+        "level": 3,
         "text": "Initial Recon"
       },
       {
@@ -1731,6 +1739,7 @@
         "download_url": "https://raw.githubusercontent.com/KieranPritchard/CTF-Write-Ups/main/Contents/Lazy_Admin/Lazy_Admin_Screenshot_9.png"
       }
     ],
+    "created_date": "2025-11-11T21:32:30Z",
     "_source": {
       "path": "Contents/Lazy_Admin/README.md",
       "sha": "efae5d66690e083791cb24570306fca39ebceab5"
@@ -2044,6 +2053,7 @@
         "download_url": "https://raw.githubusercontent.com/KieranPritchard/CTF-Write-Ups/main/Contents/Light/Light_Screenshot_9.png"
       }
     ],
+    "created_date": "2025-11-11T21:32:30Z",
     "_source": {
       "path": "Contents/Light/README.md",
       "sha": "686cf9f24287f562b0a4515b29916eaf6c129e4b"
@@ -2303,6 +2313,7 @@
         "download_url": "https://raw.githubusercontent.com/KieranPritchard/CTF-Write-Ups/main/Contents/OhSINT/OhSINT_5.png"
       }
     ],
+    "created_date": "2025-11-11T21:32:30Z",
     "_source": {
       "path": "Contents/OhSINT/README.md",
       "sha": "c118ebf144b3f4b7a0ec01e411d8cce8da17e965"
@@ -2608,6 +2619,7 @@
         "download_url": "https://raw.githubusercontent.com/KieranPritchard/CTF-Write-Ups/main/Contents/RootMe/RootMe_Screenshot_9.png"
       }
     ],
+    "created_date": "2025-11-11T21:32:30Z",
     "_source": {
       "path": "Contents/RootMe/README.md",
       "sha": "d31cb76db18a6ec6f2702f6a4bd966b0ad88772a"
@@ -2892,6 +2904,7 @@
         "download_url": "https://raw.githubusercontent.com/KieranPritchard/CTF-Write-Ups/main/Contents/Simple-CTF/Simple_CTF_Screenshot_9.png"
       }
     ],
+    "created_date": "2025-11-11T21:32:30Z",
     "_source": {
       "path": "Contents/Simple-CTF/README.md",
       "sha": "ff61d91bd84d214563f1176a69cb4b10b14696df"
@@ -3172,6 +3185,7 @@
         "download_url": "https://raw.githubusercontent.com/KieranPritchard/CTF-Write-Ups/main/Contents/bounty-hunter/Bounty_Hunter_Screenshot_9.png"
       }
     ],
+    "created_date": "2025-11-11T21:32:30Z",
     "_source": {
       "path": "Contents/bounty-hunter/README.md",
       "sha": "30f3f5cee9b725aa1823a6c2138320e57aeabce5"
@@ -3639,6 +3653,7 @@
         "download_url": "https://raw.githubusercontent.com/KieranPritchard/CTF-Write-Ups/main/Contents/c4ptur3-th3-fl4g/c4ptur3_th3_fl4g_9.png"
       }
     ],
+    "created_date": "2025-11-11T21:32:30Z",
     "_source": {
       "path": "Contents/c4ptur3-th3-fl4g/README.md",
       "sha": "02969a247f20d5cf293fbc2898a6881c4d23cbb8"
