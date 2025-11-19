@@ -14,34 +14,34 @@ function RecentWriteUp({ title, description, category }) {
         const cat = category.toLowerCase();
     
         if (cat.includes("web")) {
-            return <img className="h-2/5 w-auto" src={WebAppImage} alt="Globe" />;
+            return <img className="h-[200px] w-auto" src={WebAppImage} alt="Globe" />;
         }
         if (cat.includes("priv") || cat.includes("escalation")) {
-            return <img className="h-2/5 w-auto" src={PrivEscImage} alt="ID card" />;
+            return <img className="h-[200px] w-auto" src={PrivEscImage} alt="ID card" />;
         }
         if (cat.includes("windows")) {
-            return <img className="h-2/5 w-auto" src={WindowsImage} alt="Windows logo" />;
+            return <img className="h-[200px] w-auto" src={WindowsImage} alt="Windows logo" />;
         }
         if (cat.includes("osint")) {
-            return <img className="h-2/5 w-auto" src={OsintImage} alt="Magnifying glass" />;
+            return <img className="h-[200px] w-auto" src={OsintImage} alt="Magnifying glass" />;
         }
         if (cat.includes("password") || cat.includes("crypto")) {
-            return <img className="h-2/5 w-auto" src={CryptographyImage} alt="Lock" />;
+            return <img className="h-[200px] w-auto" src={CryptographyImage} alt="Lock" />;
         }
         if (cat.includes("database") || cat.includes("sql")) {
-            return <img className="h-2/5 w-auto" src={DatabaseImage} alt="Database" />;
+            return <img className="h-[200px] w-auto" src={DatabaseImage} alt="Database" />;
         }
         if (cat.includes("linux")) {
-            return <img className="h-2/5 w-auto" src={LinuxImage} alt="Penguin" />;
+            return <img className="h-[200px] w-auto" src={LinuxImage} alt="Penguin" />;
         }
     
         return null; // fallback
     };
     
     return (
-        <div className="flex flex-col justify-between w-80 h-115 p-4 rounded-lg bg-[#121A22] border border-[#00FF88] shadow-[0_0_20px_#00FF88,0_0_40px_#00FF88,0_0_60px_#00FF88]">
+        <div className="flex flex-col justify-between w-80 h-100 p-4 rounded-lg bg-[#121A22] border border-[#00FF88] shadow-[0_0_20px_#00FF88,0_0_40px_#00FF88,0_0_60px_#00FF88]">
             <div>
-                <div>
+                <div className="flex justify-center">
                     {renderImage(category)}
                 </div>
                 <h3 className="headings text-lg text-center mb-3 font-bold text-[#00FF88]">{title}</h3>
