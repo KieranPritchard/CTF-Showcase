@@ -25,12 +25,14 @@ function Recents() {
     return (
         <div className="min-h-screen w-full flex flex-col px-4 sm:px-8 py-10">
             <h2 className="headings flicker text-4xl text-center font-bold mb-10 text-white">
-                Recent Projects
+                Recent Write Up's
             </h2>
 
             <div className="flex-1 flex items-center justify-center w-full">
+                {/* Displays three of my recent write ups */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl w-full justify-items-center items-stretch">
                     {writeups.map((w, idx) => {
+                        // Makes the description and limits it to under 200 characters 
                         const descriptionBlock = w.content?.find(b => b.type === "paragraph");
                         const description = descriptionBlock
                             ? descriptionBlock.text.slice(0, 200) +
@@ -38,6 +40,7 @@ function Recents() {
                             : "No description available.";
 
                         return (
+                            // Links to the actual write up's
                             <Link
                                 key={idx}
                                 to={`/writeups/${w.slug}`}
