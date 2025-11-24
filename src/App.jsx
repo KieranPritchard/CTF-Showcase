@@ -1,5 +1,5 @@
 import './App.css'
-import { Routes, Route, NavLink } from 'react-router-dom'
+import { HashRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import WriteUps from './pages/WriteUps'
 import Contact from './pages/Contact'
@@ -8,9 +8,11 @@ import Navbar from './components/Navbar'
 
 function App() {
   return (
-    <div>
+    /* Wrapped in hash router to stop 404 pages on refresh */
+    <HashRouter>
       {/* This makes the navigation bar always render */}
       <Navbar />
+      {/* Stores the routes of the website */}
       <Routes>
         {/* This renders pages based on the current link */}
         <Route path="/" element={<Home />} />
@@ -18,7 +20,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/writeups/:slug" element={<WriteUpPage />} />
       </Routes>
-    </div>
+    </HashRouter>
   )
 }
 
