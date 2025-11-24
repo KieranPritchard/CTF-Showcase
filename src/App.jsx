@@ -19,7 +19,7 @@ function App() {
       {/* Define all routes */}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/#/write-ups" element={<WriteUps />} />
+        <Route path="/write-ups" element={<WriteUps/>} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/write-ups/:slug" element={<WriteUpPage />} />
         <Route path="*" element={<NotFound />} /> {/* catch-all fallback */}
