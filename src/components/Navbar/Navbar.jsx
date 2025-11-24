@@ -2,10 +2,14 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 function Navbar() {
+    // Controls whether the mobile menu is open or closed
     const [open, setOpen] = useState(false);
 
     return (
+        // Main navigation bar container
         <nav className="flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 border-b bg-[#121a22] relative transition-all">
+            
+            {/* Brand / Home Link */}
             <NavLink 
                 className="headings text-[#00FF88] font-bold text-xl neon-hover"
                 to="/"
@@ -13,63 +17,67 @@ function Navbar() {
                 Kieran Pritchard
             </NavLink>
 
-            {/* Desktop menu */}
+            {/* Desktop navigation links — visible on screens >= sm */}
             <div className="hidden sm:flex items-center gap-8">
                 <NavLink
-                to="/"
-                className={({ isActive }) =>
-                    `text-body neon-hover transition-all ${
-                    isActive ? "text-[#C7FCEC] flicker" : "text-[#C7FCEC]"
-                    }`
-                }
+                    to="/"
+                    className={({ isActive }) =>
+                        `text-body neon-hover transition-all ${
+                            isActive ? "text-[#C7FCEC] flicker" : "text-[#C7FCEC]"
+                        }`
+                    }
                 >
-                Home
+                    Home
                 </NavLink>
+
                 <NavLink
-                to="/write-ups"
-                className={({ isActive }) =>
-                    `text-body neon-hover transition-all ${
-                    isActive ? "text-[#C7FCEC] flicker" : "text-[#C7FCEC]"
-                    }`
-                }
+                    to="/write-ups"
+                    className={({ isActive }) =>
+                        `text-body neon-hover transition-all ${
+                            isActive ? "text-[#C7FCEC] flicker" : "text-[#C7FCEC]"
+                        }`
+                    }
                 >
-                Write-Ups
+                    Write-Ups
                 </NavLink>
+
                 <NavLink
-                to="/contact"
-                className={({ isActive }) =>
-                    `text-body neon-hover transition-all ${
-                    isActive ? "text-[#C7FCEC] flicker" : "text-[#C7FCEC]"
-                    }`
-                }
+                    to="/contact"
+                    className={({ isActive }) =>
+                        `text-body neon-hover transition-all ${
+                            isActive ? "text-[#C7FCEC] flicker" : "text-[#C7FCEC]"
+                        }`
+                    }
                 >
-                Contact
+                    Contact
                 </NavLink>
             </div>
 
-            {/* Menu Button */}
+            {/* Mobile menu toggle button — only visible on small screens */}
             <button
                 onClick={() => setOpen(!open)}
                 aria-label="menu"
                 className="sm:hidden text-[#C7FCEC]"
             >
+                {/* Hamburger icon */}
                 <svg
-                width="21"
-                height="15"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 50 50"
-                fill="#00FF88"
+                    width="21"
+                    height="15"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 50 50"
+                    fill="#00FF88"
                 >
-                <path d="M 0 9 L 0 11 L 50 11 L 50 9 Z M 0 24 L 0 26 L 50 26 L 50 24 Z M 0 39 L 0 41 L 50 41 L 50 39 Z"></path>
+                    <path d="M 0 9 L 0 11 L 50 11 L 50 9 Z M 0 24 L 0 26 L 50 26 L 50 24 Z M 0 39 L 0 41 L 50 41 L 50 39 Z"></path>
                 </svg>
             </button>
 
-            {/* Mobile menu */}
+            {/* Mobile dropdown menu — expands beneath navbar when toggled */}
             <div
                 className={`${
-                open ? "flex" : "hidden"
+                    open ? "flex" : "hidden"
                 } absolute top-[60px] left-0 w-full bg-[#121a22] shadow-lg py-4 flex-col items-start gap-2 px-5 text-sm md:hidden`}
             >
+                {/* Each link closes the menu after navigation */}
                 <NavLink 
                     to="/" 
                     className="text-body block py-2 w-full neon-hover text-[#C7FCEC]"
@@ -77,6 +85,7 @@ function Navbar() {
                 >
                     Home
                 </NavLink>
+
                 <NavLink
                     to="/write-ups"
                     className="text-body block py-2 w-full neon-hover text-[#C7FCEC]"
@@ -84,6 +93,7 @@ function Navbar() {
                 >
                     Write-Ups
                 </NavLink>
+
                 <NavLink
                     to="/contact"
                     className="text-body block py-2 w-full neon-hover text-[#C7FCEC]"

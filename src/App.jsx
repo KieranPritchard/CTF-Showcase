@@ -4,7 +4,7 @@ import Home from './pages/Home'
 import WriteUps from './pages/WriteUps'
 import Contact from './pages/Contact'
 import WriteUpPage from './pages/WriteUpPage'
-import Navbar from './components/Navbar'
+import Navbar from './components/Navbar/Navbar'
 
 function App() {
   return (

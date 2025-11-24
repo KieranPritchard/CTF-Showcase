@@ -1,3 +1,4 @@
+// This is a background that returns an image
 function ImageBackground({ children, isEven, image }) {
     return (
         <div

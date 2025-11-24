@@ -1,16 +1,22 @@
 import React from "react";
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 10; // Number of items displayed per page
 
 export default function Pagination({ length, page, setPage }) {
+    // Calculate how many pages are needed based on item count
     const totalPages = Math.max(1, Math.ceil(length / PAGE_SIZE));
+
+    // Ensure the current page never goes out of range
     const safePage = Math.min(Math.max(1, page), totalPages);
 
-    // Auto-correct page (example: filter reduces number of pages)
+    // Auto-fix page number if data shrinks (e.g., filtering reduces total items)
     if (safePage !== page) setPage(safePage);
 
+    // Only show pagination controls if more than one page exists
     return totalPages > 1 ? (
         <div className="flex justify-center items-center gap-4 py-6 text-[#C7FCEC]">
+            
+            {/* Go to previous page — disabled on page 1 */}
             <button
                 onClick={() => setPage(p => Math.max(1, p - 1))}
                 disabled={safePage === 1}
@@ -19,8 +25,12 @@ export default function Pagination({ length, page, setPage }) {
                 Prev
             </button>
 
-            <span>Page {safePage} of {totalPages}</span>
+            {/* Display current page number and total pages */}
+            <span>
+                Page {safePage} of {totalPages}
+            </span>
 
+            {/* Go to next page — disabled on last page */}
             <button
                 onClick={() => setPage(p => Math.min(totalPages, p + 1))}
                 disabled={safePage === totalPages}
@@ -32,4 +42,5 @@ export default function Pagination({ length, page, setPage }) {
     ) : null;
 }
 
+// Export page size so parent components can use it for slicing logic
 export { PAGE_SIZE };

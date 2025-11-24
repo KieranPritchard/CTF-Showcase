@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import Background from "../components/Background";
-import AutoBackground from "../components/AutoBackground";
+import Background from "../components/backgrounds/Background";
+import AutoBackground from "../components/backgrounds/AutoBackground";
 import About from "../components/home_page/About";
 import Recents from "../components/home_page/Recents";
 import Welcome from "../components/home_page/Welcome";
-import ImageBackground from "../components/ImageBackground";
+import ImageBackground from "../components/backgrounds/ImageBackground";
 import Banner from "../assets/banner.png";
 
 function Home() {

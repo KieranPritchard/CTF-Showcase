@@ -1,4 +1,4 @@
-import Background from '../components/Background'
+import Background from '../components/backgrounds/Background'
 import ContactLinks from '../components/contact/ContactLinks'
 
 function Contact() {

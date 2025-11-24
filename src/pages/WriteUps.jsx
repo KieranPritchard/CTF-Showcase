@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import Background from "../components/Background";
-import AutoBackground from "../components/AutoBackground";
-import Dropdown from "../components/write_ups/Dropdown";
-import Search from "../components/write_ups/Search";
-import Toolbar from "../components/write_ups/Toolbar";
-import LinkBlock from "../components/write_ups/LinkBlock";
-import Pagination, { PAGE_SIZE } from "../components/Pagination";
-import Notification from "../components/Notification";
+import Background from "../components/backgrounds/Background";
+import AutoBackground from "../components/backgrounds/AutoBackground";
+import Dropdown from "../components/write_ups/dropdown/Dropdown";
+import Search from "../components/write_ups/search/Search";
+import Toolbar from "../components/write_ups/toolbar/Toolbar";
+import LinkBlock from "../components/write_ups/linkblock/LinkBlock";
+import Pagination, { PAGE_SIZE } from "../components/write_ups/pagination/Pagination";
+import Notification from "../components/notification/Notification";
 
 function WriteUps() {
     const [posts, setPosts] = useState([]);

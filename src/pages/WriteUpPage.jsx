@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
-import AutoBackground from "../components/AutoBackground";
-import Background from "../components/Background";
-import Carousel from "../components/Carousel";
+import AutoBackground from "../components/backgrounds/AutoBackground";
+import Background from "../components/backgrounds/Background";
+import Carousel from "../components/write_ups/carousel/Carousel";
 
 // Category Images
 import WebAppImage from "../assets/web-app.webp";
