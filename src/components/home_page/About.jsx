@@ -39,7 +39,7 @@ function About() {
                 </div>
 
                 {/* Text Section */}
-                <div ref={textRef} className="fade-in-right w-full md:w-auto text-center md:text-left">
+                <div ref={textRef} className="fade-in-right w-full md:w-auto text-center">
                     <h2 className="headings flicker text-white text-3xl sm:text-4xl font-bold mb-4">About</h2>
                     <p className="text-body text-lg sm:text-xl text-[#C7FCEC] leading-relaxed">
                         I'm currently a T-Level student at Bournemouth and Poole College studying software development; however, despite focusing on that, I also love all things hacking and cyber security which honestly just shows how much of a geek I am.
