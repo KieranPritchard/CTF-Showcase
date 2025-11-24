@@ -80,3 +80,56 @@
         0 0 16px #00ff88;
     animation: flicker-hover 2.5s infinite;
 }
+
+
+/* Fade in animations */
+
+@keyframes fade-in-bottom {
+    0% {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.fade-in-bottom {
+    opacity: 0; /* Start hidden */
+    transform: translateY(50px);
+    transition: all 0.5s ease-out;
+}
+
+.fade-in-bottom.visible {
+    opacity: 1;
+    transform: translateY(0);
+    animation: fade-in-bottom 0.7s ease-out forwards;
+}
+
+/* Fade in from left (image) and right (text) */
+.fade-in-left,
+.fade-in-right {
+    opacity: 0;           /* Start hidden */
+    transform: translateX(0); /* Starting position overridden by keyframes */
+}
+
+/* Trigger animations when element becomes visible */
+.fade-in-left.visible {
+    animation: fade-in-left 0.7s ease-out forwards;
+}
+
+.fade-in-right.visible {
+    animation: fade-in-right 0.7s ease-out forwards;
+}
+
+/* Animista keyframes */
+@keyframes fade-in-left {
+    0% { transform: translateX(-50px); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fade-in-right {
+    0% { transform: translateX(50px); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+}
