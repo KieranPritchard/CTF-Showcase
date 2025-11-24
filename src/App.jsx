@@ -1,26 +1,30 @@
 import './App.css'
-import { HashRouter, Routes, Route } from 'react-router-dom'
+import { HashRouter as Router, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import WriteUps from './pages/WriteUps'
 import Contact from './pages/Contact'
 import WriteUpPage from './pages/WriteUpPage'
 import Navbar from './components/Navbar/Navbar'
 
+// Optional NotFound component
+const NotFound = () => <div>404 - Page Not Found</div>
+
 function App() {
   return (
-    /* Wrapped in hash router to stop 404 pages on refresh */
-    <HashRouter>
-      {/* This makes the navigation bar always render */}
+    // HashRouter ensures pages load correctly even on refresh
+    <Router>
+      {/* Navbar always visible */}
       <Navbar />
-      {/* Stores the routes of the website */}
+
+      {/* Define all routes */}
       <Routes>
-        {/* This renders pages based on the current link */}
         <Route path="/" element={<Home />} />
         <Route path="/write-ups" element={<WriteUps />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/writeups/:slug" element={<WriteUpPage />} />
+        <Route path="/write-ups/:slug" element={<WriteUpPage />} />
+        <Route path="*" element={<NotFound />} /> {/* catch-all fallback */}
       </Routes>
-    </HashRouter>
+    </Router>
   )
 }
 
