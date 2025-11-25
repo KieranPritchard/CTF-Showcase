@@ -32,7 +32,7 @@ function LinkBlock({ post, getDescription }) {
         <Link
             // Extracts the slug from the post in parameters
             key={post.slug}
-            to={`/writeups/${post.slug}`}
+            to={`/write-ups/${post.slug}`}
             className="flex flex-col sm:grid sm:grid-cols-6 px-4 py-4 bg-[#121A22] border-2 border-[#00FF88] rounded-xl shadow hover:shadow-lg transition gap-2 sm:gap-0"
         >
             {/* Image */}

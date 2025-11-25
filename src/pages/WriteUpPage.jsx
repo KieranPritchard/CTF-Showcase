@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import AutoBackground from "../components/backgrounds/AutoBackground";
 import Background from "../components/backgrounds/Background";
 import Carousel from "../components/write_ups/carousel/Carousel";
@@ -12,6 +12,7 @@ import OsintImage from "../assets/osint.webp";
 import CryptographyImage from "../assets/cryptography.webp";
 import DatabaseImage from "../assets/database.webp";
 import LinuxImage from "../assets/linux.webp";
+
 import HeadingBlock from "../components/write_ups/content_blocks/HeadingBlock";
 import SubheadingBlock from "../components/write_ups/content_blocks/SubheadingBlock";
 import ParagraphBlock from "../components/write_ups/content_blocks/ParagraphBlock";
@@ -22,7 +23,6 @@ import ImageBlock from "../components/write_ups/content_blocks/ImageBlock";
 function WriteUpPage() {
     const { slug } = useParams();
     const [post, setPost] = useState(null);
-
     const [validImages, setValidImages] = useState([]);
 
     useEffect(() => {
@@ -32,16 +32,12 @@ function WriteUpPage() {
                 const found = data.find((item) => item.slug === slug);
                 setPost(found);
                 setValidImages(found?.images || []);
-                setLoading(false);
             })
             .catch((err) => console.error("Failed to load writeup:", err));
     }, [slug]);
 
     if (!post) return <p className="text-center mt-8">Write-up not found.</p>;
 
-    // -----------------------------
-    // CATEGORY IMAGE LOGIC
-    // -----------------------------
     const renderImage = (category) => {
         const cat = category.toLowerCase();
 
@@ -56,37 +52,18 @@ function WriteUpPage() {
         return null;
     };
 
-    // -----------------------------
-    // CONTENT BLOCK RENDERER
-    // -----------------------------
     const renderBlock = (block, index) => {
         switch (block.type) {
-            case "heading":
-                return <HeadingBlock block={block} index={index} />
-
-            case "subheading":
-                return <SubheadingBlock block={block} index={index} />
-
-            case "paragraph":
-                return <ParagraphBlock block={block} index={index} />
-
-            case "list":
-                return <ListItem block={block} index={index} />
-
-            case "code":
-                return <CodeBlock block={block} index={index} />
-
-            case "image":
-                return <ImageBlock block={block} index={index} />
-
-            default:
-                return null;
+            case "heading": return <HeadingBlock block={block} index={index} />;
+            case "subheading": return <SubheadingBlock block={block} index={index} />;
+            case "paragraph": return <ParagraphBlock block={block} index={index} />;
+            case "list": return <ListItem block={block} index={index} />;
+            case "code": return <CodeBlock block={block} index={index} />;
+            case "image": return <ImageBlock block={block} index={index} />;
+            default: return null;
         }
     };
 
-    // -----------------------------
-    // PAGE OUTPUT
-    // -----------------------------
     return (
         <div>
             <Background>
@@ -100,32 +77,14 @@ function WriteUpPage() {
                     </h1>
 
                     <p className="flex flex-row gap-2 text-[#00FF88] my-2">
-                        {post.ctf_name && (
-                            <span className="border-2 border-[#00FF88] p-1 px-2 rounded-4xl">
-                                {post.ctf_name}
-                            </span>
-                        )}
-                        {post.category && (
-                            <span className="border-2 border-[#00FF88] p-1 px-2 rounded-4xl">
-                                {post.category}
-                            </span>
-                        )}
-                        {post.difficulty && (
-                            <span className="border-2 border-[#00FF88] p-1 px-2 rounded-4xl">
-                                {post.difficulty}
-                            </span>
-                        )}
-                        {post.points && (
-                            <span className="border-2 border-[#00FF88] p-1 px-2 rounded-4xl">
-                                ({post.points} pts)
-                            </span>
-                        )}
+                        {post.ctf_name && <span className="border-2 border-[#00FF88] p-1 px-2 rounded-4xl">{post.ctf_name}</span>}
+                        {post.category && <span className="border-2 border-[#00FF88] p-1 px-2 rounded-4xl">{post.category}</span>}
+                        {post.difficulty && <span className="border-2 border-[#00FF88] p-1 px-2 rounded-4xl">{post.difficulty}</span>}
+                        {post.points && <span className="border-2 border-[#00FF88] p-1 px-2 rounded-4xl">({post.points} pts)</span>}
                     </p>
 
                     {post.flag && (
-                        <p className="mt-4 text-green-500 font-mono text-xl">
-                            {post.flag}
-                        </p>
+                        <p className="mt-4 text-green-500 font-mono text-xl">{post.flag}</p>
                     )}
                 </header>
             </Background>
@@ -135,7 +94,6 @@ function WriteUpPage() {
                     {post.content.map((block, idx) => renderBlock(block, idx))}
                 </article>
 
-                {/* CAROUSEL */}
                 {validImages?.length > 0 && <Carousel images={validImages} />}
             </AutoBackground>
         </div>
