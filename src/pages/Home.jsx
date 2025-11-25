@@ -6,6 +6,7 @@ import Recents from "../components/home_page/Recents";
 import Welcome from "../components/home_page/Welcome";
 import ImageBackground from "../components/backgrounds/ImageBackground";
 import Banner from "../assets/banner.png";
+import Skills from "../components/home_page/Skills";
 
 function Home() {
     const [isMobile, setIsMobile] = useState(false);
@@ -23,6 +24,7 @@ function Home() {
 
     const AboutWrapper = isMobile ? AutoBackground : Background;
     const RecentsWrapper = isMobile ? AutoBackground : Background;
+    const SkillsWrapper = isMobile ? AutoBackground : Background;
 
     return (
         <>
@@ -36,7 +38,11 @@ function Home() {
                 <About />
             </AboutWrapper>
 
-            <RecentsWrapper isEven={false}>
+            <SkillsWrapper>
+                <Skills />
+            </SkillsWrapper>
+
+            <RecentsWrapper isEven={true}>
                 <Recents />
             </RecentsWrapper>
         </>
