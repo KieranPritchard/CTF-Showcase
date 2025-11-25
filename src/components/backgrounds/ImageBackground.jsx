@@ -3,10 +3,12 @@ function ImageBackground({ children, isEven, image }) {
     return (
         <div
             className={
-                `${isEven ? "h-screen px-4 bg-[#121A22]" : "h-screen px-4 bg-[#0A0F14]"} bg-cover bg-center bg-no-repeat`
+                `${isEven ? "h-auto px-4 bg-[#121A22]" : "h-auto px-4 bg-[#0A0F14]"} 
+                 bg-cover bg-center w-screen`
             }
             style={{
-                backgroundImage: image ? `url(${image})` : "none"
+                backgroundImage: image ? `url(${image})` : "none",
+                backgroundSize: "contain",
             }}
         >
             {children}
