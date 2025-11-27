@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from "react";
-import Background from "../components/backgrounds/Background";
-import AutoBackground from "../components/backgrounds/AutoBackground";
-import Dropdown from "../components/write_ups/dropdown/Dropdown";
-import Search from "../components/write_ups/search/Search";
-import Toolbar from "../components/write_ups/toolbar/Toolbar";
-import LinkBlock from "../components/write_ups/linkblock/LinkBlock";
-import Pagination, { PAGE_SIZE } from "../components/write_ups/pagination/Pagination";
-import Notification from "../components/notification/Notification";
+import Background from "../components/Backgrounds/Background";
+import AutoBackground from "../components/Backgrounds/AutoBackground";
+import Dropdown from "../components/WriteUps/dropdown/Dropdown";
+import Search from "../components/WriteUps/search/Search";
+import Toolbar from "../components/WriteUps/toolbar/Toolbar";
+import LinkBlock from "../components/WriteUps/linkblock/LinkBlock";
+import Pagination, { PAGE_SIZE } from "../components/WriteUps/pagination/Pagination";
+import Notification from "../components/Notifications/Notification";
 
 function WriteUps() {
     // Full list of write-ups

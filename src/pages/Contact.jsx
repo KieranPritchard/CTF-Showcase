@@ -1,5 +1,5 @@
-import Background from '../components/backgrounds/Background'
-import ContactLinks from '../components/contact/ContactLinks'
+import Background from '../components/Backgrounds/Background'
+import ContactLinks from '../components/ContactPage/ContactLinks'
 
 function Contact() {
     return (

@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import Background from "../components/backgrounds/Background";
-import AutoBackground from "../components/backgrounds/AutoBackground";
-import About from "../components/home_page/About";
-import Recents from "../components/home_page/Recents";
-import Welcome from "../components/home_page/Welcome";
-import ImageBackground from "../components/backgrounds/ImageBackground";
+import Background from "../components/Backgrounds/Background";
+import AutoBackground from "../components/Backgrounds/AutoBackground";
+import About from "../components/HomePage/About";
+import Recents from "../components/HomePage/Recents";
+import Welcome from "../components/HomePage/Welcome";
+import ImageBackground from "../components/Backgrounds/ImageBackground";
 import Banner from "../assets/banner.png";
-import Skills from "../components/home_page/Skills";
+import Skills from "../components/HomePage/Skills";
 
 function Home() {
     const [isMobile, setIsMobile] = useState(false);

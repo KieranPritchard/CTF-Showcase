@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import AutoBackground from "../components/backgrounds/AutoBackground";
-import Background from "../components/backgrounds/Background";
-import Carousel from "../components/write_ups/carousel/Carousel";
+import AutoBackground from "../components/Backgrounds/AutoBackground";
+import Background from "../components/Backgrounds/Background";
+import Carousel from "../components/WriteUps/carousel/Carousel";
 
 // Category Images
 import WebAppImage from "../assets/web-app.webp";
@@ -13,12 +13,12 @@ import CryptographyImage from "../assets/cryptography.webp";
 import DatabaseImage from "../assets/database.webp";
 import LinuxImage from "../assets/linux.webp";
 
-import HeadingBlock from "../components/write_ups/content_blocks/HeadingBlock";
-import SubheadingBlock from "../components/write_ups/content_blocks/SubheadingBlock";
-import ParagraphBlock from "../components/write_ups/content_blocks/ParagraphBlock";
-import ListItem from "../components/write_ups/content_blocks/ListBlock";
-import CodeBlock from "../components/write_ups/content_blocks/CodeBlock";
-import ImageBlock from "../components/write_ups/content_blocks/ImageBlock";
+import HeadingBlock from "../components/WriteUps/content_blocks/HeadingBlock";
+import SubheadingBlock from "../components/WriteUps/content_blocks/SubheadingBlock";
+import ParagraphBlock from "../components/WriteUps/content_blocks/ParagraphBlock";
+import ListItem from "../components/WriteUps/content_blocks/ListBlock";
+import CodeBlock from "../components/WriteUps/content_blocks/CodeBlock";
+import ImageBlock from "../components/WriteUps/content_blocks/ImageBlock";
 
 function WriteUpPage() {
     const { slug } = useParams();
