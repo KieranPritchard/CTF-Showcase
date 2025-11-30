@@ -3658,5 +3658,312 @@
       "path": "Contents/c4ptur3-th3-fl4g/README.md",
       "sha": "02969a247f20d5cf293fbc2898a6881c4d23cbb8"
     }
+  },
+  {
+    "slug": "pickle-rick",
+    "title": "Pickle Rick",
+    "ctf_name": "TryHackMe",
+    "platform": "",
+    "category": "Web Application",
+    "difficulty": "Easy",
+    "points": "90",
+    "flag": "",
+    "tools": [],
+    "content": [
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Info"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "CTF Name: TryHackMe",
+          "Challenge Name: Pickle Rick",
+          "Category: Web Application",
+          "Points: 90",
+          "Difficulty: Easy"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Description"
+      },
+      {
+        "type": "paragraph",
+        "text": "A fun Rick and Morty–themed CTF where the objective is to collect three secret ingredients to help turn Rick back into a human."
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Files Provided"
+      },
+      {
+        "type": "paragraph",
+        "text": "None"
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Challenge Setup"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Tools Used:"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Nmap — For initial host discovery, port scanning, and service enumeration.",
+          "Gobuster — Directory and file brute forcing.",
+          "Browser Developer Tools — Inspecting HTML comments and discovering hidden credentials.",
+          "GTFOBins — Identifying sudo or restricted-shell bypass methods.",
+          "sudo — Used to escalate privileges due to misconfigurations.",
+          "Linux CLI Utilities (tac, ls, sudo -l, etc.) — Navigating the filesystem and reading files when primary commands were blocked."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "Environment:"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "TryHackMe hosted target machine",
+          "Kali Linux (attacker machine)"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Initial Recon"
+      },
+      {
+        "type": "paragraph",
+        "text": "After deploying the machine and obtaining the target IP, I performed an Nmap scan. The scan revealed two open services:"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "SSH on port 22",
+          "Apache Web Server on port 80"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Exploitation / Solution"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "1. Initial Enumeration"
+      },
+      {
+        "type": "paragraph",
+        "text": "I started by running Gobuster with the common.txt wordlist from SecLists. Visiting the web interface revealed a page telling me to find a username and password."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "2. Discovering Credentials"
+      },
+      {
+        "type": "paragraph",
+        "text": "Inspecting the page source exposed a username hidden in an HTML comment. A quick check of robots.txt revealed another string possibly being a password. An attempt to log in via SSH using these credentials failed, so I continued enumeration."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "3. Further Directory Busting"
+      },
+      {
+        "type": "paragraph",
+        "text": "Running Gobuster again with file extension enumeration uncovered more files, including: \"portal.php\" accessing this page led to a login portal."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "4. Portal Access & Command Injection"
+      },
+      {
+        "type": "paragraph",
+        "text": "Using the discovered credentials, I successfully logged into the portal. The interface allowed command execution, which I verified by running whoami. Although the \"cat\" command was disabled, I continued exploring the filesystem."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "5. Privilege Escalation Attempts"
+      },
+      {
+        "type": "paragraph",
+        "text": "Using \"sudo -l\", I saw that certain commands could be executed with sudo without requiring a password. Some GTFOBins escalation attempts didn’t work, but I found a workaround: replacing \"cat\" with \"tac\", which functioned normally."
+      },
+      {
+        "type": "paragraph",
+        "text": "This allowed me to extract the first ingredient."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "6. Collecting All Ingredients"
+      },
+      {
+        "type": "paragraph",
+        "text": "Navigating to \"/home\", I found directories for \"rick\" and \"ubuntu\". Inside the \"rick\" directory, a folder named \"secondingredient\" contained the second item. Again using tac, I read its contents. Finally, leveraging my sudo permissions, I accessed the \"/root\" directory and obtained the third ingredient."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "text": "7. Completion"
+      },
+      {
+        "type": "paragraph",
+        "text": "After retrieving all three ingredients, the challenge was successfully completed."
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Flag"
+      },
+      {
+        "type": "code",
+        "language": "",
+        "code": "Flag One: mr. meeseek hair\nFlag Two: 1 jerry tear\nFlag Three: fleeb juice"
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Tools Used"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "Nmap — For initial host discovery, port scanning, and service enumeration.",
+          "Gobuster — Directory and file brute forcing.",
+          "Browser Developer Tools — Inspecting HTML comments and discovering hidden credentials.",
+          "GTFOBins — Identifying sudo or restricted-shell bypass methods.",
+          "sudo — Used to escalate privileges due to misconfigurations.",
+          "Linux CLI Utilities (tac, ls, sudo -l, etc.) — Navigating the filesystem and reading files when primary commands were blocked."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Notes / Lessons Learned"
+      },
+      {
+        "type": "list",
+        "ordered": false,
+        "items": [
+          "If a command is blocked, try alternatives—utilities like tac, head, or less can bypass restrictions.",
+          "Inspect everything: page source, comments, and simple files often contain direct hints."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "text": "Screenshots (Optional)"
+      },
+      {
+        "type": "paragraph",
+        "text": ""
+      }
+    ],
+    "images": [
+      {
+        "path": "Contents/Pickle_Rick/Pickle_Rick_Screenshot_1.png",
+        "sha": "9c1bd34d11b9ee6161c868b92e92d4d0067fbc13",
+        "download_url": "https://raw.githubusercontent.com/KieranPritchard/CTF-Write-Ups/main/Contents/Pickle_Rick/Pickle_Rick_Screenshot_1.png"
+      },
+      {
+        "path": "Contents/Pickle_Rick/Pickle_Rick_Screenshot_10.png",
+        "sha": "c6e164280dd9d9db6cf57f20b0869f8c9965c780",
+        "download_url": "https://raw.githubusercontent.com/KieranPritchard/CTF-Write-Ups/main/Contents/Pickle_Rick/Pickle_Rick_Screenshot_10.png"
+      },
+      {
+        "path": "Contents/Pickle_Rick/Pickle_Rick_Screenshot_11.png",
+        "sha": "b9992a35bb4c336721e15467af8f9f9470652634",
+        "download_url": "https://raw.githubusercontent.com/KieranPritchard/CTF-Write-Ups/main/Contents/Pickle_Rick/Pickle_Rick_Screenshot_11.png"
+      },
+      {
+        "path": "Contents/Pickle_Rick/Pickle_Rick_Screenshot_12.png",
+        "sha": "6a09043ecc1179bc7942f980a459cc5f5ab6b974",
+        "download_url": "https://raw.githubusercontent.com/KieranPritchard/CTF-Write-Ups/main/Contents/Pickle_Rick/Pickle_Rick_Screenshot_12.png"
+      },
+      {
+        "path": "Contents/Pickle_Rick/Pickle_Rick_Screenshot_13.png",
+        "sha": "10b1cd1f2352fc4381f6666e8703f5172d306006",
+        "download_url": "https://raw.githubusercontent.com/KieranPritchard/CTF-Write-Ups/main/Contents/Pickle_Rick/Pickle_Rick_Screenshot_13.png"
+      },
+      {
+        "path": "Contents/Pickle_Rick/Pickle_Rick_Screenshot_14.png",
+        "sha": "94918cd3908d6cc9ba50c82d0c65348c2377a66b",
+        "download_url": "https://raw.githubusercontent.com/KieranPritchard/CTF-Write-Ups/main/Contents/Pickle_Rick/Pickle_Rick_Screenshot_14.png"
+      },
+      {
+        "path": "Contents/Pickle_Rick/Pickle_Rick_Screenshot_15.png",
+        "sha": "860c1854ea0f07e7609a069e49b1c29abad21fe9",
+        "download_url": "https://raw.githubusercontent.com/KieranPritchard/CTF-Write-Ups/main/Contents/Pickle_Rick/Pickle_Rick_Screenshot_15.png"
+      },
+      {
+        "path": "Contents/Pickle_Rick/Pickle_Rick_Screenshot_16.png",
+        "sha": "5d74a91b6b74daee4a0ead70f7c9a318c906035e",
+        "download_url": "https://raw.githubusercontent.com/KieranPritchard/CTF-Write-Ups/main/Contents/Pickle_Rick/Pickle_Rick_Screenshot_16.png"
+      },
+      {
+        "path": "Contents/Pickle_Rick/Pickle_Rick_Screenshot_2.png",
+        "sha": "f70f0add0a6b91850e6697a72c7de4fc4be89b97",
+        "download_url": "https://raw.githubusercontent.com/KieranPritchard/CTF-Write-Ups/main/Contents/Pickle_Rick/Pickle_Rick_Screenshot_2.png"
+      },
+      {
+        "path": "Contents/Pickle_Rick/Pickle_Rick_Screenshot_3.png",
+        "sha": "3343dbeaf9191dfb86467033b55eec39946675d5",
+        "download_url": "https://raw.githubusercontent.com/KieranPritchard/CTF-Write-Ups/main/Contents/Pickle_Rick/Pickle_Rick_Screenshot_3.png"
+      },
+      {
+        "path": "Contents/Pickle_Rick/Pickle_Rick_Screenshot_4.png",
+        "sha": "c997f0bbd832e3ba4eabac938de2f90498c36366",
+        "download_url": "https://raw.githubusercontent.com/KieranPritchard/CTF-Write-Ups/main/Contents/Pickle_Rick/Pickle_Rick_Screenshot_4.png"
+      },
+      {
+        "path": "Contents/Pickle_Rick/Pickle_Rick_Screenshot_5.png",
+        "sha": "fc94d4beb786c2f44b8b4bee7be522799ae0572f",
+        "download_url": "https://raw.githubusercontent.com/KieranPritchard/CTF-Write-Ups/main/Contents/Pickle_Rick/Pickle_Rick_Screenshot_5.png"
+      },
+      {
+        "path": "Contents/Pickle_Rick/Pickle_Rick_Screenshot_6.png",
+        "sha": "fa393e8cc926117ba3826f9d48b05be2abf9f6f0",
+        "download_url": "https://raw.githubusercontent.com/KieranPritchard/CTF-Write-Ups/main/Contents/Pickle_Rick/Pickle_Rick_Screenshot_6.png"
+      },
+      {
+        "path": "Contents/Pickle_Rick/Pickle_Rick_Screenshot_7.png",
+        "sha": "fce8b2698a83002ef270b4468618812e6a186676",
+        "download_url": "https://raw.githubusercontent.com/KieranPritchard/CTF-Write-Ups/main/Contents/Pickle_Rick/Pickle_Rick_Screenshot_7.png"
+      },
+      {
+        "path": "Contents/Pickle_Rick/Pickle_Rick_Screenshot_8.png",
+        "sha": "6b0a7da21c7cdd6760f17d4f92f0541124e8c614",
+        "download_url": "https://raw.githubusercontent.com/KieranPritchard/CTF-Write-Ups/main/Contents/Pickle_Rick/Pickle_Rick_Screenshot_8.png"
+      },
+      {
+        "path": "Contents/Pickle_Rick/Pickle_Rick_Screenshot_9.png",
+        "sha": "775305cdeada2aca4910f427ab98a2fc600cb36c",
+        "download_url": "https://raw.githubusercontent.com/KieranPritchard/CTF-Write-Ups/main/Contents/Pickle_Rick/Pickle_Rick_Screenshot_9.png"
+      }
+    ],
+    "created_date": "2025-11-30T21:04:06Z",
+    "_source": {
+      "path": "Contents/Pickle_Rick/README.md",
+      "sha": "d4a16daf958db3269811b9790c76218bddce3344"
+    }
   }
 ]
