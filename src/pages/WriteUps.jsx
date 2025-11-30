@@ -40,12 +40,17 @@ function WriteUps() {
         fetch("https://kieranpritchard.github.io/CTF-Showcase/writeups.json")
         .then((r) => r.json())
         .then((data) => {
-            setPosts(data);
-            setFiltered(data);
+            // Sort newest → oldest by created_date
+            const sorted = data.sort(
+                (a, b) => new Date(b.created_date) - new Date(a.created_date)
+            );
+
+            setPosts(sorted);
+            setFiltered(sorted);
 
             // Extract unique categories and platforms for dropdowns
-            setCategories([...new Set(data.map(p => p.category).filter(Boolean))]);
-            setPlatforms([...new Set(data.map(p => p.ctf_name).filter(Boolean))]);
+            setCategories([...new Set(sorted.map(p => p.category).filter(Boolean))]);
+            setPlatforms([...new Set(sorted.map(p => p.ctf_name).filter(Boolean))]);
         })
         .catch((err) => console.error("Failed to load writeups.json:", err));
     }, []);
@@ -58,12 +63,15 @@ function WriteUps() {
         if (platform) result = result.filter(p => p.ctf_name === platform);
 
         if (searchQuery)
-        result = result.filter(p =>
-            (p.title || p.slug).toLowerCase().includes(searchQuery.toLowerCase())
-        );
+            result = result.filter(p =>
+                (p.title || p.slug).toLowerCase().includes(searchQuery.toLowerCase())
+            );
 
-    setFiltered(result);
-    setPage(1); // Reset to first page whenever filter/search changes
+        // Always keep newest → oldest
+        result = result.sort((a, b) => new Date(b.created_date) - new Date(a.created_date));
+
+        setFiltered(result);
+        setPage(1); // Reset to first page whenever filter/search changes
     }, [category, platform, searchQuery, posts]);
 
     // Determine the posts for the current page
@@ -85,44 +93,44 @@ function WriteUps() {
     const handleSearchChange = (value, submit = false) => {
         setSearchInput(value);
 
-    if (submit) {
-        const trimmed = value.trim();
+        if (submit) {
+            const trimmed = value.trim();
 
-        if (trimmed === "") {
-            setNotif({ type: "warning", message: "Search cannot be empty!" });
-            return;
-        } else if (trimmed === "music") {
-            setNotif({ type: "info", message: "go to: '/playlist'" });
-            return;
-        }
+            if (trimmed === "") {
+                setNotif({ type: "warning", message: "Search cannot be empty!" });
+                return;
+            } else if (trimmed === "music") {
+                setNotif({ type: "info", message: "go to: '/playlist'" });
+                return;
+            }
 
-        // Easter egg for XSS-like input
-        const looksLikeXSS = /<[^>]+>|on\w+=/i.test(trimmed);
-        if (looksLikeXSS) {
-            setNotif({
-            type: "success",
-            message: "Nice try... Think I would let you do that!"
-            });
-            return;
-        }
+            // Easter egg for XSS-like input
+            const looksLikeXSS = /<[^>]+>|on\w+=/i.test(trimmed);
+            if (looksLikeXSS) {
+                setNotif({
+                    type: "success",
+                    message: "Nice try... Think I would let you do that!"
+                });
+                return;
+            }
 
-        // Set search query for filtering
-        setSearchQuery(value);
+            // Set search query for filtering
+            setSearchQuery(value);
         }
     };
 
     // Animate LinkBlock elements when they enter viewport
     useEffect(() => {
         const observer = new IntersectionObserver(
-        (entries) => {
-            entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add("visible");
-                observer.unobserve(entry.target); // Animate only once
-            }
-            });
-        },
-        { threshold: 0.1 } // Trigger when 10% of element is visible
+            (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("visible");
+                        observer.unobserve(entry.target); // Animate only once
+                    }
+                });
+            },
+            { threshold: 0.1 } // Trigger when 10% of element is visible
         );
 
         linkRefs.current.forEach(ref => {
@@ -134,42 +142,42 @@ function WriteUps() {
 
     return (
         <Wrapper>
-        {/* Toast notifications */}
-        {notif && (
-            <div className="fixed top-4 right-4 z-50">
-            <Notification
-                type={notif.type}
-                message={notif.message}
-                duration={2500}
-                onClose={() => setNotif(null)}
-            />
-            </div>
-        )}
-
-        <div className="px-[5%] pt-5">
-            {/* Toolbar with search and dropdown filters */}
-            <Toolbar>
-            <Search value={searchInput} handleChange={handleSearchChange} />
-            <Dropdown options={categories} handleSelect={setCategory} message="Category" />
-            <Dropdown options={platforms} handleSelect={setPlatform} message="Platform" />
-            </Toolbar>
-
-            {/* Grid of LinkBlocks with fade-in animation */}
-            <div className="grid gap-4 mt-5">
-            {currentPosts.map((post, idx) => (
-                <div
-                key={post.slug}
-                ref={(el) => (linkRefs.current[idx] = el)}
-                className="fade-in-bottom"
-                >
-                <LinkBlock post={post} getDescription={getDescription} />
+            {/* Toast notifications */}
+            {notif && (
+                <div className="fixed top-4 right-4 z-50">
+                    <Notification
+                        type={notif.type}
+                        message={notif.message}
+                        duration={2500}
+                        onClose={() => setNotif(null)}
+                    />
                 </div>
-            ))}
-            </div>
+            )}
 
-            {/* Pagination controls */}
-            <Pagination length={filtered.length} page={page} setPage={setPage} />
-        </div>
+            <div className="px-[5%] pt-5">
+                {/* Toolbar with search and dropdown filters */}
+                <Toolbar>
+                    <Search value={searchInput} handleChange={handleSearchChange} />
+                    <Dropdown options={categories} handleSelect={setCategory} message="Category" />
+                    <Dropdown options={platforms} handleSelect={setPlatform} message="Platform" />
+                </Toolbar>
+
+                {/* Grid of LinkBlocks with fade-in animation */}
+                <div className="grid gap-4 mt-5">
+                    {currentPosts.map((post, idx) => (
+                        <div
+                            key={post.slug}
+                            ref={(el) => (linkRefs.current[idx] = el)}
+                            className="fade-in-bottom"
+                        >
+                            <LinkBlock post={post} getDescription={getDescription} />
+                        </div>
+                    ))}
+                </div>
+
+                {/* Pagination controls */}
+                <Pagination length={filtered.length} page={page} setPage={setPage} />
+            </div>
         </Wrapper>
     );
 }

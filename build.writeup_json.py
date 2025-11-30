@@ -299,7 +299,7 @@ def build_json():
         results.append(entry)
 
     # Sort by oldest → newest (you can flip this if you want newest first)
-    results.sort(key=lambda x: x["created_date"])
+    results.sort(key=lambda x: x["created_date"], reverse=True)
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         json.dump(results, f, ensure_ascii=False, indent=2)
