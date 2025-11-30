@@ -54,12 +54,12 @@ function RecentWriteUp({ title, description, category }) {
                 </div>
 
                 {/* Title of the write-up */}
-                <h3 className="headings text-lg text-center mb-3 font-bold text-[#00FF88]">
+                <h3 className="headings text-2xl text-center mb-3 font-bold text-[#00FF88]">
                     {title}
                 </h3>
 
                 {/* Description preview (trimmed to ensure consistent layout) */}
-                <p className="text-[#C7FCEC] text-body text-center leading-relaxed overflow-hidden">
+                <p className="text-[#C7FCEC] text-body text-md text-center leading-relaxed overflow-hidden">
                     {description.length > 180
                         ? description.slice(0, 180) + "..."
                         : description}

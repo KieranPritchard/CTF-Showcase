@@ -23,7 +23,7 @@ function Navbar() {
             <button
                 onClick={() => setOpen(!open)}
                 aria-label="menu"
-                className="sm:hidden text-[#C7FCEC] hover:bg-[#27323C] p-1 rounded-md"
+                className="sm:hidden text-[#C7FCEC]"
             >
                 {/* Toggle Between Hamburger & X */}
                 {open ? (
@@ -41,7 +41,7 @@ function Navbar() {
 
             {/* Mobile Dropdown */}
             <div
-                className={`${open ? "flex" : "hidden"} absolute top-[60px] left-0 w-full bg-[#121a22] shadow-lg py-4 flex-col items-start gap-2 px-5 text-sm md:hidden`}
+                className={`${open ? "flex" : "hidden"} absolute top-[60px] left-0 w-full bg-[#121a22] z-50 shadow-lg-[#121a22] shadow-lg py-4 flex-col items-start gap-2 px-5 text-sm md:hidden`}
             >
                 <NavLink to="/" className="text-body block p-2 w-full hover:bg-[#27323C] rounded-md neon-hover text-[#C7FCEC]" onClick={() => setOpen(false)}>Home</NavLink>
                 <NavLink to="/write-ups" className="text-body block p-2 w-full hover:bg-[#27323C] rounded-md neon-hover text-[#C7FCEC]" onClick={() => setOpen(false)}>Write-Ups</NavLink>
