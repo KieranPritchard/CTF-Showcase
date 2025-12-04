@@ -156,11 +156,13 @@ function WriteUps() {
 
             <div className="px-[5%] pt-5">
                 {/* Toolbar with search and dropdown filters */}
-                <Toolbar>
-                    <Search value={searchInput} handleChange={handleSearchChange} />
-                    <Dropdown options={categories} handleSelect={setCategory} message="Category" />
-                    <Dropdown options={platforms} handleSelect={setPlatform} message="Platform" />
-                </Toolbar>
+                <div className="w-full">
+                    <Toolbar>
+                        <Search value={searchInput} handleChange={handleSearchChange} />
+                        <Dropdown options={categories} handleSelect={setCategory} message="Category" />
+                        <Dropdown options={platforms} handleSelect={setPlatform} message="Platform" />
+                    </Toolbar>
+                </div>
 
                 {/* Grid of LinkBlocks with fade-in animation */}
                 <div className="grid gap-4 mt-5">

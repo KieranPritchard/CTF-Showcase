@@ -14,7 +14,6 @@ function Toolbar({ children }) {
                 justify-center         /* Center children horizontally */
                 sm:gap-2 gap-1         /* Gap between children: smaller on mobile */
                 items-center           /* Vertically center children */
-                w-full                 /* Take full width of parent container */
             "
         >
             {/* Render any child elements passed to the toolbar */}
