@@ -61,7 +61,7 @@ function Recents() {
                 return (
                 <Link
                     key={idx}
-                    to={`/writeups/${w.slug}`}
+                    to={`/write-ups/${w.slug}`}
                     ref={(el) => (cardsRef.current[idx] = el)}
                     className="fade-in-bottom h-full w-full flex justify-center hover:scale-[1.02] transition-transform"
                 >
