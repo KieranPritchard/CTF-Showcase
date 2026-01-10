@@ -17,8 +17,8 @@ function TotalPoints(){
 
     return(
         <div>
-            <h3>Total Points</h3>
-            <p>{data.total_points}</p>
+            <h3 className="text-xl font-bold text-[#00FF88]">Total Points</h3>
+            <p className="text-6xl font-semibold text-[#C7FCEC]">{data.total_points}</p>
         </div>
     )
 }

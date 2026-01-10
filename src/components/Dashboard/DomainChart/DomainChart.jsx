@@ -8,16 +8,10 @@ import {
     Filler,
     Tooltip,
     Legend,
+    Title
 } from 'chart.js';
 
-ChartJS.register(
-    RadialLinearScale,
-    PointElement,
-    LineElement,
-    Filler,
-    Tooltip,
-    Legend
-);
+ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend, Title);
 
 function DomainChart() {
     const [chartData, setChartData] = useState(null);
@@ -27,62 +21,74 @@ function DomainChart() {
             .then((r) => r.json())
             .then((json) => {
                 const expertise = json.domain_expertise;
-                
                 setChartData({
                     labels: expertise.labels,
-                    datasets: [
-                        {
-                            label: 'Challenges Solved',
-                            data: expertise.data,
-                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                            borderColor: 'rgba(54, 162, 235, 1)',
-                            borderWidth: 2,
-                            pointBackgroundColor: 'rgba(54, 162, 235, 1)',
-                        },
-                    ],
+                    datasets: [{
+                        label: 'Challenges Solved',
+                        data: expertise.data,
+                        backgroundColor: 'rgba(0, 255, 136, 0.1)',
+                        borderColor: '#00FF88',
+                        borderWidth: 2,
+                        pointRadius: 5,
+                        pointBackgroundColor: '#00FF88',
+                        pointBorderColor: '#111',
+                        pointHoverBackgroundColor: '#121A22',
+                        pointHoverBorderColor: '#00FF88',
+                    }],
                 });
             })
             .catch((err) => console.error("Error loading JSON:", err));
     }, []);
 
     const options = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: { 
+                display: false // ❌ Removed Legend Key
+            },
+            title: { 
+                display: true, 
+                text: 'Domain Expertise',
+                color: '#00FF88', 
+                font: { size: 18, weight: 'bold' },
+                padding: { bottom: 20 }
+            },
+            tooltip: {
+                enabled: true,
+                backgroundColor: 'rgba(17, 17, 17, 0.9)',
+                titleColor: '#00FF88',
+                borderColor: '#00FF88',
+                borderWidth: 1,
+                displayColors: false,
+            },
+        },
         scales: {
             r: {
                 beginAtZero: true,
-                // Since your max value is 6, setting a suggestedMax 
-                // ensures the chart isn't cramped at the edges.
-                suggestedMax: 7, 
-                ticks: {
-                    stepSize: 1 // Good for count-based data (1, 2, 3...)
-                },
-                grid: {
-                    color: 'rgba(255, 255, 255, 0.1)', // Subtle grid for dark mode
-                },
-                angleLines: {
-                    color: 'rgba(255, 255, 255, 0.1)',
-                },
+                suggestedMax: 5,
+                angleLines: { color: 'rgba(255, 255, 255, 0.05)' },
+                grid: { color: 'rgba(255, 255, 255, 0.05)' },
                 pointLabels: {
-                    font: {
-                        size: 12
-                    }
+                    color: '#00FF88',
+                    font: { size: 12, weight: 'bold' }
+                },
+                ticks: {
+                    stepSize: 1,
+                    color: '#00FF88',
+                    backdropColor: 'transparent'
                 }
             }
-        },
-        plugins: {
-            legend: {
-                display: false // Often looks cleaner on single-dataset radar charts
-            }
-        },
-        maintainAspectRatio: false
+        }
     };
 
-    if (!chartData) return <div>Loading...</div>;
+    if (!chartData) return <div style={{ color: '#00FF88' }}>Loading Domain Stats...</div>;
 
     return (
-        <div style={{ height: '400px', width: '100%' }}>
+        <div style={{ height: '400px', width: '100%', padding: '20px', background: '#121A22', borderRadius: '12px' }}>
             <Radar data={chartData} options={options} />
         </div>
     );
 }
 
-export default DomainChart
+export default DomainChart;
