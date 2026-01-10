@@ -17,7 +17,7 @@ function TotalPoints(){
 
     return(
         <div>
-            <h3>Total Challenges</h3>
+            <h3>Total Points</h3>
             <p>{data.total_points}</p>
         </div>
     )

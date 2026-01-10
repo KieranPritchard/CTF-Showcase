@@ -17,7 +17,7 @@ function UsedPlatforms(){
 
     return(
         <div>
-            <h3>Total Challenges</h3>
+            <h3>Unique Platforms</h3>
             <p>{data.unique_platforms}</p>
         </div>
     )
