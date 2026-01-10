@@ -1,4 +1,5 @@
 import Background from "../components/Backgrounds/Background"
+import DomainChart from "../components/Dashboard/HeroStats/DomainChart/DomainChart"
 import TotalChallenges from "../components/Dashboard/HeroStats/TotalChallenges/TotalChallenges"
 import TotalPoints from "../components/Dashboard/HeroStats/TotalPoints/TotalPoints"
 import UsedPlatforms from "../components/Dashboard/HeroStats/UsedPlatforms/UsedPlatforms"
@@ -15,6 +16,9 @@ function Dashboard(){
             </StatsContainer>
             <StatsContainer>
                 <UsedPlatforms />
+            </StatsContainer>
+            <StatsContainer>
+                <DomainChart />
             </StatsContainer>
         </Background>
     )
