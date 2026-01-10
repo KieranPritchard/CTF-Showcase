@@ -85,7 +85,7 @@ function DomainChart() {
     if (!chartData) return <div style={{ color: '#00FF88' }}>Loading Domain Stats...</div>;
 
     return (
-        <div style={{ height: '400px', width: '100%', padding: '20px', background: '#121A22', borderRadius: '12px' }}>
+        <div style={{ height: '450px', width: '100%', padding: '20px', background: '#121A22', borderRadius: '12px' }}>
             <Radar data={chartData} options={options} />
         </div>
     );

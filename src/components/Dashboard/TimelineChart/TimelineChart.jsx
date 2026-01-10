@@ -119,7 +119,7 @@ function TimelineChart() {
 
     return (
         <div style={{ 
-            height: '400px', 
+            height: '450px', 
             width: '100%', 
             padding: '20px', 
             background: '#121A22', // Dark background to make white labels pop

@@ -17,7 +17,7 @@ function UsedPlatforms(){
 
     return(
         <div>
-            <h3 className="text-xl font-bold text-[#00FF88]">Unique Platforms</h3>
+            <h3 className="text-xl mb-2 font-bold text-[#00FF88]">Unique Platforms</h3>
             <p className="text-6xl font-semibold text-[#C7FCEC]">{data.unique_platforms}</p>
         </div>
     )
