@@ -1,0 +1,39 @@
+{
+  "hero": {
+    "total_challenges": 13,
+    "total_points": 1920,
+    "unique_platforms": 0
+  },
+  "domain_expertise": {
+    "labels": [
+      "Web Application",
+      "Linux",
+      "Windows",
+      "Password Cracking",
+      "Database Exploit",
+      "OSINT",
+      "Privilege Escalatio",
+      "Cryptography/Steganography"
+    ],
+    "data": [
+      6,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ]
+  },
+  "timeline": {
+    "labels": [
+      "2025-11-11",
+      "2025-11-30"
+    ],
+    "data": [
+      12,
+      13
+    ]
+  }
+}
