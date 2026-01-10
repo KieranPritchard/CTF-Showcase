@@ -6,6 +6,7 @@ import Contact from './pages/Contact'
 import WriteUpPage from './pages/WriteUpPage'
 import Navbar from './components/Navbar/Navbar'
 import Footer from './components/Footer/Footer'
+import Dashboard from './pages/Dashboard'
 
 // Optional NotFound component
 const NotFound = () => <div>404 - Page Not Found</div>
@@ -21,6 +22,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/write-ups" element={<WriteUps/>} />
+        <Route path="/dashboard" element={<Dashboard/>} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/write-ups/:slug" element={<WriteUpPage />} />
         <Route path="*" element={<NotFound />} /> {/* catch-all fallback */}

@@ -16,6 +16,7 @@ function Navbar() {
             <div className="hidden sm:flex items-center gap-8">
                 <NavLink to="/" className={({ isActive }) => `text-body neon-hover transition-all ${isActive ? "text-[#C7FCEC] flicker" : "text-[#C7FCEC]"}`}>Home</NavLink>
                 <NavLink to="/write-ups" className={({ isActive }) => `text-body neon-hover transition-all ${isActive ? "text-[#C7FCEC] flicker" : "text-[#C7FCEC]"}`}>Write-Ups</NavLink>
+                <NavLink to="/dashboard" className={({ isActive }) => `text-body neon-hover transition-all ${isActive ? "text-[#C7FCEC] flicker" : "text-[#C7FCEC]"}`}>Dashboard</NavLink>
                 <NavLink to="/contact" className={({ isActive }) => `text-body neon-hover transition-all ${isActive ? "text-[#C7FCEC] flicker" : "text-[#C7FCEC]"}`}>Contact</NavLink>
             </div>
 
@@ -45,6 +46,7 @@ function Navbar() {
             >
                 <NavLink to="/" className="text-body block p-2 w-full hover:bg-[#27323C] rounded-md neon-hover text-[#C7FCEC]" onClick={() => setOpen(false)}>Home</NavLink>
                 <NavLink to="/write-ups" className="text-body block p-2 w-full hover:bg-[#27323C] rounded-md neon-hover text-[#C7FCEC]" onClick={() => setOpen(false)}>Write-Ups</NavLink>
+                <NavLink to="/dashboard" className="text-body block p-2 w-full hover:bg-[#27323C] rounded-md neon-hover text-[#C7FCEC]" onClick={() => setOpen(false)}>Dashboard</NavLink>
                 <NavLink to="/contact" className="text-body block p-2 w-full hover:bg-[#27323C] rounded-md neon-hover text-[#C7FCEC]" onClick={() => setOpen(false)}>Contact</NavLink>
             </div>
         </nav>
