@@ -1,12 +1,18 @@
 import { useEffect, useRef } from "react";
 
 function Welcome() {
+    // Refrences the banner
     const bannerRef = useRef(null);
 
+    // Uses use effect to create
     useEffect(() => {
+        // Creates a new observer
         const observer = new IntersectionObserver(
+            // Loops over the different entrys
             (entries) => {
+                // Loops over each of the entrys
                 entries.forEach((entry) => {
+                // Checks if the entry is intersecting
                 if (entry.isIntersecting) {
                     entry.target.classList.add("visible");
                     observer.unobserve(entry.target); // animate only once
@@ -16,6 +22,7 @@ function Welcome() {
             { threshold: 0.1 } // trigger when 10% visible
         );
 
+        // Checks if the banner is current
         if (bannerRef.current) {
             observer.observe(bannerRef.current);
         }
@@ -25,8 +32,8 @@ function Welcome() {
 
     return (
         <div
-        ref={bannerRef}
-        className="fade-in-bottom bg-[#121A22] border-2 border-[#00FF88] w-full max-w-3xl mx-auto py-4 px-4 sm:px-8 mb-20 rounded-lg shadow-[0_0_20px_#00FF88,0_0_40px_#00FF88,0_0_60px_#00FF88]"
+            ref={bannerRef}
+            className="fade-in-bottom bg-[#121A22] border-2 border-[#00FF88] w-full max-w-3xl mx-auto py-4 px-4 sm:px-8 mb-20 rounded-lg shadow-[0_0_20px_#00FF88,0_0_40px_#00FF88,0_0_60px_#00FF88]"
         >
             <h1 className="headings flicker text-3xl sm:text-3xl md:text-4xl font-extrabold text-center my-4 text-[#C7FCEC] drop-shadow-[0_0_6px_#00FF88] tracking-wide">
                 Explore My Write-Up's

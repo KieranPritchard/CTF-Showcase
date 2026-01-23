@@ -10,13 +10,17 @@ if (typeof global !== 'undefined') {
   global.Buffer = Buffer
 }
 
+// Imports the functions and the styling
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 
+// Creates react root
 createRoot(document.getElementById('root')).render(
+  // Opens the app in strict mode
   <StrictMode>
+    {/* Renders the app */}
     <App />
   </StrictMode>
 )

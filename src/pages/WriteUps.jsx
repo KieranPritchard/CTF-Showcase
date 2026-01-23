@@ -37,39 +37,52 @@ function WriteUps() {
 
     // Load write-ups data on component mount
     useEffect(() => {
+        // Fetchs the write ups data from the github repository
         fetch("https://kieranpritchard.github.io/CTF-Showcase/writeups.json")
+        // Converts the data to json
         .then((r) => r.json())
+        // Then sorts the data
         .then((data) => {
             // Sort newest → oldest by created_date
             const sorted = data.sort(
+                // Swaps based on the date
                 (a, b) => new Date(b.created_date) - new Date(a.created_date)
             );
 
+            // Sets the sorted posts in the posts state 
             setPosts(sorted);
+            // Sets the sorted posts in the set filtered 
             setFiltered(sorted);
 
             // Extract unique categories and platforms for dropdowns
             setCategories([...new Set(sorted.map(p => p.category).filter(Boolean))]);
             setPlatforms([...new Set(sorted.map(p => p.ctf_name).filter(Boolean))]);
         })
+        // Catchs the error
         .catch((err) => console.error("Failed to load writeups.json:", err));
     }, []);
 
     // Update filtered posts whenever filters or search query changes
     useEffect(() => {
+        // Creates result variable from posts
         let result = posts;
 
+        // Checks if category is changed and filters the results
         if (category) result = result.filter(p => p.category === category);
+        // Checks if category is changed and filters the results
         if (platform) result = result.filter(p => p.ctf_name === platform);
 
+        // Checks for a search query
         if (searchQuery)
+            // Filters the results by teh search query
             result = result.filter(p =>
                 (p.title || p.slug).toLowerCase().includes(searchQuery.toLowerCase())
             );
 
         // Always keep newest → oldest
         result = result.sort((a, b) => new Date(b.created_date) - new Date(a.created_date));
-
+        
+        // Sets the filtered result
         setFiltered(result);
         setPage(1); // Reset to first page whenever filter/search changes
     }, [category, platform, searchQuery, posts]);
@@ -91,11 +104,15 @@ function WriteUps() {
 
     // Handle search input and submission
     const handleSearchChange = (value, submit = false) => {
+        // Sets the search input as the value
         setSearchInput(value);
 
+        // Checks for the submit
         if (submit) {
+            // Trims the value
             const trimmed = value.trim();
 
+            // Checks for differnt values
             if (trimmed === "") {
                 setNotif({ type: "warning", message: "Search cannot be empty!" });
                 return;
@@ -121,9 +138,12 @@ function WriteUps() {
 
     // Animate LinkBlock elements when they enter viewport
     useEffect(() => {
+        // Obserber to check different entrys
         const observer = new IntersectionObserver(
             (entries) => {
+                // Loops over each entry
                 entries.forEach(entry => {
+                    // Checks if the entry is in view
                     if (entry.isIntersecting) {
                         entry.target.classList.add("visible");
                         observer.unobserve(entry.target); // Animate only once

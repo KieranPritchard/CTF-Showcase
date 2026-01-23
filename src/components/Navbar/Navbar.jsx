@@ -2,6 +2,7 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 function Navbar() {
+    // State to switch between open adn closed state
     const [open, setOpen] = useState(false);
 
     return (

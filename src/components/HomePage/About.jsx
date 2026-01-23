@@ -2,9 +2,11 @@ import { useEffect, useRef } from "react";
 import ImageOfMe from "../../assets/kieran-pritchard-profile-photo.webp";
 
 function About() {
+    // Refrences the image and texts
     const imageRef = useRef(null);
     const textRef = useRef(null);
 
+    // Creates animation observer
     useEffect(() => {
         const observer = new IntersectionObserver(
         (entries) => {
