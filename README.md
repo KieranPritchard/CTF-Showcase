@@ -35,12 +35,15 @@ A security-first portfolio platform designed to transform private CTF research i
 **Frontend:**
 * React
 * Tailwind CSS
+
 **Backend / Automation:**
 * Python
 * GitHub REST API
+
 **Content Format:**
 * Markdown (source of truth)
 * JSON (compiled data layer)
+
 **Tools:**
 * Git
 * GitHub Pages
