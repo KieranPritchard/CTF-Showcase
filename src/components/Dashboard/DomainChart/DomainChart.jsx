@@ -13,14 +13,21 @@ import {
 
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend, Title);
 
+// Radar chart for domain expertise stats
 function DomainChart() {
+    // State to hold the chart data
     const [chartData, setChartData] = useState(null);
 
+    // Use effect to fetch stats on mount
     useEffect(() => {
+        // Fetches the stats from the json file
         fetch("/CTF-Showcase/stats.json")
+            // Converts the response to json
             .then((r) => r.json())
             .then((json) => {
+                // Takes the domain expertise data
                 const expertise = json.domain_expertise;
+                // Sets the chart labels and dataset
                 setChartData({
                     labels: expertise.labels,
                     datasets: [{
@@ -37,9 +44,11 @@ function DomainChart() {
                     }],
                 });
             })
+            // Catches the error
             .catch((err) => console.error("Error loading JSON:", err));
     }, []);
 
+    // Chart options for styling and behaviour
     const options = {
         responsive: true,
         maintainAspectRatio: false,
@@ -82,6 +91,7 @@ function DomainChart() {
         }
     };
 
+    // If data hasnt arrived yet, show loading instead of crashing
     if (!chartData) return <div style={{ color: '#00FF88' }}>Loading Domain Stats...</div>;
 
     return (

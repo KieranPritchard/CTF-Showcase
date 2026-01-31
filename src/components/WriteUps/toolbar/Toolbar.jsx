@@ -1,7 +1,4 @@
-/**
- * Toolbar component: a flexible container for action buttons, inputs, or other controls.
- * Supports both vertical stacking on small screens and horizontal layout on larger screens.
- */
+// Toolbar container for search and dropdown filters (stacks on small screens, row on larger)
 function Toolbar({ children }) {
     return (
         <div
@@ -16,7 +13,7 @@ function Toolbar({ children }) {
                 items-center           /* Vertically center children */
             "
         >
-            {/* Render any child elements passed to the toolbar */}
+            {/* Renders the child elements (search, dropdowns) */}
             {children}
         </div>
     );

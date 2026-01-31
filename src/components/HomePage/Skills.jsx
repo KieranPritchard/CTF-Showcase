@@ -1,11 +1,11 @@
-function Skills(){
-    return(
+// Skills section with two columns of list items
+function Skills() {
+    return (
         <div className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-8 py-10 w-full">
             <h2 className="headings flicker text-white text-3xl sm:text-4xl font-bold mb-10">Skills</h2>
             {/* Two-column layout */}
             <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-8 w-full max-w-6xl">
-                
-                {/* Image Section */}
+                {/* Left column - tools and tech */}
                 <div className="md:w-auto text-center flex flex-col justify-center w-full">
                     <ul className="text-body list-disc text-[#C7FCEC] text-left">
                         <li>Nmap</li>
@@ -22,7 +22,7 @@ function Skills(){
                     </ul>
                 </div>
 
-                {/* Text Section */}
+                {/* Right column - skills and areas */}
                 <div className="w-full md:w-auto text-center">
                     <ul className="text-body list-disc text-[#C7FCEC] text-left ">
                         <li>Vulnerability Scanning</li>

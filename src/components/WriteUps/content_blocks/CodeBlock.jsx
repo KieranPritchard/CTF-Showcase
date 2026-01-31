@@ -1,8 +1,11 @@
 import { useState } from "react";
 
+// Code block with copy-to-clipboard button
 export default function CodeBlock({ block }) {
+    // State to show copied feedback
     const [copied, setCopied] = useState(false);
 
+    // Copies the code to clipboard and shows feedback
     const handleCopy = () => {
         navigator.clipboard.writeText(block.code);
         setCopied(true);
@@ -11,7 +14,7 @@ export default function CodeBlock({ block }) {
 
     return (
         <div className="relative mx-5 my-4">
-            {/* Copy Button */}
+            {/* Copy button */}
             <button
                 onClick={handleCopy}
                 className="
@@ -23,7 +26,7 @@ export default function CodeBlock({ block }) {
                 {copied ? "Copied!" : "Copy"}
             </button>
 
-            {/* Code Block */}
+            {/* Code block content */}
             <pre
                 className="
                     code-text bg-black/40 text-[#00FF88]

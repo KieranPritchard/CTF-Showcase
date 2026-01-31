@@ -23,15 +23,21 @@ ChartJS.register(
     Filler
 );
 
+// Line chart for progression timeline
 function TimelineChart() {
+    // State to hold the chart data
     const [chartData, setChartData] = useState(null);
 
+    // Use effect to fetch stats on mount
     useEffect(() => {
+        // Fetches the stats from the json file
         fetch("/CTF-Showcase/stats.json")
+            // Converts the response to json
             .then((r) => r.json())
             .then((json) => {
+                // Takes the timeline data
                 const timeline = json.timeline;
-                
+                // Sets the chart labels and dataset
                 setChartData({
                     labels: timeline.labels,
                     datasets: [
@@ -52,9 +58,11 @@ function TimelineChart() {
                     ],
                 });
             })
+            // Catches the error
             .catch((err) => console.error("Error loading timeline:", err));
     }, []);
 
+    // Chart options for styling and behaviour
     const options = {
         responsive: true,
         maintainAspectRatio: false,
@@ -115,6 +123,7 @@ function TimelineChart() {
         }
     };
 
+    // If data hasnt arrived yet, show loading instead of crashing
     if (!chartData) return <div style={{ color: '#00FF88' }}>Loading Timeline...</div>;
 
     return (

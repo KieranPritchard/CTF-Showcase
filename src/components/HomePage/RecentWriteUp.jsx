@@ -6,19 +6,16 @@ import CryptographyImage from "../../assets/cryptography.webp";
 import DatabaseImage from "../../assets/database.webp";
 import LinuxImage from "../../assets/linux.webp";
 
+// Card for a recent write-up preview (image, title, description)
 function RecentWriteUp({ title, description, category }) {
-
-    /**
-     * Returns the appropriate icon/image for a given write-up category.
-     * Matching is done using lowercase substring checks
-     * so categories like "Web Exploitation" or "Windows – Forensics"
-     * still map correctly.
-     */
+    // Decides which image to render based on category
     const renderImage = (category) => {
         if (!category) return null;
 
+        // Stores the category in lower case
         const cat = category.toLowerCase();
 
+        // Checks which image to return and render
         if (cat.includes("web")) {
             return <img className="h-[200px] w-auto" src={WebAppImage} alt="Globe" />;
         }
@@ -41,11 +38,11 @@ function RecentWriteUp({ title, description, category }) {
             return <img className="h-[200px] w-auto" src={LinuxImage} alt="Penguin" />;
         }
 
-        return null; // fallback image if category is unknown
+        // Returns null if there isnt a image
+        return null;
     };
 
     return (
-        // Card container for a recent write-up preview
         <div className="flex flex-col justify-between w-80 h-100 p-4 rounded-lg bg-[#121A22] border border-[#00FF88] shadow-[0_0_20px_#00FF88,0_0_40px_#00FF88,0_0_60px_#00FF88]">
             <div>
                 {/* Category-based icon */}

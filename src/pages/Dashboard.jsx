@@ -6,34 +6,35 @@ import UsedPlatforms from "../components/Dashboard/HeroStats/UsedPlatforms/UsedP
 import StatsContainer from "../components/Dashboard/StatsContainer/StatsContainer"
 import TimelineChart from "../components/Dashboard/TimelineChart/TimelineChart"
 
+// Dashboard page with stats and charts
 function Dashboard(){
     return(
         <AutoBackground>
+            {/* Grid of stat cards and charts */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
-                
+                {/* Total challenges stat */}
                 <StatsContainer>
                     <TotalChallenges />
                 </StatsContainer>
 
+                {/* Total points stat */}
                 <StatsContainer>
                     <TotalPoints />
                 </StatsContainer>
 
-                {/* On tablets, this will move to its own row or share based on span */}
+                {/* Used platforms stat */}
                 <StatsContainer>
                     <UsedPlatforms />
                 </StatsContainer>
 
-                {/* - Mobile: spans 1 col
-                    - Large: spans 2 cols 
-                */}
+                {/* Timeline chart (spans 2 cols on medium screens) */}
                 <div className="md:col-span-2">
                     <StatsContainer>
                         <TimelineChart />
                     </StatsContainer>
                 </div>
 
-                {/* On large screens, this fills the 3rd slot next to Timeline */}
+                {/* Domain chart (spans 1 col on large screens) */}
                 <div className="md:col-span-2 lg:col-span-1">
                     <StatsContainer>
                         <DomainChart />

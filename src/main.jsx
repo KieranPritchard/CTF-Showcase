@@ -1,5 +1,6 @@
 // Polyfill Buffer before any other imports that might need it
 import { Buffer } from 'buffer'
+// Provide Buffer globally for gray-matter and other Node-compatible libs
 if (typeof window !== 'undefined') {
   window.Buffer = Buffer
 }

@@ -56,38 +56,40 @@ function Recents() {
 
     return (
         <div className="min-h-screen w-full flex flex-col px-4 sm:px-8 py-10">
-        <h2 className="headings flicker text-4xl text-center font-bold mb-10 text-white">
-            Recent Write Up's
-        </h2>
+            <h2 className="headings flicker text-4xl text-center font-bold mb-10 text-white">
+                Recent Write Up's
+            </h2>
 
-        <div className="flex-1 flex items-center justify-center w-full">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl w-full justify-items-center items-stretch">
-            {writeups.map((w, idx) => {
-                const descriptionBlock = w.content?.find(
-                (b) => b.type === "paragraph"
-                );
-                const description = descriptionBlock
-                ? descriptionBlock.text.slice(0, 200) +
-                    (descriptionBlock.text.length > 200 ? "..." : "")
-                : "No description available.";
+            <div className="flex-1 flex items-center justify-center w-full">
+                {/* Grid of recent write-up cards */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl w-full justify-items-center items-stretch">
+                    {writeups.map((w, idx) => {
+                        // Finds the first paragraph block for description
+                        const descriptionBlock = w.content?.find(
+                            (b) => b.type === "paragraph"
+                        );
+                        const description = descriptionBlock
+                            ? descriptionBlock.text.slice(0, 200) +
+                                (descriptionBlock.text.length > 200 ? "..." : "")
+                            : "No description available.";
 
-                return (
-                <Link
-                    key={idx}
-                    to={`/write-ups/${w.slug}`}
-                    ref={(el) => (cardsRef.current[idx] = el)}
-                    className="fade-in-bottom h-full w-full flex justify-center hover:scale-[1.02] transition-transform"
-                >
-                    <RecentWriteUp
-                    title={w.title}
-                    description={description}
-                    category={w.category}
-                    />
-                </Link>
-                );
-            })}
+                        return (
+                            <Link
+                                key={idx}
+                                to={`/write-ups/${w.slug}`}
+                                ref={(el) => (cardsRef.current[idx] = el)}
+                                className="fade-in-bottom h-full w-full flex justify-center hover:scale-[1.02] transition-transform"
+                            >
+                                <RecentWriteUp
+                                    title={w.title}
+                                    description={description}
+                                    category={w.category}
+                                />
+                            </Link>
+                        );
+                    })}
+                </div>
             </div>
-        </div>
         </div>
     );
 }

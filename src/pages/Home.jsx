@@ -33,20 +33,24 @@ function Home() {
 
     return (
         <>
+            {/* Hero section with banner and welcome */}
             <ImageBackground isEven={false} image={Banner}>
                 <div className="flex justify-center items-end h-screen">
                     <Welcome />
                 </div>
             </ImageBackground>
 
+            {/* About section */}
             <AboutWrapper isEven={true}>
                 <About />
             </AboutWrapper>
 
+            {/* Skills section */}
             <SkillsWrapper>
                 <Skills />
             </SkillsWrapper>
 
+            {/* Recent write-ups section */}
             <RecentsWrapper isEven={true}>
                 <Recents />
             </RecentsWrapper>

@@ -28,10 +28,7 @@ export default function Notification({
         setTimeout(() => onClose?.(), 300);
     };
 
-    /**
-     * Predefined color themes for each notification type.
-     * Using static class names ensures Tailwind doesn't purge them.
-     */
+    // Predefined colour themes for each notification type
     const colorClasses = {
         success: {
             bg: "bg-[#457B9D]/20",

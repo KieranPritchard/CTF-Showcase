@@ -8,26 +8,28 @@ import Navbar from './components/Navbar/Navbar'
 import Footer from './components/Footer/Footer'
 import Dashboard from './pages/Dashboard'
 
-// Optional NotFound component
+// Optional NotFound component for invalid routes
 const NotFound = () => <div>404 - Page Not Found</div>
 
+// Defines the main app component and routing
 function App() {
   return (
     // HashRouter ensures pages load correctly even on refresh
     <Router>
-      {/* Navbar always visible */}
+      {/* Navbar always visible at the top */}
       <Navbar />
 
-      {/* Define all routes */}
+      {/* Define all routes for the app */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/write-ups" element={<WriteUps/>} />
         <Route path="/dashboard" element={<Dashboard/>} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/write-ups/:slug" element={<WriteUpPage />} />
-        <Route path="*" element={<NotFound />} /> {/* catch-all fallback */}
+        <Route path="*" element={<NotFound />} /> {/* Catch-all fallback for unknown paths */}
       </Routes>
 
+      {/* Footer always visible at the bottom */}
       <Footer />
     </Router>
   )
